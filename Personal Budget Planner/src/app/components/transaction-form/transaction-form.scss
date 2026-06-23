@@ -1,0 +1,128 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background: rgba(18, 23, 41, 0.45);
+  backdrop-filter: blur(2px);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 1rem;
+  animation: fade 0.15s ease;
+}
+
+@media (min-width: 560px) {
+  .overlay {
+    align-items: center;
+  }
+}
+
+.modal {
+  width: 100%;
+  max-width: 440px;
+  box-shadow: var(--shadow-lg);
+  animation: rise 0.18s ease;
+}
+
+.modal-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.1rem 1.25rem;
+  border-bottom: 1px solid var(--border);
+}
+.modal-head h2 {
+  font-size: 1.15rem;
+}
+
+.icon-btn {
+  border: none;
+  background: transparent;
+  font-size: 1rem;
+  color: var(--text-muted);
+  cursor: pointer;
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+}
+.icon-btn:hover {
+  background: var(--surface-2);
+  color: var(--text);
+}
+
+.modal-body {
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.toggle {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.35rem;
+  background: var(--surface-2);
+  padding: 0.3rem;
+  border-radius: var(--radius-sm);
+}
+.toggle button {
+  border: none;
+  background: transparent;
+  font: inherit;
+  font-weight: 600;
+  padding: 0.55rem;
+  border-radius: 7px;
+  cursor: pointer;
+  color: var(--text-muted);
+  transition: background 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
+}
+.toggle button.active {
+  background: var(--surface);
+  box-shadow: var(--shadow-sm);
+}
+.toggle button.active.expense {
+  color: var(--expense);
+}
+.toggle button.active.income {
+  color: var(--income);
+}
+
+.amount-input {
+  position: relative;
+}
+.amount-input .currency-sign {
+  position: absolute;
+  left: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+  font-weight: 600;
+}
+.amount-input .input {
+  padding-left: 1.6rem;
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+
+.modal-foot {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.6rem;
+  margin-top: 0.25rem;
+}
+.modal-foot .btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+}
+@keyframes rise {
+  from {
+    transform: translateY(12px);
+    opacity: 0;
+  }
+}

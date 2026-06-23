@@ -1,0 +1,84 @@
+<section class="page">
+  <div class="page-head">
+    <div>
+      <h1>Budgets</h1>
+      <p>Set a monthly spending limit for each category</p>
+    </div>
+  </div>
+
+  <!-- Overall summary -->
+  <div class="card summary">
+    <div class="summary-figures">
+      <div class="summary-item">
+        <span class="muted">Total budget</span>
+        <strong>{{ totalBudget() | currency }}</strong>
+      </div>
+      <div class="summary-item">
+        <span class="muted">Spent this month</span>
+        <strong class="amount-expense">{{ totalSpent() | currency }}</strong>
+      </div>
+      <div class="summary-item">
+        <span class="muted">Remaining</span>
+        <strong [class.amount-income]="remaining() >= 0" [class.amount-expense]="remaining() < 0">
+          {{ remaining() | currency }}
+        </strong>
+      </div>
+    </div>
+    <div class="bar big">
+      <div
+        class="bar-fill"
+        [class.over]="totalSpent() > totalBudget() && totalBudget() > 0"
+        [style.width.%]="usedRatio() * 100"
+      ></div>
+    </div>
+  </div>
+
+  <!-- Per-category limits -->
+  <div class="card budget-rows">
+    @for (row of rows(); track row.name) {
+      <div class="budget-row">
+        <div class="budget-row-head">
+          <span class="cat-name">
+            <span class="cat-icon" [style.background]="row.color + '22'">{{ row.icon }}</span>
+            {{ row.name }}
+          </span>
+          <div class="limit-input">
+            <span class="currency-sign">$</span>
+            <input
+              class="input"
+              type="number"
+              min="0"
+              step="10"
+              placeholder="0"
+              [ngModel]="row.limit || null"
+              (ngModelChange)="setLimit(row.name, $event)"
+              [name]="row.name"
+              aria-label="Monthly limit"
+            />
+            <span class="per-month muted">/ mo</span>
+          </div>
+        </div>
+
+        @if (row.limit > 0) {
+          <div class="bar">
+            <div
+              class="bar-fill"
+              [class.over]="row.over"
+              [style.width.%]="row.ratio * 100"
+              [style.background]="row.over ? null : row.color"
+            ></div>
+          </div>
+          <div class="budget-row-foot">
+            <span class="muted">{{ row.spent | currency }} spent</span>
+            <span [class.amount-expense]="row.over" [class.muted]="!row.over">
+              {{ row.percent | number: '1.0-0' }}% ·
+              {{ row.over ? (row.spent - row.limit | currency) + ' over' : (row.limit - row.spent | currency) + ' left' }}
+            </span>
+          </div>
+        } @else {
+          <p class="no-limit muted">No limit set{{ row.spent > 0 ? ' · ' + (row.spent | currency) + ' spent' : '' }}</p>
+        }
+      </div>
+    }
+  </div>
+</section>

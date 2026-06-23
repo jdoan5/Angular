@@ -1,0 +1,131 @@
+<section class="page">
+  <div class="page-head">
+    <div>
+      <h1>Dashboard</h1>
+      <p>{{ monthLabel() | date: 'MMMM yyyy' }} overview</p>
+    </div>
+    <a class="btn btn-primary" routerLink="/transactions" [queryParams]="{ add: 1 }">
+      <span aria-hidden="true">＋</span> Add transaction
+    </a>
+  </div>
+
+  <!-- Summary cards -->
+  <div class="stat-grid">
+    <div class="card stat">
+      <span class="stat-label">Total balance</span>
+      <span class="stat-value" [class.amount-expense]="store.totalBalance() < 0">
+        {{ store.totalBalance() | currency }}
+      </span>
+      <span class="stat-foot muted">All-time net</span>
+    </div>
+    <div class="card stat">
+      <span class="stat-label">Income</span>
+      <span class="stat-value amount-income">{{ store.monthIncome() | currency }}</span>
+      <span class="stat-foot muted">This month</span>
+    </div>
+    <div class="card stat">
+      <span class="stat-label">Expenses</span>
+      <span class="stat-value amount-expense">{{ store.monthExpense() | currency }}</span>
+      <span class="stat-foot muted">This month</span>
+    </div>
+    <div class="card stat">
+      <span class="stat-label">Net saved</span>
+      <span class="stat-value" [class.amount-income]="store.monthNet() >= 0" [class.amount-expense]="store.monthNet() < 0">
+        {{ store.monthNet() | currency }}
+      </span>
+      <span class="stat-foot">
+        <span class="badge" [class.good]="savingsRate() >= 0">
+          {{ savingsRate() | number: '1.0-0' }}% savings rate
+        </span>
+      </span>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <!-- Spending breakdown -->
+    <div class="card panel">
+      <div class="panel-head">
+        <h2>Spending by category</h2>
+        <span class="muted">{{ monthLabel() | date: 'MMM yyyy' }}</span>
+      </div>
+
+      @if (legend().length) {
+        <div class="breakdown">
+          <app-donut-chart [data]="donutData()" centerLabel="Spent" />
+          <ul class="legend">
+            @for (item of legend(); track item.category) {
+              <li>
+                <span class="dot" [style.background]="item.color"></span>
+                <span class="legend-name">{{ categoryIcon(item.category) }} {{ item.category }}</span>
+                <span class="legend-pct muted">{{ item.percent | number: '1.0-0' }}%</span>
+                <span class="legend-amt">{{ item.amount | currency }}</span>
+              </li>
+            }
+          </ul>
+        </div>
+      } @else {
+        <p class="empty">No spending recorded this month yet.</p>
+      }
+    </div>
+
+    <!-- Budget overview -->
+    <div class="card panel">
+      <div class="panel-head">
+        <h2>Budget overview</h2>
+        <a class="link" routerLink="/budgets">Manage</a>
+      </div>
+
+      @if (topBudgets().length) {
+        <ul class="budget-list">
+          @for (b of topBudgets(); track b.category) {
+            <li>
+              <div class="budget-row-top">
+                <span class="budget-name">{{ categoryIcon(b.category) }} {{ b.category }}</span>
+                <span class="budget-figures" [class.over]="b.over">
+                  {{ b.spent | currency }} <span class="muted">/ {{ b.limit | currency }}</span>
+                </span>
+              </div>
+              <div class="bar">
+                <div
+                  class="bar-fill"
+                  [class.over]="b.over"
+                  [style.width.%]="b.ratio * 100"
+                  [style.background]="b.over ? null : b.color"
+                ></div>
+              </div>
+            </li>
+          }
+        </ul>
+      } @else {
+        <p class="empty">No budgets set. <a class="link" routerLink="/budgets">Create one</a>.</p>
+      }
+    </div>
+  </div>
+
+  <!-- Recent transactions -->
+  <div class="card panel">
+    <div class="panel-head">
+      <h2>Recent activity</h2>
+      <a class="link" routerLink="/transactions">View all</a>
+    </div>
+
+    @if (recent().length) {
+      <ul class="tx-list">
+        @for (t of recent(); track t.id) {
+          <li class="tx-row">
+            <span class="tx-icon" [class.income]="t.type === 'income'">{{ categoryIcon(t.category) }}</span>
+            <div class="tx-main">
+              <span class="tx-desc">{{ t.description || t.category }}</span>
+              <span class="tx-meta muted">{{ t.category }} · {{ t.date | date: 'MMM d' }}</span>
+            </div>
+            <span class="tx-amt" [class.amount-income]="t.type === 'income'" [class.amount-expense]="t.type === 'expense'">
+              {{ t.type === 'income' ? '+' : '−' }}{{ t.amount | currency }}
+            </span>
+          </li>
+        }
+      </ul>
+    } @else {
+      <p class="empty">No transactions yet.</p>
+    }
+  </div>
+</section>

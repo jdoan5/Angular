@@ -1,0 +1,154 @@
+:host {
+  display: block;
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.7rem 0.8rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+.filters {
+  display: flex;
+  gap: 0.3rem;
+  background: var(--surface-2);
+  padding: 0.25rem;
+  border-radius: 999px;
+}
+.pill {
+  border: none;
+  background: transparent;
+  font: inherit;
+  font-weight: 600;
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  padding: 0.4rem 0.9rem;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
+}
+.pill.active {
+  background: var(--surface);
+  color: var(--text);
+  box-shadow: var(--shadow-sm);
+}
+.search {
+  flex: 1;
+  min-width: 200px;
+}
+
+.tx-table {
+  padding: 0.4rem 1.1rem;
+}
+
+.tx-row {
+  display: grid;
+  grid-template-columns: 40px 1fr auto auto auto;
+  align-items: center;
+  gap: 0.9rem;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--border);
+}
+.tx-row:last-child {
+  border-bottom: none;
+}
+.tx-icon {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 11px;
+  background: var(--expense-soft);
+  font-size: 1.1rem;
+}
+.tx-icon.income {
+  background: var(--income-soft);
+}
+.tx-main {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.tx-desc {
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.tx-meta {
+  font-size: 0.82rem;
+}
+.tx-date {
+  font-size: 0.85rem;
+  white-space: nowrap;
+}
+.tx-amt {
+  font-weight: 700;
+  white-space: nowrap;
+}
+.tx-actions {
+  display: flex;
+  gap: 0.2rem;
+}
+.icon-btn {
+  border: none;
+  background: transparent;
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  cursor: pointer;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+}
+.icon-btn:hover {
+  background: var(--surface-2);
+  color: var(--text);
+}
+.icon-btn.danger:hover {
+  background: var(--expense-soft);
+  color: var(--expense);
+}
+
+.empty-state {
+  text-align: center;
+  padding: 3rem 1.5rem;
+}
+.empty-emoji {
+  font-size: 2.4rem;
+  margin-bottom: 0.5rem;
+}
+.empty-state h3 {
+  margin-bottom: 0.35rem;
+}
+.empty-state p {
+  margin: 0 0 1.25rem;
+}
+
+@media (max-width: 620px) {
+  .tx-row {
+    grid-template-columns: 36px 1fr auto;
+    grid-template-areas:
+      'icon main amount'
+      'icon date actions';
+    row-gap: 0.2rem;
+  }
+  .tx-icon {
+    grid-area: icon;
+  }
+  .tx-main {
+    grid-area: main;
+  }
+  .tx-amt {
+    grid-area: amount;
+    text-align: right;
+  }
+  .tx-date {
+    grid-area: date;
+  }
+  .tx-actions {
+    grid-area: actions;
+    justify-content: flex-end;
+  }
+}

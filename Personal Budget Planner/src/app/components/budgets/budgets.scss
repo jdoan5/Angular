@@ -1,0 +1,129 @@
+:host {
+  display: block;
+}
+
+.summary {
+  padding: 1.25rem 1.4rem;
+  margin-bottom: 1rem;
+}
+.summary-figures {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+.summary-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+.summary-item span {
+  font-size: 0.8rem;
+}
+.summary-item strong {
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+
+.bar {
+  height: 8px;
+  border-radius: 999px;
+  background: var(--surface-2);
+  overflow: hidden;
+}
+.bar.big {
+  height: 12px;
+}
+.bar-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: var(--primary);
+  transition: width 0.4s ease;
+}
+.bar-fill.over {
+  background: var(--expense);
+}
+
+.budget-rows {
+  padding: 0.5rem 1.4rem;
+}
+.budget-row {
+  padding: 1.1rem 0;
+  border-bottom: 1px solid var(--border);
+}
+.budget-row:last-child {
+  border-bottom: none;
+}
+.budget-row-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.65rem;
+}
+.cat-name {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-weight: 600;
+}
+.cat-icon {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  font-size: 1rem;
+}
+
+.limit-input {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.limit-input .currency-sign {
+  position: absolute;
+  left: 0.65rem;
+  color: var(--text-muted);
+  font-weight: 600;
+  pointer-events: none;
+}
+.limit-input .input {
+  width: 120px;
+  padding-left: 1.45rem;
+  padding-right: 3rem;
+  text-align: left;
+  font-weight: 600;
+}
+.limit-input .per-month {
+  position: absolute;
+  right: 0.7rem;
+  font-size: 0.82rem;
+  pointer-events: none;
+}
+
+.budget-row-foot {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  margin-top: 0.45rem;
+}
+
+.no-limit {
+  margin: 0.2rem 0 0;
+  font-size: 0.85rem;
+}
+
+@media (max-width: 560px) {
+  .summary-figures {
+    gap: 1.25rem;
+  }
+  .budget-row-head {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.6rem;
+  }
+  .limit-input .input {
+    width: 140px;
+  }
+}

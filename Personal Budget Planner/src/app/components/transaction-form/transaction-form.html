@@ -1,0 +1,96 @@
+<div class="overlay" (click)="close()">
+  <div class="modal card" (click)="$event.stopPropagation()" role="dialog" aria-modal="true">
+    <header class="modal-head">
+      <h2>{{ isEdit() ? 'Edit transaction' : 'Add transaction' }}</h2>
+      <button type="button" class="icon-btn" (click)="close()" aria-label="Close">✕</button>
+    </header>
+
+    <form class="modal-body" (ngSubmit)="submit()">
+      <div class="toggle" role="tablist">
+        <button
+          type="button"
+          [class.active]="form().type === 'expense'"
+          [class.expense]="form().type === 'expense'"
+          (click)="setType('expense')"
+        >
+          Expense
+        </button>
+        <button
+          type="button"
+          [class.active]="form().type === 'income'"
+          [class.income]="form().type === 'income'"
+          (click)="setType('income')"
+        >
+          Income
+        </button>
+      </div>
+
+      <div class="field">
+        <label for="amount">Amount</label>
+        <div class="amount-input">
+          <span class="currency-sign">$</span>
+          <input
+            id="amount"
+            class="input"
+            type="number"
+            min="0"
+            step="0.01"
+            placeholder="0.00"
+            [ngModel]="form().amount"
+            (ngModelChange)="patch('amount', $event)"
+            name="amount"
+            autocomplete="off"
+          />
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="category">Category</label>
+        <select
+          id="category"
+          class="select"
+          [ngModel]="form().category"
+          (ngModelChange)="patch('category', $event)"
+          name="category"
+        >
+          @for (cat of categoryOptions(); track cat.name) {
+            <option [value]="cat.name">{{ cat.icon }} {{ cat.name }}</option>
+          }
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="description">Description</label>
+        <input
+          id="description"
+          class="input"
+          type="text"
+          placeholder="e.g. Groceries"
+          [ngModel]="form().description"
+          (ngModelChange)="patch('description', $event)"
+          name="description"
+          autocomplete="off"
+        />
+      </div>
+
+      <div class="field">
+        <label for="date">Date</label>
+        <input
+          id="date"
+          class="input"
+          type="date"
+          [ngModel]="form().date"
+          (ngModelChange)="patch('date', $event)"
+          name="date"
+        />
+      </div>
+
+      <footer class="modal-foot">
+        <button type="button" class="btn btn-ghost" (click)="close()">Cancel</button>
+        <button type="submit" class="btn btn-primary" [disabled]="!valid()">
+          {{ isEdit() ? 'Save changes' : 'Add transaction' }}
+        </button>
+      </footer>
+    </form>
+  </div>
+</div>

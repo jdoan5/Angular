@@ -1,0 +1,33 @@
+@if (segments().length) {
+  <div class="donut">
+    <svg viewBox="0 0 42 42" class="donut-svg" role="img" aria-label="Spending by category">
+      <circle class="donut-track" cx="21" cy="21" r="15.915" />
+      @for (seg of segments(); track seg.label) {
+        <circle
+          class="donut-seg"
+          cx="21"
+          cy="21"
+          r="15.915"
+          [attr.stroke]="seg.color"
+          [attr.stroke-dasharray]="seg.dash + ' ' + (100 - seg.dash)"
+          [attr.stroke-dashoffset]="seg.offset"
+        >
+          <title>{{ seg.label }} · {{ seg.percent | number: '1.0-0' }}%</title>
+        </circle>
+      }
+    </svg>
+    <div class="donut-center">
+      <span class="donut-center-label">{{ centerLabel() }}</span>
+      <span class="donut-center-value">{{ total() | currency }}</span>
+    </div>
+  </div>
+} @else {
+  <div class="donut donut-empty">
+    <svg viewBox="0 0 42 42" class="donut-svg" aria-hidden="true">
+      <circle class="donut-track" cx="21" cy="21" r="15.915" />
+    </svg>
+    <div class="donut-center">
+      <span class="donut-center-value muted">—</span>
+    </div>
+  </div>
+}

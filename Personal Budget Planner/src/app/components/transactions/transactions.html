@@ -1,0 +1,63 @@
+<section class="page">
+  <div class="page-head">
+    <div>
+      <h1>Transactions</h1>
+      <p>{{ filtered().length }} shown · net {{ filteredTotal() | currency }}</p>
+    </div>
+    <button class="btn btn-primary" (click)="openAdd()">
+      <span aria-hidden="true">＋</span> Add transaction
+    </button>
+  </div>
+
+  <div class="toolbar card">
+    <div class="filters">
+      <button class="pill" [class.active]="filter() === 'all'" (click)="setFilter('all')">All</button>
+      <button class="pill" [class.active]="filter() === 'income'" (click)="setFilter('income')">Income</button>
+      <button class="pill" [class.active]="filter() === 'expense'" (click)="setFilter('expense')">Expenses</button>
+    </div>
+    <input
+      class="input search"
+      type="search"
+      placeholder="Search description or category…"
+      [ngModel]="search()"
+      (ngModelChange)="search.set($event)"
+    />
+  </div>
+
+  @if (filtered().length) {
+    <div class="card tx-table">
+      @for (t of filtered(); track t.id) {
+        <div class="tx-row">
+          <span class="tx-icon" [class.income]="t.type === 'income'">{{ categoryIcon(t.category) }}</span>
+          <div class="tx-main">
+            <span class="tx-desc">{{ t.description || t.category }}</span>
+            <span class="tx-meta muted">{{ t.category }}</span>
+          </div>
+          <span class="tx-date muted">{{ t.date | date: 'MMM d, yyyy' }}</span>
+          <span
+            class="tx-amt"
+            [class.amount-income]="t.type === 'income'"
+            [class.amount-expense]="t.type === 'expense'"
+          >
+            {{ t.type === 'income' ? '+' : '−' }}{{ t.amount | currency }}
+          </span>
+          <div class="tx-actions">
+            <button class="icon-btn" (click)="openEdit(t)" aria-label="Edit" title="Edit">✎</button>
+            <button class="icon-btn danger" (click)="remove(t)" aria-label="Delete" title="Delete">🗑</button>
+          </div>
+        </div>
+      }
+    </div>
+  } @else {
+    <div class="card empty-state">
+      <div class="empty-emoji">🧾</div>
+      <h3>No transactions found</h3>
+      <p class="muted">Add your first transaction to start tracking your budget.</p>
+      <button class="btn btn-primary" (click)="openAdd()">＋ Add transaction</button>
+    </div>
+  }
+</section>
+
+@if (formOpen()) {
+  <app-transaction-form [editing]="editing()" (save)="onSave($event)" (cancel)="closeForm()" />
+}

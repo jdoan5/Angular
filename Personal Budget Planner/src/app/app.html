@@ -1,0 +1,25 @@
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" routerLink="/dashboard">
+      <span class="brand-mark">₿</span>
+      <span class="brand-name">Budget<strong>Planner</strong></span>
+    </a>
+
+    <nav class="nav">
+      <a routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
+      <a routerLink="/transactions" routerLinkActive="active">Transactions</a>
+      <a routerLink="/budgets" routerLinkActive="active">Budgets</a>
+    </nav>
+
+    <div class="balance">
+      <span class="balance-label">Balance</span>
+      <span class="balance-value" [class.amount-expense]="store.totalBalance() < 0">
+        {{ store.totalBalance() | currency }}
+      </span>
+    </div>
+  </div>
+</header>
+
+<main>
+  <router-outlet />
+</main>
