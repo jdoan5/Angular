@@ -1,0 +1,132 @@
+:host {
+  display: block;
+}
+
+.hero {
+  text-align: center;
+  margin-bottom: 2.2rem;
+}
+.hero h1 {
+  font-size: 2rem;
+  margin-bottom: 0.4rem;
+}
+.hero p {
+  margin: 0 0 1rem;
+}
+
+.total-bar {
+  max-width: 420px;
+  height: 10px;
+  margin: 0 auto;
+  border-radius: 999px;
+  background: var(--paper-deep);
+  overflow: hidden;
+  border: 1px solid var(--ink-faint);
+}
+.total-bar-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--accent), #c98b3d);
+  transition: width 0.5s ease;
+}
+
+.empty {
+  text-align: center;
+  padding: 3rem 1rem 4rem;
+}
+.empty-mark {
+  font-size: 2rem;
+  color: var(--accent);
+  margin: 0 0 0.4rem;
+}
+.empty h2 {
+  margin-bottom: 0.4rem;
+}
+.empty p {
+  margin: 0 0 1.4rem;
+}
+
+.shelf {
+  margin-bottom: 2.4rem;
+}
+.shelf-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  border-bottom: 2px solid var(--ink-faint);
+  padding-bottom: 0.5rem;
+  margin-bottom: 1rem;
+}
+.shelf-head h2 {
+  font-size: 1.3rem;
+  margin: 0;
+}
+.shelf-icon {
+  margin-right: 0.5rem;
+}
+.shelf-count {
+  font-variant-numeric: tabular-nums;
+  font-size: 0.9rem;
+}
+
+.entry-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 0.9rem;
+}
+
+.entry {
+  background: var(--surface);
+  border: 1.5px solid var(--ink-faint);
+  border-top: 3px solid var(--ink-faint);
+  border-radius: 12px;
+  padding: 0.95rem 1.05rem;
+}
+.entry.locked {
+  background: transparent;
+  border-style: dashed;
+}
+
+.entry-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.6rem;
+  margin-bottom: 0.35rem;
+}
+.entry-head h3 {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  margin: 0;
+  letter-spacing: 0.02em;
+}
+.pattern {
+  color: var(--ink-faint);
+  letter-spacing: 0.22em;
+}
+
+.diff {
+  flex-shrink: 0;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.14rem 0.5rem;
+  border-radius: 999px;
+  background: var(--good-soft);
+  color: var(--good);
+}
+.diff.medium {
+  background: rgba(185, 138, 47, 0.14);
+  color: #8a6420;
+}
+.diff.hard {
+  background: rgba(163, 59, 46, 0.12);
+  color: var(--bad);
+}
+
+.entry-fact {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.55;
+}

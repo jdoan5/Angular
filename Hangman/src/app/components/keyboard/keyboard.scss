@@ -1,0 +1,60 @@
+:host {
+  display: block;
+}
+
+.keys {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.key-row {
+  display: flex;
+  justify-content: center;
+  gap: 0.45rem;
+}
+
+.key {
+  width: clamp(30px, 8.6vw, 44px);
+  height: clamp(38px, 10vw, 50px);
+  border: 1.5px solid var(--ink-faint);
+  border-radius: 10px;
+  background: var(--surface);
+  color: var(--ink);
+  font: inherit;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: transform 0.06s ease, background 0.15s ease, border-color 0.15s ease,
+    color 0.15s ease, opacity 0.15s ease;
+  box-shadow: 0 2px 0 var(--ink-faint);
+}
+
+.key:hover:not(:disabled) {
+  border-color: var(--ink);
+  transform: translateY(-1px);
+}
+
+.key:active:not(:disabled) {
+  transform: translateY(1px);
+  box-shadow: none;
+}
+
+.key:disabled {
+  cursor: default;
+}
+
+.key.hit {
+  background: var(--good-soft);
+  border-color: var(--good);
+  color: var(--good);
+  box-shadow: none;
+}
+
+.key.miss {
+  background: transparent;
+  border-color: transparent;
+  color: var(--ink-faint);
+  box-shadow: none;
+  text-decoration: line-through;
+}

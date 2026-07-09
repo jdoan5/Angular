@@ -1,0 +1,43 @@
+<svg viewBox="0 0 200 240" role="img" [attr.aria-label]="'Hangman drawing, ' + stage() + ' of 6 misses'">
+  <!-- Gallows frame (always visible) -->
+  <g class="frame">
+    <path d="M20 230 H180" />
+    <path d="M60 230 V20" />
+    <path d="M60 20 H140" />
+    <path d="M60 52 L92 20" />
+    <path d="M140 20 V45" />
+  </g>
+
+  <!-- The unlucky scholar, one part per miss -->
+  <g class="figure">
+    @if (stage() >= 1) {
+      <circle class="part" cx="140" cy="63" r="17" />
+      @if (lost()) {
+        <g class="face">
+          <path d="M132 58 l6 6 M138 58 l-6 6" />
+          <path d="M148 58 l6 6 M154 58 l-6 6" transform="translate(-6 0)" />
+        </g>
+      } @else if (stage() >= 1) {
+        <g class="face dots">
+          <circle cx="134" cy="60" r="1.6" />
+          <circle cx="146" cy="60" r="1.6" />
+        </g>
+      }
+    }
+    @if (stage() >= 2) {
+      <path class="part" d="M140 80 V140" />
+    }
+    @if (stage() >= 3) {
+      <path class="part" d="M140 96 L115 121" />
+    }
+    @if (stage() >= 4) {
+      <path class="part" d="M140 96 L165 121" />
+    }
+    @if (stage() >= 5) {
+      <path class="part" d="M140 140 L118 176" />
+    }
+    @if (stage() >= 6) {
+      <path class="part" d="M140 140 L162 176" />
+    }
+  </g>
+</svg>

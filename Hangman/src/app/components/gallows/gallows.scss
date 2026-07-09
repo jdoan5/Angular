@@ -1,0 +1,47 @@
+:host {
+  display: block;
+}
+
+svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.frame path {
+  fill: none;
+  stroke: var(--ink-faint);
+  stroke-width: 6;
+  stroke-linecap: round;
+}
+
+.figure .part {
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 5;
+  stroke-linecap: round;
+  animation: sketch 0.3s ease;
+}
+
+.face path {
+  stroke: var(--ink);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+}
+
+.face.dots circle {
+  fill: var(--ink);
+}
+
+@keyframes sketch {
+  from {
+    opacity: 0;
+    transform: translateY(-3px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .figure .part {
+    animation: none;
+  }
+}

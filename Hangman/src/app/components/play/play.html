@@ -1,0 +1,134 @@
+@if (store.phase() === 'home') {
+  <!-- ============ Category picker ============ -->
+  <section class="page home">
+    <header class="hero">
+      <h1>Pick a volume</h1>
+      <p class="muted">
+        Solve the word, earn the entry. {{ store.collectedCount() }} of {{ totalEntries }}
+        entries discovered so far.
+      </p>
+      <div class="stat-strip" aria-label="Your record">
+        <span class="stat"><strong>{{ store.stats().wins }}</strong> wins</span>
+        <span class="stat"><strong>{{ store.stats().losses }}</strong> losses</span>
+        <span class="stat">🔥 <strong>{{ store.stats().streak }}</strong> streak</span>
+        <span class="stat">🏆 best <strong>{{ store.stats().bestStreak }}</strong></span>
+      </div>
+    </header>
+
+    <div class="cat-grid">
+      @for (p of store.progressByCategory(); track p.category.id) {
+        <button type="button" class="cat-card" (click)="store.start(p.category.id)">
+          <span class="cat-icon" [style.background]="p.category.color + '1a'">{{ p.category.icon }}</span>
+          <span class="cat-name">{{ p.category.name }}</span>
+          <span class="cat-tagline muted">{{ p.category.tagline }}</span>
+          <span class="cat-progress">
+            <span class="cat-bar"><span
+              class="cat-bar-fill"
+              [style.width.%]="p.total ? (p.collected / p.total) * 100 : 0"
+              [style.background]="p.category.color"
+            ></span></span>
+            <span class="cat-count muted">{{ p.collected }}/{{ p.total }}</span>
+          </span>
+        </button>
+      }
+    </div>
+  </section>
+} @else {
+  <!-- ============ Game board ============ -->
+  <!-- inert while the round-over dialog is open: nothing behind the overlay
+       can take focus or receive the browser's default Enter/Space activation -->
+  <section class="page game" [attr.inert]="store.phase() !== 'playing' ? '' : null">
+    <div class="game-top">
+      <button type="button" class="btn btn-ghost btn-sm" (click)="store.backToCategories()">
+        ← Volumes
+      </button>
+      <span class="chip">
+        {{ store.category()?.icon }} {{ store.category()?.name }}
+      </span>
+      <div class="pips" role="img" [attr.aria-label]="store.misses() + ' of 6 misses used'">
+        @for (spent of pips(); track $index) {
+          <span class="pip" [class.spent]="spent"></span>
+        }
+      </div>
+    </div>
+
+    <div class="board">
+      <div class="gallows-side">
+        <app-gallows [stage]="store.misses()" [lost]="store.phase() === 'lost'" />
+      </div>
+
+      <div class="play-side">
+        <div class="tiles" aria-label="The word to guess" aria-live="polite">
+          @for (tile of store.tiles(); track $index) {
+            @if (tile.isLetter) {
+              <span class="tile" [class.missed]="isMissedLetter(tile)">
+                {{ tile.revealed ? tile.char : '' }}
+              </span>
+            } @else {
+              <span class="tile gap">{{ tile.char === ' ' ? '' : tile.char }}</span>
+            }
+          }
+        </div>
+
+        <div class="hint-zone">
+          @if (store.hintUsed()) {
+            <p class="hint-text"><span class="hint-label">Hint</span> {{ store.entry()?.hint }}</p>
+          } @else {
+            <button
+              type="button"
+              class="btn btn-ghost btn-sm"
+              [disabled]="!store.hintAvailable()"
+              (click)="store.useHint()"
+            >
+              💡 Reveal hint — costs 1 miss
+            </button>
+          }
+        </div>
+
+        <app-keyboard
+          [guessed]="store.guessed()"
+          [word]="store.entry()?.word ?? ''"
+          [locked]="store.phase() !== 'playing'"
+          (pick)="store.guess($event)"
+        />
+
+        <button type="button" class="btn-give-up" (click)="store.giveUp()">
+          Concede this word
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ Round-over fact card ============ -->
+  @if (store.phase() === 'won' || store.phase() === 'lost') {
+    <div class="overlay">
+      <div class="fact-card" role="dialog" aria-modal="true">
+        <p class="verdict" [class.lost]="store.phase() === 'lost'">
+          {{ store.phase() === 'won' ? '✦ Solved!' : 'Hard luck —' }}
+        </p>
+        <h2 class="the-word">{{ store.entry()?.word }}</h2>
+
+        <div class="fact">
+          <p class="fact-kicker">From the encyclopedia</p>
+          <p class="fact-text">{{ store.entry()?.fact }}</p>
+        </div>
+
+        @if (store.phase() === 'won') {
+          <p class="collected-note">📖 Added to your encyclopedia</p>
+        } @else {
+          <p class="collected-note muted">Win it next time to add the entry to your collection.</p>
+        }
+
+        <div class="fact-actions">
+          <button #nextBtn type="button" class="btn btn-primary" (click)="store.nextWord()">
+            Next word <kbd>↵</kbd>
+          </button>
+          <button type="button" class="btn btn-ghost" (click)="store.backToCategories()">
+            All volumes
+          </button>
+          <a class="btn btn-ghost" routerLink="/encyclopedia">My encyclopedia</a>
+        </div>
+      </div>
+    </div>
+  }
+}

@@ -1,0 +1,59 @@
+<section class="page">
+  <header class="hero">
+    <h1>My Encyclopedia</h1>
+    <p class="muted">
+      Every word you solve earns its entry. {{ store.collectedCount() }} of
+      {{ totalEntries }} discovered.
+    </p>
+    <div class="total-bar" role="progressbar" [attr.aria-valuenow]="store.collectedCount()"
+         [attr.aria-valuemax]="totalEntries" aria-label="Overall discovery progress">
+      <div class="total-bar-fill" [style.width.%]="overallPercent()"></div>
+    </div>
+  </header>
+
+  @if (store.collectedCount() === 0) {
+    <div class="empty">
+      <p class="empty-mark">✦</p>
+      <h2>Nothing discovered yet</h2>
+      <p class="muted">Win a round of hangman and the word — plus its story — lands here.</p>
+      <a class="btn btn-primary" routerLink="/">Start playing</a>
+    </div>
+  }
+
+  @for (shelf of shelves(); track shelf.id) {
+    <section class="shelf">
+      <div class="shelf-head">
+        <h2><span class="shelf-icon">{{ shelf.icon }}</span>{{ shelf.name }}</h2>
+        <span class="shelf-count muted">{{ shelf.collected }} / {{ shelf.total }}</span>
+      </div>
+
+      <div class="entry-grid">
+        @for (item of shelf.entries; track item.entry.id) {
+          @if (item.found) {
+            <article class="entry found" [style.border-top-color]="shelf.color">
+              <div class="entry-head">
+                <h3>{{ item.entry.word }}</h3>
+                <span class="diff" [class.hard]="item.entry.difficulty === 'hard'"
+                      [class.medium]="item.entry.difficulty === 'medium'">
+                  {{ item.entry.difficulty }}
+                </span>
+              </div>
+              <p class="entry-fact">{{ item.entry.fact }}</p>
+            </article>
+          } @else {
+            <article class="entry locked">
+              <div class="entry-head">
+                <h3 class="pattern" aria-label="Undiscovered word">{{ item.pattern }}</h3>
+                <span class="diff" [class.hard]="item.entry.difficulty === 'hard'"
+                      [class.medium]="item.entry.difficulty === 'medium'">
+                  {{ item.entry.difficulty }}
+                </span>
+              </div>
+              <p class="entry-fact muted">Undiscovered — solve it in Play to reveal the entry.</p>
+            </article>
+          }
+        }
+      </div>
+    </section>
+  }
+</section>

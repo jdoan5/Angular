@@ -1,0 +1,106 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main {
+  flex: 1;
+}
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: color-mix(in srgb, var(--paper) 88%, transparent);
+  backdrop-filter: saturate(140%) blur(10px);
+  border-bottom: 1.5px solid var(--ink-faint);
+}
+
+.topbar-inner {
+  max-width: 1020px;
+  margin: 0 auto;
+  padding: 0 1.25rem;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  text-decoration: none;
+  color: var(--ink);
+}
+.brand-mark {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 9px;
+  background: var(--ink);
+  color: var(--paper);
+  font-size: 1.15rem;
+}
+.brand-name {
+  font-family: var(--font-display);
+  font-weight: 650;
+  font-size: 1.06rem;
+  letter-spacing: 0.01em;
+}
+.brand-name em {
+  font-style: italic;
+  color: var(--accent);
+}
+
+.nav {
+  display: flex;
+  gap: 0.3rem;
+  margin-left: auto;
+}
+.nav a {
+  padding: 0.42rem 0.85rem;
+  border-radius: 999px;
+  text-decoration: none;
+  color: var(--muted);
+  font-weight: 600;
+  font-size: 0.93rem;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+.nav a:hover {
+  color: var(--ink);
+  background: var(--paper-deep);
+}
+.nav a.active {
+  color: var(--paper);
+  background: var(--ink);
+}
+
+.tally {
+  display: flex;
+  gap: 0.8rem;
+  font-weight: 700;
+  font-size: 0.92rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.foot {
+  text-align: center;
+  padding: 1.6rem 1rem 2rem;
+}
+.foot p {
+  margin: 0;
+  font-size: 0.85rem;
+  font-style: italic;
+}
+
+@media (max-width: 560px) {
+  .brand-name {
+    display: none;
+  }
+  .topbar-inner {
+    gap: 0.7rem;
+  }
+}

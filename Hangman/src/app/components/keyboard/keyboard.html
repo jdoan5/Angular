@@ -1,0 +1,19 @@
+<div class="keys" role="group" aria-label="Letter keyboard">
+  @for (row of rows(); track $index) {
+    <div class="key-row">
+      @for (key of row; track key.letter) {
+        <button
+          type="button"
+          class="key"
+          [class.hit]="key.state === 'hit'"
+          [class.miss]="key.state === 'miss'"
+          [disabled]="key.state !== 'idle' || locked()"
+          (click)="pick.emit(key.letter)"
+          [attr.aria-label]="'Guess letter ' + key.letter"
+        >
+          {{ key.letter }}
+        </button>
+      }
+    </div>
+  }
+</div>

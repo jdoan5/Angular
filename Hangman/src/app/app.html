@@ -1,0 +1,26 @@
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" routerLink="/" (click)="store.backToCategories()">
+      <span class="brand-mark">☞</span>
+      <span class="brand-name">Hangman <em>Encyclopedia</em></span>
+    </a>
+
+    <nav class="nav">
+      <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Play</a>
+      <a routerLink="/encyclopedia" routerLinkActive="active">Encyclopedia</a>
+    </nav>
+
+    <div class="tally" aria-label="Current streak and collection size">
+      <span title="Current streak">🔥 {{ store.stats().streak }}</span>
+      <span title="Entries collected">📖 {{ store.collectedCount() }}</span>
+    </div>
+  </div>
+</header>
+
+<main>
+  <router-outlet />
+</main>
+
+<footer class="foot">
+  <p class="muted">Solve a word · unlock its story — a little encyclopedia, one game at a time.</p>
+</footer>
