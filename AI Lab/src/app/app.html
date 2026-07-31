@@ -1,0 +1,38 @@
+<div class="lab">
+  <header>
+    <div class="brand">
+      <span class="logo">✦</span>
+      <div>
+        <h1>John's AI Lab</h1>
+        <p>Agents on Vertex AI (Gemini) · live App Store data · built in Angular</p>
+      </div>
+    </div>
+    <nav class="stages">
+      @for (s of stages; track s.id) {
+        <button
+          class="stage"
+          [class.active]="active() === s.id"
+          [class.soon]="!s.live"
+          [disabled]="!s.live"
+          (click)="active.set(s.id)"
+        >
+          <span class="stage-title">{{ s.title }}</span>
+          <span class="stage-blurb">{{ s.live ? s.blurb : 'Launching soon' }}</span>
+        </button>
+      }
+    </nav>
+  </header>
+
+  <main>
+    @if (active() === 'reviews') {
+      <app-review-analyst />
+    }
+  </main>
+
+  <footer>
+    <span>The API key stays server-side; the browser only ever sees answers.</span>
+    <a href="https://apps.apple.com/us/developer/john-doan/id6771974020" target="_blank" rel="noopener">
+      My apps on the App Store ↗
+    </a>
+  </footer>
+</div>

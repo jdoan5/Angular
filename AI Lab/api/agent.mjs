@@ -1,0 +1,93 @@
+// Vercel serverless function: POST /api/agent
+// Body: { message: string, history?: [{role:'user'|'model', text:string}] }
+// The GEMINI_API_KEY env var is configured in Vercel project settings and
+// never leaves the server.
+
+import { runAgent } from '../agent-core/agent.mjs';
+import { listMyApps, getAppReviews } from '../agent-core/tools.mjs';
+
+const MAX_MESSAGE_CHARS = 2000;
+const MAX_HISTORY_TURNS = 20;
+
+// Best-effort per-instance rate limit (in-memory, resets on cold start).
+// Real abuse protection for a public deploy is a Vercel WAF rate-limit rule;
+// this guards against naive scripted hammering at zero cost.
+const WINDOW_MS = 60_000;
+const MAX_PER_WINDOW = 8;
+const hits = new Map();
+
+function rateLimited(ip) {
+  const now = Date.now();
+  if (hits.size > 1000) hits.clear();
+  const recent = (hits.get(ip) ?? []).filter((t) => now - t < WINDOW_MS);
+  recent.push(now);
+  hits.set(ip, recent);
+  return recent.length > MAX_PER_WINDOW;
+}
+
+/** Keep only well-formed turns, capped in count and per-turn length. */
+function sanitizeHistory(history) {
+  return history
+    .filter(
+      (t) =>
+        t && (t.role === 'user' || t.role === 'model') &&
+        typeof t.text === 'string' && t.text.trim()
+    )
+    .slice(-MAX_HISTORY_TURNS)
+    .map((t) => ({ role: t.role, text: t.text.slice(0, MAX_MESSAGE_CHARS) }));
+}
+
+export default async function handler(req, res) {
+  if (req.method === 'GET') {
+    // Health/status for the UI banner: is the agent configured?
+    res.status(200).json({ ok: true, hasKey: Boolean(process.env.GEMINI_API_KEY) });
+    return;
+  }
+  if (req.method !== 'POST') {
+    res.status(405).json({ error: 'POST only' });
+    return;
+  }
+  try {
+    const ip =
+      (req.headers['x-forwarded-for']?.split(',')[0] ?? '').trim() ||
+      req.socket?.remoteAddress || 'unknown';
+    if (rateLimited(ip)) {
+      res.status(429).json({ error: 'Too many requests — try again in a minute.' });
+      return;
+    }
+
+    const { message, history, selftest } = req.body ?? {};
+
+    if (selftest) {
+      // Key-free verification path: exercises the live iTunes tools only.
+      const apps = await listMyApps();
+      const first = apps.apps[0];
+      const reviews = first ? await getAppReviews({ appId: first.appId }) : null;
+      res.status(200).json({ ok: true, apps: apps.count, sampleApp: first?.name ?? null, sampleReviews: reviews?.count ?? 0 });
+      return;
+    }
+
+    if (typeof message !== 'string' || !message.trim()) {
+      res.status(400).json({ error: 'message (string) is required' });
+      return;
+    }
+    if (message.length > MAX_MESSAGE_CHARS) {
+      res.status(400).json({ error: `message too long (max ${MAX_MESSAGE_CHARS} chars)` });
+      return;
+    }
+    if (history !== undefined && !Array.isArray(history)) {
+      res.status(400).json({ error: 'history must be an array' });
+      return;
+    }
+
+    const result = await runAgent(sanitizeHistory(history ?? []), message.trim());
+    res.status(200).json(result);
+  } catch (err) {
+    if (err?.code === 'NO_KEY') {
+      res.status(503).json({ error: 'Agent not configured: GEMINI_API_KEY is missing.' });
+      return;
+    }
+    console.error('agent request failed:', err);
+    res.status(500).json({ error: 'Agent request failed.' });
+  }
+}

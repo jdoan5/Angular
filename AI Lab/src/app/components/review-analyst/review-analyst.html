@@ -1,0 +1,69 @@
+<section class="analyst">
+  @if (agent.configured() === false) {
+    <div class="banner">
+      <strong>Agent not configured.</strong> Add your Vertex AI API key to
+      <code>.env.local</code> (see <code>.env.example</code>) and restart
+      <code>npm run api</code> — or set <code>GEMINI_API_KEY</code> in Vercel.
+      The chat UI still works; requests will explain what's missing.
+    </div>
+  }
+
+  <div class="thread" #thread aria-live="polite">
+    @if (agent.messages().length === 0) {
+      <div class="empty">
+        <h2>App Review Analyst</h2>
+        <p>
+          An agent with live App Store tools: it lists John's published apps,
+          pulls their public reviews and ratings, then analyzes sentiment,
+          themes, and trends — and can draft developer replies.
+        </p>
+        <div class="starters">
+          @for (s of starters; track s) {
+            <button class="starter" (click)="send(s)">{{ s }}</button>
+          }
+        </div>
+      </div>
+    }
+
+    @for (m of agent.messages(); track $index) {
+      <div class="message" [class.user]="m.role === 'user'" [class.error]="m.error">
+        @if (m.trace?.length) {
+          <div class="trace">
+            @for (step of m.trace; track $index) {
+              <div class="step">
+                <span class="tool"><span aria-hidden="true">⚙ </span>{{ step.tool }}</span>
+                @if (argsPreview(step.args)) {
+                  <span class="args">({{ argsPreview(step.args) }})</span>
+                }
+                <span class="summary">→ {{ step.summary }}</span>
+              </div>
+            }
+          </div>
+        }
+        @if (m.pending) {
+          <div class="pending" role="status" aria-label="Thinking"><span></span><span></span><span></span></div>
+        } @else {
+          <div class="text">{{ m.text }}</div>
+        }
+      </div>
+    }
+  </div>
+
+  <form class="composer" (ngSubmit)="send()">
+    <!-- Deliberately never disabled: users can compose the next question while
+         the agent works, and focus isn't dropped after each send. Double-submit
+         is guarded by the Send button + AgentService.send()'s busy check. -->
+    <input
+      [(ngModel)]="draft"
+      name="draft"
+      placeholder="Ask about your apps' reviews…"
+      aria-label="Ask about your apps' reviews"
+      autocomplete="off"
+    />
+    <button type="submit" [disabled]="agent.busy() || !draft.trim()">Send</button>
+  </form>
+
+  @if (agent.model()) {
+    <p class="modelline">Powered by {{ agent.model() }} on Vertex AI · tools: iTunes Search &amp; RSS</p>
+  }
+</section>
