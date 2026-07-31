@@ -3,7 +3,8 @@
 // The GEMINI_API_KEY env var is configured in Vercel project settings and
 // never leaves the server.
 
-import { runAgent } from '../agent-core/agent.mjs';
+import { runAgentStream } from '../agent-core/agent.mjs';
+import { AGENTS } from '../agent-core/agents.mjs';
 import { listMyApps, getAppReviews } from '../agent-core/tools.mjs';
 
 const MAX_MESSAGE_CHARS = 2000;
@@ -56,7 +57,7 @@ export default async function handler(req, res) {
       return;
     }
 
-    const { message, history, selftest } = req.body ?? {};
+    const { message, history, selftest, agent } = req.body ?? {};
 
     if (selftest) {
       // Key-free verification path: exercises the live iTunes tools only.
@@ -79,9 +80,30 @@ export default async function handler(req, res) {
       res.status(400).json({ error: 'history must be an array' });
       return;
     }
+    if (agent !== undefined && !(agent in AGENTS)) {
+      res.status(400).json({ error: 'unknown agent' });
+      return;
+    }
+    if (!process.env.GEMINI_API_KEY) {
+      res.status(503).json({ error: 'Agent not configured: GEMINI_API_KEY is missing.' });
+      return;
+    }
 
-    const result = await runAgent(sanitizeHistory(history ?? []), message.trim());
-    res.status(200).json(result);
+    // Stream progress as NDJSON: one JSON event per line (tool-start,
+    // tool-end, delta, draft-discard, done, error). Errors after the stream
+    // has started are delivered as an in-band event, since headers are gone.
+    res.status(200);
+    res.setHeader('content-type', 'application/x-ndjson; charset=utf-8');
+    res.setHeader('cache-control', 'no-cache, no-transform');
+    const emit = (event) => res.write(JSON.stringify(event) + '\n');
+
+    try {
+      await runAgentStream(agent, sanitizeHistory(history ?? []), message.trim(), emit);
+    } catch (err) {
+      console.error('agent stream failed:', err);
+      emit({ type: 'error', error: 'Agent request failed.' });
+    }
+    res.end();
   } catch (err) {
     if (err?.code === 'NO_KEY') {
       res.status(503).json({ error: 'Agent not configured: GEMINI_API_KEY is missing.' });

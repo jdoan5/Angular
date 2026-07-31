@@ -24,8 +24,15 @@
   </header>
 
   <main>
-    @if (active() === 'reviews') {
-      <app-review-analyst />
+    @if (activeStage(); as stage) {
+      @if (stage.live) {
+        <app-agent-chat
+          [agentId]="stage.id"
+          [heading]="stage.title"
+          [description]="stage.description"
+          [starters]="stage.starters"
+        />
+      }
     }
   </main>
 

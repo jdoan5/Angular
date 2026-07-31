@@ -1,4 +1,4 @@
-<section class="analyst">
+<section class="chat">
   @if (agent.configured() === false) {
     <div class="banner">
       <strong>Agent not configured.</strong> Add your Vertex AI API key to
@@ -9,41 +9,46 @@
   }
 
   <div class="thread" #thread aria-live="polite">
-    @if (agent.messages().length === 0) {
+    @if (state.messages().length === 0) {
       <div class="empty">
-        <h2>App Review Analyst</h2>
-        <p>
-          An agent with live App Store tools: it lists John's published apps,
-          pulls their public reviews and ratings, then analyzes sentiment,
-          themes, and trends — and can draft developer replies.
-        </p>
+        <h2>{{ heading() }}</h2>
+        <p>{{ description() }}</p>
         <div class="starters">
-          @for (s of starters; track s) {
+          @for (s of starters(); track s) {
             <button class="starter" (click)="send(s)">{{ s }}</button>
           }
         </div>
       </div>
     }
 
-    @for (m of agent.messages(); track $index) {
+    @for (m of state.messages(); track $index) {
       <div class="message" [class.user]="m.role === 'user'" [class.error]="m.error">
         @if (m.trace?.length) {
           <div class="trace">
             @for (step of m.trace; track $index) {
-              <div class="step">
-                <span class="tool"><span aria-hidden="true">⚙ </span>{{ step.tool }}</span>
+              <div class="step" [class.running]="step.running">
+                <span class="tool">
+                  <span class="gear" aria-hidden="true">⚙</span>
+                  {{ step.tool }}
+                </span>
                 @if (argsPreview(step.args)) {
                   <span class="args">({{ argsPreview(step.args) }})</span>
                 }
-                <span class="summary">→ {{ step.summary }}</span>
+                @if (step.running) {
+                  <span class="summary dim" role="status">running…</span>
+                } @else {
+                  <span class="summary">→ {{ step.summary }}</span>
+                }
               </div>
             }
           </div>
         }
-        @if (m.pending) {
+        @if (m.pending && !m.text && !m.trace?.length) {
           <div class="pending" role="status" aria-label="Thinking"><span></span><span></span><span></span></div>
-        } @else {
-          <div class="text">{{ m.text }}</div>
+        } @else if (m.text) {
+          <div class="text">{{ m.text }}<!--
+            -->@if (m.pending) {<span class="caret" aria-hidden="true"></span>}
+          </div>
         }
       </div>
     }
@@ -56,14 +61,14 @@
     <input
       [(ngModel)]="draft"
       name="draft"
-      placeholder="Ask about your apps' reviews…"
-      aria-label="Ask about your apps' reviews"
+      placeholder="Ask away…"
+      aria-label="Message the agent"
       autocomplete="off"
     />
-    <button type="submit" [disabled]="agent.busy() || !draft.trim()">Send</button>
+    <button type="submit" [disabled]="state.busy() || !draft.trim()">Send</button>
   </form>
 
-  @if (agent.model()) {
-    <p class="modelline">Powered by {{ agent.model() }} on Vertex AI · tools: iTunes Search &amp; RSS</p>
+  @if (state.model()) {
+    <p class="modelline">Powered by {{ state.model() }} on Vertex AI · live tools, streamed as they run</p>
   }
 </section>
