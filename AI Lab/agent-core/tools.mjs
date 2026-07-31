@@ -80,9 +80,39 @@ export async function getAppReviews({ appId, country = 'us', sort = 'mostRecent'
   return { appId, country, sort, count: reviews.length, reviews };
 }
 
+/** Curated, static facts about John and the portfolio — the Concierge's
+ *  grounding for everything the App Store lookup can't tell it. */
+export function getDeveloperProfile() {
+  return {
+    name: 'John Doan',
+    role: 'Independent app developer',
+    portfolio: 'https://jdoan5.github.io',
+    appStoreDeveloperPage: 'https://apps.apple.com/us/developer/john-doan/id6771974020',
+    supportEmail: 'john@johnvdoan.com',
+    iosStack: 'SwiftUI, SwiftData (some apps add CloudKit sync, Swift Charts, WatchKit)',
+    webStack: 'Angular 22 with signals, SCSS, deployed on Vercel',
+    alsoLearning: 'Java Spring Boot (REST APIs, OAuth2), Terraform',
+    webApps: [
+      { name: 'Personal Budget Planner', kind: 'Angular web app', note: '50/30/20 budgeting with charts, runs fully in the browser' },
+      { name: 'Hangman Encyclopedia', kind: 'Angular web app', note: 'hangman plus a collectible encyclopedia of fact-checked entries' },
+      { name: "John's AI Lab", kind: 'Angular + Gemini agents', note: 'this very app — agents with live App Store tools on Vertex AI' },
+    ],
+    iosAppsNote: 'The authoritative list of published iOS apps (names, ratings, versions) comes from the list_my_apps tool — always prefer it over memory.',
+    highlights: [
+      'Cosmic Cadets — space math adventure for kids 5-8, adaptive difficulty, no ads or purchases',
+      'Streak Rings — habit tracker with an Apple Watch app and iCloud sync',
+      'All apps are ad-free with no tracking; several are fully offline',
+    ],
+  };
+}
+
 /** Registry the agent loop dispatches on. NOTE: zero-arg tools must omit
  *  `parameters` entirely — Vertex rejects an OBJECT schema with no properties. */
 export const toolRegistry = {
+  get_developer_profile: {
+    fn: getDeveloperProfile,
+    description: "Static profile of John Doan: tech stacks, web apps, portfolio and support links, and highlights. Use for questions about John, his skills, or non-App-Store projects.",
+  },
   list_my_apps: { fn: listMyApps, description: 'List all of John Doan\'s published App Store apps with ids, ratings and versions.' },
   get_app_details: {
     fn: getAppDetails,
