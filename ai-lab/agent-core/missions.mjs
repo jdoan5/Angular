@@ -6,7 +6,7 @@
 import { GoogleGenAI } from '@google/genai';
 
 const MODEL = process.env.GEMINI_MODEL || 'gemini-3.5-flash';
-const USE_VERTEX = process.env.GEMINI_VERTEX !== '0';
+const USE_VERTEX = process.env.GEMINI_VERTEX === '1';
 
 export const SKILLS = {
   counting: 'counting and number recognition',

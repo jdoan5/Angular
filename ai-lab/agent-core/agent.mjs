@@ -8,10 +8,10 @@ import { toolRegistry } from './tools.mjs';
 import { AGENTS, DEFAULT_AGENT } from './agents.mjs';
 
 const MODEL = process.env.GEMINI_MODEL || 'gemini-3.5-flash';
-// GEMINI_VERTEX=1 (default): key from the Cloud console's Agent Platform /
-// Vertex AI express mode. Set GEMINI_VERTEX=0 for an AI Studio key — the two
-// key types are NOT interchangeable and a mismatch fails with 401.
-const USE_VERTEX = process.env.GEMINI_VERTEX !== '0';
+// Default: AI Studio key (aistudio.google.com — no billing dependency).
+// Set GEMINI_VERTEX=1 for a Vertex express-mode key from the Cloud console —
+// the two key types are NOT interchangeable and a mismatch fails with 401.
+const USE_VERTEX = process.env.GEMINI_VERTEX === '1';
 const MAX_TOOL_ROUNDS = 6;
 
 const NO_ANSWER =

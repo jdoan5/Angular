@@ -1,6 +1,6 @@
 # John's AI Lab
 
-Agent demos on **Vertex AI (Gemini)**, built in **Angular 22**, using **live App
+Agent demos on **Google Gemini**, built in **Angular 22**, using **live App
 Store data**. Stage 1 is the **App Review Analyst**: an agent with
 function-calling tools that lists my published iOS apps, pulls their public
 reviews and ratings, analyzes sentiment and themes, and drafts developer
@@ -15,7 +15,7 @@ Angular 22 UI (chat + tool-call trace)
 Serverless agent  (api/agent.mjs on Vercel · dev-server.mjs locally)
         │  function-calling loop      agent-core/agent.mjs
         ▼
-Gemini (Vertex AI express mode, @google/genai)
+Google Gemini (@google/genai — AI Studio key by default; GEMINI_VERTEX=1 switches to Vertex express mode)
         │  tool calls
         ▼
 Apple iTunes Search & RSS APIs (public, no auth)
@@ -31,7 +31,7 @@ it decide to list apps, pick an id, and fetch reviews before it writes a word.
 
 ```bash
 npm install
-cp .env.example .env.local     # paste your Vertex AI express-mode API key
+cp .env.example .env.local     # paste your Gemini API key (aistudio.google.com/apikey)
 npm run dev                    # agent API on :8787 + Angular on :4200 (proxied)
 ```
 

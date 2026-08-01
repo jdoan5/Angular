@@ -1,7 +1,7 @@
 <section class="chat">
   @if (agent.configured() === false) {
     <div class="banner">
-      <strong>Agent not configured.</strong> Add your Vertex AI API key to
+      <strong>Agent not configured.</strong> Add your Gemini API key (AI Studio) to
       <code>.env.local</code> (see <code>.env.example</code>) and restart
       <code>npm run api</code> — or set <code>GEMINI_API_KEY</code> in Vercel.
       The chat UI still works; requests will explain what's missing.
@@ -70,6 +70,6 @@
   </form>
 
   @if (state.model()) {
-    <p class="modelline">Powered by {{ state.model() }} on Vertex AI · live tools, streamed as they run</p>
+    <p class="modelline">Powered by {{ state.model() }} on Google Gemini · live tools, streamed as they run</p>
   }
 </section>
