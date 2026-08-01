@@ -6,7 +6,7 @@
 import { runAgentStream } from '../agent-core/agent.mjs';
 import { AGENTS } from '../agent-core/agents.mjs';
 import { listMyApps, getAppReviews } from '../agent-core/tools.mjs';
-import { rateLimited } from '../agent-core/ratelimit.mjs';
+import { rateLimited, isRateLimit, RATE_LIMIT_MSG } from '../agent-core/ratelimit.mjs';
 
 const MAX_MESSAGE_CHARS = 2000;
 const MAX_HISTORY_TURNS = 20;
@@ -88,7 +88,7 @@ export default async function handler(req, res) {
     } catch (err) {
       if (!ac.signal.aborted) {
         console.error('agent stream failed:', err);
-        emit({ type: 'error', error: 'Agent request failed.' });
+        emit({ type: 'error', error: isRateLimit(err) ? RATE_LIMIT_MSG : 'Agent request failed.' });
       }
     }
     res.end();

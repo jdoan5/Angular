@@ -7,6 +7,14 @@ const WINDOW_MS = 60_000;
 const MAX_PER_WINDOW = 8;
 const hits = new Map();
 
+/** True when an upstream Gemini error is a free-tier quota blip, so the UI can
+ *  say "wait a minute" instead of looking broken. */
+export function isRateLimit(err) {
+  return err?.status === 429 || /RESOURCE_EXHAUSTED|429/.test(String(err?.message ?? ''));
+}
+export const RATE_LIMIT_MSG =
+  'The free-tier quota needs a breather — wait about a minute, then try again.';
+
 /** True if this request should be rejected with 429. */
 export function rateLimited(req) {
   const ip =

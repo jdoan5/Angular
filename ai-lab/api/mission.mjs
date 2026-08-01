@@ -3,7 +3,7 @@
 // Returns { mission, model } — schema-validated JSON from Gemini.
 
 import { generateMission, SKILLS } from '../agent-core/missions.mjs';
-import { rateLimited } from '../agent-core/ratelimit.mjs';
+import { rateLimited, isRateLimit, RATE_LIMIT_MSG } from '../agent-core/ratelimit.mjs';
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
@@ -37,6 +37,10 @@ export default async function handler(req, res) {
     }
     if (err?.code === 'BAD_MISSION') {
       res.status(502).json({ error: 'The mission came back scrambled — try again.' });
+      return;
+    }
+    if (isRateLimit(err)) {
+      res.status(429).json({ error: RATE_LIMIT_MSG });
       return;
     }
     console.error('mission request failed:', err);
