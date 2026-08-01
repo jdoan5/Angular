@@ -18,7 +18,6 @@ export class AgentChat {
   readonly starters = input<string[]>([]);
 
   readonly agent = inject(AgentService);
-  draft = '';
 
   @ViewChild('thread') thread?: ElementRef<HTMLElement>;
 
@@ -43,9 +42,10 @@ export class AgentChat {
 
   send(text?: string): void {
     const fromDraft = text === undefined;
-    const message = (text ?? this.draft).trim();
+    const state = this.state;
+    const message = (text ?? state.draft()).trim();
     if (!message) return;
-    if (fromDraft) this.draft = '';   // a starter click must not wipe a typed draft
+    if (fromDraft) state.draft.set('');   // a starter click must not wipe a typed draft
     this.agent.send(this.agentId(), message);
   }
 

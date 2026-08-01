@@ -59,13 +59,14 @@
          the agent works, and focus isn't dropped after each send. Double-submit
          is guarded by the Send button + AgentService.send()'s busy check. -->
     <input
-      [(ngModel)]="draft"
+      [ngModel]="state.draft()"
+      (ngModelChange)="state.draft.set($event)"
       name="draft"
       placeholder="Ask away…"
       aria-label="Message the agent"
       autocomplete="off"
     />
-    <button type="submit" [disabled]="state.busy() || !draft.trim()">Send</button>
+    <button type="submit" [disabled]="state.busy() || !state.draft().trim()">Send</button>
   </form>
 
   @if (state.model()) {

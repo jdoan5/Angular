@@ -1,0 +1,120 @@
+<section class="maker">
+  @switch (phase()) {
+    @case ('setup') {
+      <div class="setup">
+        <h2>Math Mission Maker</h2>
+        <p class="lead">
+          Gemini writes a playable, Cosmic Cadets-style math mission as
+          schema-validated JSON — pick a skill and difficulty, then fly it.
+        </p>
+
+        @if (errorMsg()) {
+          <div class="error-banner">{{ errorMsg() }}</div>
+        }
+
+        <h3>Skill</h3>
+        <div class="chips">
+          @for (s of skills; track s.id) {
+            <button class="chip" [class.selected]="skill() === s.id" (click)="skill.set(s.id)">
+              {{ s.label }}
+            </button>
+          }
+        </div>
+
+        <h3>Difficulty</h3>
+        <div class="chips">
+          @for (t of tiers; track t) {
+            <button class="chip tier" [class.selected]="tier() === t" (click)="tier.set(t)">
+              {{ t }}
+            </button>
+          }
+        </div>
+
+        <button class="generate" (click)="generate()">Generate mission ✦</button>
+        <p class="fine">
+          Inspired by
+          <a href="https://apps.apple.com/us/app/cosmic-cadets/id6782706983" target="_blank" rel="noopener">Cosmic Cadets</a>,
+          John's math game for kids on the App Store.
+        </p>
+      </div>
+    }
+
+    @case ('loading') {
+      <div class="loading">
+        <div class="rocket" aria-hidden="true">🚀</div>
+        <p role="status">Plotting the star map…</p>
+      </div>
+    }
+
+    @case ('play') {
+      @if (mission(); as m) {
+        <div class="play">
+          <header class="mission-head">
+            <div>
+              <h2>{{ m.title }}</h2>
+              @if (index() === 0 && triedWrong().size === 0 && !celebrating()) {
+                <p class="intro">{{ m.intro }}</p>
+              }
+            </div>
+            <span class="progress">{{ index() + 1 }} / {{ m.problems.length }}</span>
+          </header>
+
+          @if (current(); as p) {
+            <div class="problem" [class.celebrate]="celebrating()">
+              <p class="question">{{ p.question }}</p>
+              @if (p.equation) {
+                <p class="equation">{{ p.equation }}</p>
+              }
+              <div class="choices">
+                @for (c of p.choices; track $index) {
+                  <button
+                    class="choice"
+                    [class.correct]="choiceState($index) === 'correct'"
+                    [class.wrong]="choiceState($index) === 'wrong'"
+                    [disabled]="choiceState($index) === 'wrong' || celebrating()"
+                    (click)="choose($index)"
+                  >
+                    {{ c }}
+                  </button>
+                }
+              </div>
+              @if (showHint() && !celebrating()) {
+                <p class="hint">💡 {{ p.hint }}</p>
+              }
+            </div>
+          }
+        </div>
+      }
+    }
+
+    @case ('done') {
+      <div class="done">
+        <h2>Mission complete!</h2>
+        <div class="stars" aria-label="Score">
+          @for (s of [0, 1, 2, 3, 4]; track s) {
+            <span class="star" [class.filled]="s < stars()">★</span>
+          }
+        </div>
+        <p>{{ stars() }} of {{ mission()?.problems?.length }} solved on the first try.</p>
+        <div class="actions">
+          <button class="generate" (click)="generate()">New mission ✦</button>
+          <button class="ghost" (click)="replay()">Replay this one</button>
+          <button class="ghost" (click)="newMission()">Change skill</button>
+        </div>
+        <details class="json">
+          <summary>View the raw JSON Gemini returned</summary>
+          <pre>{{ missionJson() }}</pre>
+        </details>
+        <p class="fine">
+          Want the full adventure? Get
+          <a href="https://apps.apple.com/us/app/cosmic-cadets/id6782706983" target="_blank" rel="noopener">Cosmic Cadets</a>
+          on the App Store.
+        </p>
+      </div>
+    }
+  }
+
+  @if (model()) {
+    <p class="modelline">Structured output: {{ model() }} · responseSchema-constrained, server-validated</p>
+  }
+</section>

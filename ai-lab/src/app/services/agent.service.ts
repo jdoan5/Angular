@@ -15,11 +15,13 @@ export interface ChatMessage {
   error?: boolean;
 }
 
-/** Chat state for one agent (each lab stage keeps its own conversation). */
+/** Chat state for one agent (each lab stage keeps its own conversation —
+ *  including a half-typed draft, so switching tabs never leaks or loses it). */
 export interface AgentChatState {
   messages: WritableSignal<ChatMessage[]>;
   busy: WritableSignal<boolean>;
   model: WritableSignal<string>;
+  draft: WritableSignal<string>;
 }
 
 type StreamEvent =
@@ -40,7 +42,7 @@ export class AgentService {
   state(agentId: string): AgentChatState {
     let s = this.states.get(agentId);
     if (!s) {
-      s = { messages: signal<ChatMessage[]>([]), busy: signal(false), model: signal('') };
+      s = { messages: signal<ChatMessage[]>([]), busy: signal(false), model: signal(''), draft: signal('') };
       this.states.set(agentId, s);
     }
     return s;
@@ -160,11 +162,20 @@ export class AgentService {
         while ((nl = buffer.indexOf('\n')) >= 0) {
           const line = buffer.slice(0, nl).trim();
           buffer = buffer.slice(nl + 1);
-          if (line) yield JSON.parse(line) as StreamEvent;
+          if (!line) continue;
+          let event: StreamEvent | null = null;
+          try {
+            event = JSON.parse(line) as StreamEvent;
+          } catch { /* corrupt line — skip; sawDone catches a broken stream */ }
+          if (event) yield event;
         }
       }
       const rest = buffer.trim();
-      if (rest) yield JSON.parse(rest) as StreamEvent;
+      if (rest) {
+        try {
+          yield JSON.parse(rest) as StreamEvent;
+        } catch { /* truncated tail — sawDone reports the drop */ }
+      }
     } finally {
       reader.releaseLock();
     }

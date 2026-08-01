@@ -93,7 +93,7 @@ export function getDeveloperProfile() {
     webStack: 'Angular 22 with signals, SCSS, deployed on Vercel',
     alsoLearning: 'Java Spring Boot (REST APIs, OAuth2), Terraform',
     webApps: [
-      { name: 'Personal Budget Planner', kind: 'Angular web app', note: '50/30/20 budgeting with charts, runs fully in the browser' },
+      { name: 'Personal Budget Planner', kind: 'Angular web app', note: 'income and expense tracking with per-category monthly budgets and a donut-chart dashboard, runs fully in the browser (localStorage)' },
       { name: 'Hangman Encyclopedia', kind: 'Angular web app', note: 'hangman plus a collectible encyclopedia of fact-checked entries' },
       { name: "John's AI Lab", kind: 'Angular + Gemini agents', note: 'this very app — agents with live App Store tools on Vertex AI' },
     ],

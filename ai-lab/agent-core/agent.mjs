@@ -55,16 +55,19 @@ async function executeTool(agent, name, args) {
  * @param {Array<{role:'user'|'model', text:string}>} history prior chat turns
  * @param {string} message the new user message
  * @param {(event: object) => void} emit event sink (transport-agnostic)
+ * @param {AbortSignal} [signal] stop doing work when the client disconnects
  */
-export async function runAgentStream(agentId, history, message, emit) {
+export async function runAgentStream(agentId, history, message, emit, signal) {
   const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey) {
     const err = new Error('GEMINI_API_KEY is not set');
     err.code = 'NO_KEY';
     throw err;
   }
-  const agent = AGENTS[agentId] ?? AGENTS[DEFAULT_AGENT];
+  // Object.hasOwn so prototype keys ("constructor" etc.) can't resolve.
+  const agent = Object.hasOwn(AGENTS, agentId ?? '') ? AGENTS[agentId] : AGENTS[DEFAULT_AGENT];
   const ai = new GoogleGenAI(USE_VERTEX ? { vertexai: true, apiKey } : { apiKey });
+  const send = (event) => { if (!signal?.aborted) emit(event); };
 
   // Defensive re-filter (the API layer validates too): only well-formed,
   // non-empty turns may enter contents — Vertex rejects empty text parts.
@@ -77,6 +80,7 @@ export async function runAgentStream(agentId, history, message, emit) {
   ];
 
   for (let round = 0; round <= MAX_TOOL_ROUNDS; round++) {
+    if (signal?.aborted) return;   // client is gone — stop spending quota
     const stream = await ai.models.generateContentStream({
       model: MODEL,
       contents,
@@ -84,6 +88,7 @@ export async function runAgentStream(agentId, history, message, emit) {
         systemInstruction: agent.systemInstruction,
         tools: [{ functionDeclarations: declarationsFor(agent) }],
         temperature: 0.4,
+        ...(signal ? { abortSignal: signal } : {}),
       },
     });
 
@@ -99,28 +104,35 @@ export async function runAgentStream(agentId, history, message, emit) {
         if (part.functionCall) calls.push(part.functionCall);
         if (part.text && !part.thought) {
           roundText += part.text;
-          emit({ type: 'delta', text: part.text });
+          send({ type: 'delta', text: part.text });
         }
       }
     }
 
     if (calls.length === 0 || round === MAX_TOOL_ROUNDS) {
-      if (!roundText.trim()) emit({ type: 'delta', text: NO_ANSWER });
-      emit({ type: 'done', model: MODEL });
+      // Budget exhausted with calls still pending: whatever text streamed was
+      // pre-tool chatter, not an answer — discard it and say so.
+      if (calls.length > 0 && roundText.trim()) {
+        send({ type: 'draft-discard' });
+        roundText = '';
+      }
+      if (!roundText.trim()) send({ type: 'delta', text: NO_ANSWER });
+      send({ type: 'done', model: MODEL });
       return;
     }
 
     // Tool round after all — any deltas we optimistically streamed were
     // pre-tool chatter, not the final answer; tell the client to reset.
-    if (roundText.trim()) emit({ type: 'draft-discard' });
+    if (roundText.trim()) send({ type: 'draft-discard' });
 
     contents.push({ role: 'model', parts: allParts });
 
     const responseParts = [];
     for (const call of calls) {
-      emit({ type: 'tool-start', tool: call.name, args: call.args ?? {} });
+      if (signal?.aborted) return;
+      send({ type: 'tool-start', tool: call.name, args: call.args ?? {} });
       const result = await executeTool(agent, call.name, call.args);
-      emit({ type: 'tool-end', tool: call.name, summary: summarize(call.name, result) });
+      send({ type: 'tool-end', tool: call.name, summary: summarize(call.name, result) });
       responseParts.push({
         functionResponse: {
           // Echo the call id when the API populates one (parallel-call contract).
@@ -133,8 +145,8 @@ export async function runAgentStream(agentId, history, message, emit) {
     contents.push({ role: 'user', parts: responseParts });
   }
   // Unreachable (the final round returns above); kept as a safe fallback.
-  emit({ type: 'delta', text: NO_ANSWER });
-  emit({ type: 'done', model: MODEL });
+  send({ type: 'delta', text: NO_ANSWER });
+  send({ type: 'done', model: MODEL });
 }
 
 /** One-line human summary of a tool result for the UI trace. */

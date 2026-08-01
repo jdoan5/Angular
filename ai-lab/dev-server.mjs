@@ -3,7 +3,8 @@
 //   node dev-server.mjs        → http://localhost:8787/api/agent
 
 import { createServer } from 'node:http';
-import handler from './api/agent.mjs';
+import agentHandler from './api/agent.mjs';
+import missionHandler from './api/mission.mjs';
 
 try {
   process.loadEnvFile('.env.local'); // Node ≥ 20.12; fine if the file is absent
@@ -39,7 +40,9 @@ createServer(async (req, res) => {
     }
   }
   if (req.url?.startsWith('/api/agent')) {
-    await handler(req, res);
+    await agentHandler(req, res);
+  } else if (req.url?.startsWith('/api/mission')) {
+    await missionHandler(req, res);
   } else {
     res.status(404).json({ error: 'not found' });
   }

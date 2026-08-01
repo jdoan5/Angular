@@ -25,13 +25,15 @@
 
   <main>
     @if (activeStage(); as stage) {
-      @if (stage.live) {
+      @if (stage.live && stage.kind === 'chat') {
         <app-agent-chat
           [agentId]="stage.id"
           [heading]="stage.title"
           [description]="stage.description"
           [starters]="stage.starters"
         />
+      } @else if (stage.live && stage.kind === 'mission') {
+        <app-mission-maker />
       }
     }
   </main>

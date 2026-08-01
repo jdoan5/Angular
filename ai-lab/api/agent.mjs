@@ -6,25 +6,10 @@
 import { runAgentStream } from '../agent-core/agent.mjs';
 import { AGENTS } from '../agent-core/agents.mjs';
 import { listMyApps, getAppReviews } from '../agent-core/tools.mjs';
+import { rateLimited } from '../agent-core/ratelimit.mjs';
 
 const MAX_MESSAGE_CHARS = 2000;
 const MAX_HISTORY_TURNS = 20;
-
-// Best-effort per-instance rate limit (in-memory, resets on cold start).
-// Real abuse protection for a public deploy is a Vercel WAF rate-limit rule;
-// this guards against naive scripted hammering at zero cost.
-const WINDOW_MS = 60_000;
-const MAX_PER_WINDOW = 8;
-const hits = new Map();
-
-function rateLimited(ip) {
-  const now = Date.now();
-  if (hits.size > 1000) hits.clear();
-  const recent = (hits.get(ip) ?? []).filter((t) => now - t < WINDOW_MS);
-  recent.push(now);
-  hits.set(ip, recent);
-  return recent.length > MAX_PER_WINDOW;
-}
 
 /** Keep only well-formed turns, capped in count and per-turn length. */
 function sanitizeHistory(history) {
@@ -49,10 +34,7 @@ export default async function handler(req, res) {
     return;
   }
   try {
-    const ip =
-      (req.headers['x-forwarded-for']?.split(',')[0] ?? '').trim() ||
-      req.socket?.remoteAddress || 'unknown';
-    if (rateLimited(ip)) {
+    if (rateLimited(req)) {
       res.status(429).json({ error: 'Too many requests — try again in a minute.' });
       return;
     }
@@ -80,7 +62,7 @@ export default async function handler(req, res) {
       res.status(400).json({ error: 'history must be an array' });
       return;
     }
-    if (agent !== undefined && !(agent in AGENTS)) {
+    if (agent !== undefined && !(typeof agent === 'string' && Object.hasOwn(AGENTS, agent))) {
       res.status(400).json({ error: 'unknown agent' });
       return;
     }
@@ -97,11 +79,17 @@ export default async function handler(req, res) {
     res.setHeader('cache-control', 'no-cache, no-transform');
     const emit = (event) => res.write(JSON.stringify(event) + '\n');
 
+    // Stop spending model quota the moment the client disconnects.
+    const ac = new AbortController();
+    res.on('close', () => { if (!res.writableEnded) ac.abort(); });
+
     try {
-      await runAgentStream(agent, sanitizeHistory(history ?? []), message.trim(), emit);
+      await runAgentStream(agent, sanitizeHistory(history ?? []), message.trim(), emit, ac.signal);
     } catch (err) {
-      console.error('agent stream failed:', err);
-      emit({ type: 'error', error: 'Agent request failed.' });
+      if (!ac.signal.aborted) {
+        console.error('agent stream failed:', err);
+        emit({ type: 'error', error: 'Agent request failed.' });
+      }
     }
     res.end();
   } catch (err) {

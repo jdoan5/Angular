@@ -43,9 +43,15 @@ exercises the live iTunes tools without Gemini.
 Standard Angular deploy plus one env var: set `GEMINI_API_KEY` in Vercel
 project settings. `api/agent.mjs` becomes a serverless function automatically.
 
-## Roadmap
+## The three stages
 
-- **Stage 1 — App Review Analyst** ✅
-- **Stage 2 — Portfolio Concierge**: grounded Q&A about all my apps
-- **Stage 3 — Math Mission Maker**: structured-output word problems in the
-  style of [Cosmic Cadets](https://apps.apple.com/us/app/cosmic-cadets/id6782706983)
+- **Stage 1 — App Review Analyst** ✅ · agentic tool-calling with a live,
+  streamed trace (NDJSON events: tool-start / tool-end / delta / done)
+- **Stage 2 — Portfolio Concierge** ✅ · grounded Q&A over live store data +
+  a curated profile tool; per-agent tool scoping
+- **Stage 3 — Math Mission Maker** ✅ · schema-constrained generation
+  (`responseSchema` → server-validated JSON) rendered as a playable mission,
+  in the style of [Cosmic Cadets](https://apps.apple.com/us/app/cosmic-cadets/id6782706983)
+
+Three stages, three distinct Gemini patterns: tool loops, grounding, and
+structured output.
