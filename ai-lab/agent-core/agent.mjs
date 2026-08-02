@@ -3,15 +3,11 @@
 // Shared verbatim by the Vercel function (api/agent.mjs) and the local dev
 // server (dev-server.mjs).
 
-import { GoogleGenAI } from '@google/genai';
 import { toolRegistry } from './tools.mjs';
+import { makeGenAI } from './client.mjs';
 import { AGENTS, DEFAULT_AGENT } from './agents.mjs';
 
 const MODEL = process.env.GEMINI_MODEL || 'gemini-3.5-flash';
-// Default: AI Studio key (aistudio.google.com — no billing dependency).
-// Set GEMINI_VERTEX=1 for a Vertex express-mode key from the Cloud console —
-// the two key types are NOT interchangeable and a mismatch fails with 401.
-const USE_VERTEX = process.env.GEMINI_VERTEX === '1';
 const MAX_TOOL_ROUNDS = 6;
 
 const NO_ANSWER =
@@ -58,15 +54,9 @@ async function executeTool(agent, name, args) {
  * @param {AbortSignal} [signal] stop doing work when the client disconnects
  */
 export async function runAgentStream(agentId, history, message, emit, signal) {
-  const apiKey = process.env.GEMINI_API_KEY;
-  if (!apiKey) {
-    const err = new Error('GEMINI_API_KEY is not set');
-    err.code = 'NO_KEY';
-    throw err;
-  }
   // Object.hasOwn so prototype keys ("constructor" etc.) can't resolve.
   const agent = Object.hasOwn(AGENTS, agentId ?? '') ? AGENTS[agentId] : AGENTS[DEFAULT_AGENT];
-  const ai = new GoogleGenAI(USE_VERTEX ? { vertexai: true, apiKey } : { apiKey });
+  const ai = makeGenAI();   // throws NO_KEY when credentials are missing
   const send = (event) => { if (!signal?.aborted) emit(event); };
 
   // Defensive re-filter (the API layer validates too): only well-formed,

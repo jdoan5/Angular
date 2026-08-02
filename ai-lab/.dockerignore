@@ -1,0 +1,13 @@
+node_modules
+dist
+.angular
+.env.local
+.env
+.vscode
+.idea
+src
+public
+*.md
+proxy.conf.json
+dev-server.mjs
+vercel.json

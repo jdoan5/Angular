@@ -3,10 +3,9 @@
 // single structured call whose output the UI renders as a playable mission.
 // Server-side only, like the rest of the agent core.
 
-import { GoogleGenAI } from '@google/genai';
+import { makeGenAI } from './client.mjs';
 
 const MODEL = process.env.GEMINI_MODEL || 'gemini-3.5-flash';
-const USE_VERTEX = process.env.GEMINI_VERTEX === '1';
 
 export const SKILLS = {
   counting: 'counting and number recognition',
@@ -133,13 +132,7 @@ export function validateMission(m) {
  * @returns {{ mission: object, model: string }}
  */
 export async function generateMission({ skill, tier }, signal) {
-  const apiKey = process.env.GEMINI_API_KEY;
-  if (!apiKey) {
-    const err = new Error('GEMINI_API_KEY is not set');
-    err.code = 'NO_KEY';
-    throw err;
-  }
-  const ai = new GoogleGenAI(USE_VERTEX ? { vertexai: true, apiKey } : { apiKey });
+  const ai = makeGenAI();   // throws NO_KEY when credentials are missing
 
   const contents = [{ role: 'user', parts: [{ text: 'Generate the mission now.' }] }];
 

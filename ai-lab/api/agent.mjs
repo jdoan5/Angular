@@ -7,6 +7,7 @@ import { runAgentStream } from '../agent-core/agent.mjs';
 import { AGENTS } from '../agent-core/agents.mjs';
 import { listMyApps, getAppReviews } from '../agent-core/tools.mjs';
 import { rateLimited, isRateLimit, RATE_LIMIT_MSG } from '../agent-core/ratelimit.mjs';
+import { hasCredentials, authMode } from '../agent-core/client.mjs';
 
 const MAX_MESSAGE_CHARS = 2000;
 const MAX_HISTORY_TURNS = 20;
@@ -26,7 +27,7 @@ function sanitizeHistory(history) {
 export default async function handler(req, res) {
   if (req.method === 'GET') {
     // Health/status for the UI banner: is the agent configured?
-    res.status(200).json({ ok: true, hasKey: Boolean(process.env.GEMINI_API_KEY) });
+    res.status(200).json({ ok: true, hasKey: hasCredentials(), auth: authMode() });
     return;
   }
   if (req.method !== 'POST') {
@@ -66,8 +67,8 @@ export default async function handler(req, res) {
       res.status(400).json({ error: 'unknown agent' });
       return;
     }
-    if (!process.env.GEMINI_API_KEY) {
-      res.status(503).json({ error: 'Agent not configured: GEMINI_API_KEY is missing.' });
+    if (!hasCredentials()) {
+      res.status(503).json({ error: 'Agent not configured: credentials are missing.' });
       return;
     }
 
