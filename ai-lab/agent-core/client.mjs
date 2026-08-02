@@ -37,7 +37,9 @@ export function makeGenAI() {
     return new GoogleGenAI({
       vertexai: true,
       project: process.env.GOOGLE_CLOUD_PROJECT,
-      location: process.env.GOOGLE_CLOUD_LOCATION || 'us-central1',
+      // 'global' matches the SDK default and is where the Gemini-3 family is
+      // served; a regional pin here can 404 with "Publisher Model not found".
+      location: process.env.GOOGLE_CLOUD_LOCATION || 'global',
     });
   }
   const apiKey = process.env.GEMINI_API_KEY;
