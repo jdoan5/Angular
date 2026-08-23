@@ -24,4 +24,9 @@ export class App {
   );
   readonly versionRows = computed(() => this.snapshot()?.rating_by_version ?? []);
   readonly weeklyRows = computed(() => this.snapshot()?.weekly_velocity ?? []);
+  // Complete weeks only — if every row is partial (a sparse first snapshot),
+  // the section shows its empty state instead of a blank chart.
+  readonly completeWeeks = computed(() =>
+    this.weeklyRows().filter((r) => !r.is_partial_week),
+  );
 }

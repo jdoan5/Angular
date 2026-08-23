@@ -8,9 +8,11 @@
     </p>
     @if (snapshot(); as s) {
       <p class="freshness">
-        Data refreshed daily by the lakehouse
         @if (s.generated_at) {
-          · snapshot generated {{ s.generated_at | date: 'MMM d, y, h:mm a' }} UTC
+          Data refreshed daily by the lakehouse · snapshot generated
+          {{ s.generated_at | date: 'MMM d, y, h:mm a' : 'UTC' }} UTC
+        } @else {
+          Seed snapshot — automated daily refresh from the lakehouse pending.
         }
       </p>
     }
@@ -60,8 +62,8 @@
         All tracked apps combined, within each app's continuously-observed window.
         Partial first/current weeks are excluded rather than letting them fake a trend.
       </p>
-      @if (weeklyRows().length > 0) {
-        <app-weekly-bars [rows]="weeklyRows()" />
+      @if (completeWeeks().length > 0) {
+        <app-weekly-bars [rows]="completeWeeks()" />
       } @else {
         <p class="empty">Awaiting the first automated snapshot for weekly data.</p>
       }
@@ -88,8 +90,8 @@
                 <td class="num">{{ row.reviews_collected | number }}</td>
                 <td class="num">{{ row.avg_rating | number: '1.2-2' }}</td>
                 <td class="num">{{ row.versions_seen }}</td>
-                <td>{{ row.oldest_review_at | date: 'MMM y' }}</td>
-                <td>{{ row.newest_review_at | date: 'MMM d, y' }}</td>
+                <td>{{ row.oldest_review_at | date: 'MMM y' : 'UTC' }}</td>
+                <td>{{ row.newest_review_at | date: 'MMM d, y' : 'UTC' }}</td>
               </tr>
             }
           </tbody>
