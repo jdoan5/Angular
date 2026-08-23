@@ -1,0 +1,18 @@
+{
+  "_note": "Seed snapshot, hand-copied from the published Databricks dashboard on 2026-08-22. The gold-snapshot GitHub Action overwrites this file daily with fresh gold-table data; rating_by_version and weekly_velocity stay empty until its first run.",
+  "totals": {
+    "reviews_collected": 4634,
+    "overall_avg_rating": 3.96,
+    "apps_tracked": 6
+  },
+  "overview": [
+    { "app_name": "Finch: Self-Care Pet", "reviews_collected": 1000, "avg_rating": 4.71, "versions_seen": 281, "oldest_review_at": "2021-10-19T13:59:00Z", "newest_review_at": "2026-08-21T03:13:00Z" },
+    { "app_name": "Duolingo (high-volume control)", "reviews_collected": 999, "avg_rating": 3.75, "versions_seen": 259, "oldest_review_at": "2017-09-10T02:37:00Z", "newest_review_at": "2026-08-20T22:03:00Z" },
+    { "app_name": "Habit Tracker", "reviews_collected": 956, "avg_rating": 4.19, "versions_seen": 203, "oldest_review_at": "2019-01-29T10:35:00Z", "newest_review_at": "2026-08-20T01:39:00Z" },
+    { "app_name": "Productive - Habit Tracker", "reviews_collected": 943, "avg_rating": 3.12, "versions_seen": 144, "oldest_review_at": "2017-08-08T12:04:00Z", "newest_review_at": "2026-07-11T14:24:00Z" },
+    { "app_name": "Atoms - from Atomic Habits", "reviews_collected": 532, "avg_rating": 3.73, "versions_seen": 41, "oldest_review_at": "2024-02-22T04:00:00Z", "newest_review_at": "2026-07-29T19:50:00Z" },
+    { "app_name": "HabitKit", "reviews_collected": 204, "avg_rating": 4.65, "versions_seen": 50, "oldest_review_at": "2022-11-28T01:43:00Z", "newest_review_at": "2026-08-17T23:15:00Z" }
+  ],
+  "rating_by_version": [],
+  "weekly_velocity": []
+}

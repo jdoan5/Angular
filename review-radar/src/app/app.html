@@ -1,0 +1,115 @@
+<main>
+  <header>
+    <h1>Review Radar</h1>
+    <p class="tagline">
+      An App Store reviews lakehouse — Apple's public reviews feed, ingested daily
+      into a bronze&nbsp;→&nbsp;silver&nbsp;→&nbsp;gold medallion pipeline on Databricks,
+      served here as aggregates.
+    </p>
+    @if (snapshot(); as s) {
+      <p class="freshness">
+        Data refreshed daily by the lakehouse
+        @if (s.generated_at) {
+          · snapshot generated {{ s.generated_at | date: 'MMM d, y, h:mm a' }} UTC
+        }
+      </p>
+    }
+  </header>
+
+  @if (error()) {
+    <section class="panel">
+      <p class="empty">Couldn't load the snapshot ({{ error() }}). Try a refresh.</p>
+    </section>
+  } @else if (snapshot(); as s) {
+    <section class="tiles">
+      <div class="tile">
+        <span class="tile-value">{{ s.totals.apps_tracked }}</span>
+        <span class="tile-label">apps tracked</span>
+      </div>
+      <div class="tile">
+        <span class="tile-value">{{ s.totals.reviews_collected | number }}</span>
+        <span class="tile-label">reviews collected</span>
+      </div>
+      <div class="tile">
+        <span class="tile-value">{{ s.totals.overall_avg_rating | number: '1.2-2' }} ★</span>
+        <span class="tile-label">avg rating, review-weighted</span>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>Average rating by app</h2>
+      <app-rating-bars [rows]="overview()" />
+    </section>
+
+    <section class="panel">
+      <h2>Rating by version over time</h2>
+      <p class="note">
+        One dot per app version — placed by first review date, sized by review count.
+        Only versions with ≥ 20 reviews are shown; small samples would be noise.
+      </p>
+      @if (versionRows().length > 0) {
+        <app-version-scatter [rows]="versionRows()" />
+      } @else {
+        <p class="empty">Awaiting the first automated snapshot for version-level data.</p>
+      }
+    </section>
+
+    <section class="panel">
+      <h2>Reviews per week</h2>
+      <p class="note">
+        All tracked apps combined, within each app's continuously-observed window.
+        Partial first/current weeks are excluded rather than letting them fake a trend.
+      </p>
+      @if (weeklyRows().length > 0) {
+        <app-weekly-bars [rows]="weeklyRows()" />
+      } @else {
+        <p class="empty">Awaiting the first automated snapshot for weekly data.</p>
+      }
+    </section>
+
+    <section class="panel">
+      <h2>App comparison</h2>
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th>App</th>
+              <th class="num">Reviews</th>
+              <th class="num">Avg ★</th>
+              <th class="num">Versions</th>
+              <th>Oldest review</th>
+              <th>Newest review</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (row of overview(); track row.app_name) {
+              <tr>
+                <td>{{ row.app_name }}</td>
+                <td class="num">{{ row.reviews_collected | number }}</td>
+                <td class="num">{{ row.avg_rating | number: '1.2-2' }}</td>
+                <td class="num">{{ row.versions_seen }}</td>
+                <td>{{ row.oldest_review_at | date: 'MMM y' }}</td>
+                <td>{{ row.newest_review_at | date: 'MMM d, y' }}</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </section>
+  } @else {
+    <section class="panel"><p class="empty">Loading snapshot…</p></section>
+  }
+
+  <footer>
+    <p>
+      Pipeline: Apple RSS reviews feed → bronze (raw, append-only) → silver
+      (MERGE-deduped, one row per review) → gold aggregates → nightly JSON snapshot
+      → this page. Built on Databricks Free Edition; orchestrated by a Lakeflow job;
+      deployed via Asset Bundles.
+    </p>
+    <p>
+      This demo publishes aggregate numbers only — no review text, no author names.
+      Not affiliated with Apple or any listed app.
+    </p>
+  </footer>
+</main>

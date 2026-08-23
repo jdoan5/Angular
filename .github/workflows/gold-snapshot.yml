@@ -1,0 +1,90 @@
+name: gold-snapshot
+
+# Refreshes review-radar/public/gold_snapshot.json from the Databricks gold
+# tables, once a day after the lakehouse's 7:00 AM America/New_York job.
+# The commit triggers Vercel's auto-redeploy of the review-radar app.
+#
+# Required repository secrets (Settings → Secrets and variables → Actions):
+#   DATABRICKS_HOST          e.g. https://dbc-xxxxxxxx-xxxx.cloud.databricks.com
+#   DATABRICKS_TOKEN         PAT named github-action-snapshot (SQL scope)
+#   DATABRICKS_WAREHOUSE_ID  the serverless SQL warehouse id
+
+on:
+  schedule:
+    - cron: "30 13 * * *" # ~9:30 AM ET (13:30 UTC; drifts 1h with DST — fine)
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: gold-snapshot
+  cancel-in-progress: false
+
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Execute gold snapshot query
+        env:
+          HOST: ${{ secrets.DATABRICKS_HOST }}
+          TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
+          WAREHOUSE_ID: ${{ secrets.DATABRICKS_WAREHOUSE_ID }}
+        run: |
+          set -euo pipefail
+
+          BODY=$(jq -n \
+            --arg wid "$WAREHOUSE_ID" \
+            --rawfile stmt .github/workflows/gold_snapshot.sql \
+            '{warehouse_id: $wid, statement: $stmt, wait_timeout: "50s", on_wait_timeout: "CONTINUE"}')
+
+          RESP=$(curl -sS -f -X POST "$HOST/api/2.0/sql/statements" \
+            -H "Authorization: Bearer $TOKEN" \
+            -H "Content-Type: application/json" \
+            -d "$BODY")
+
+          STATEMENT_ID=$(echo "$RESP" | jq -r '.statement_id')
+          STATE=$(echo "$RESP" | jq -r '.status.state')
+
+          # Poll while the warehouse wakes up (serverless cold start).
+          TRIES=0
+          while [ "$STATE" = "PENDING" ] || [ "$STATE" = "RUNNING" ]; do
+            TRIES=$((TRIES + 1))
+            if [ "$TRIES" -gt 20 ]; then
+              echo "Timed out waiting for statement $STATEMENT_ID (state=$STATE)"
+              exit 1
+            fi
+            sleep 10
+            RESP=$(curl -sS -f "$HOST/api/2.0/sql/statements/$STATEMENT_ID" \
+              -H "Authorization: Bearer $TOKEN")
+            STATE=$(echo "$RESP" | jq -r '.status.state')
+          done
+
+          if [ "$STATE" != "SUCCEEDED" ]; then
+            echo "Statement finished in state $STATE"
+            echo "$RESP" | jq '.status'
+            exit 1
+          fi
+
+          echo "$RESP" | jq -r '.result.data_array[0][0]' \
+            | jq --arg ts "$(date -u +%FT%TZ)" '. + {generated_at: $ts}' \
+            > review-radar/public/gold_snapshot.json
+
+          # Sanity: the file must be valid JSON with the expected keys.
+          jq -e '.totals.reviews_collected and (.overview | length > 0)' \
+            review-radar/public/gold_snapshot.json > /dev/null
+          echo "Snapshot OK: $(jq -c '.totals' review-radar/public/gold_snapshot.json)"
+
+      - name: Commit if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add review-radar/public/gold_snapshot.json
+          if git diff --cached --quiet; then
+            echo "No data change — nothing to commit."
+          else
+            git commit -m "chore(review-radar): refresh gold snapshot"
+            git push
+          fi

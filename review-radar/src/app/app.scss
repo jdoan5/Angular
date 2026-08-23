@@ -1,0 +1,121 @@
+main {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 32px 20px 64px;
+}
+
+header {
+  margin-bottom: 24px;
+
+  h1 {
+    margin: 0 0 6px;
+    font-size: 2rem;
+    letter-spacing: -0.5px;
+  }
+
+  .tagline {
+    margin: 0;
+    color: var(--ink-dim);
+    max-width: 60ch;
+  }
+
+  .freshness {
+    margin: 10px 0 0;
+    font-size: 0.85rem;
+    color: var(--good);
+  }
+}
+
+.tiles {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.tile {
+  background: var(--panel);
+  border: 1px solid var(--panel-edge);
+  border-radius: 12px;
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+
+  .tile-value {
+    font-size: 1.9rem;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .tile-label {
+    color: var(--ink-dim);
+    font-size: 0.85rem;
+  }
+}
+
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--panel-edge);
+  border-radius: 12px;
+  padding: 18px 20px;
+  margin-bottom: 12px;
+
+  h2 {
+    margin: 0 0 8px;
+    font-size: 1.05rem;
+  }
+
+  .note {
+    margin: 0 0 14px;
+    font-size: 0.82rem;
+    color: var(--ink-dim);
+    max-width: 70ch;
+  }
+
+  .empty {
+    color: var(--ink-dim);
+    font-style: italic;
+  }
+}
+
+.table-scroll {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+
+  th,
+  td {
+    text-align: left;
+    padding: 8px 10px;
+    border-bottom: 1px solid var(--panel-edge);
+    white-space: nowrap;
+  }
+
+  th {
+    color: var(--ink-dim);
+    font-weight: 600;
+  }
+
+  .num {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+  }
+
+  tbody tr:last-child td {
+    border-bottom: none;
+  }
+}
+
+footer {
+  margin-top: 28px;
+  color: var(--ink-dim);
+  font-size: 0.8rem;
+
+  p {
+    max-width: 80ch;
+  }
+}
