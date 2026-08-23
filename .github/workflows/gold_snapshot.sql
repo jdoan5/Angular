@@ -1,6 +1,8 @@
 -- Review Radar: packs the gold layer into one JSON document (single cell).
 -- Executed by gold-snapshot.yml via the Databricks SQL Statement Execution API.
 -- Keep the shape in sync with review-radar/src/app/models/snapshot.ts.
+-- ignoreNullFields=false: a NULL must surface as an explicit null in the JSON,
+-- never as a silently missing key the app would trip over.
 SELECT to_json(named_struct(
   'totals', (
     SELECT struct(
@@ -29,4 +31,4 @@ SELECT to_json(named_struct(
     ))
     FROM workspace.review_radar.gold_review_velocity
   )
-))
+), map('ignoreNullFields', 'false'))

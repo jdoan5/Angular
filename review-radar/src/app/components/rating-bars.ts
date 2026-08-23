@@ -16,7 +16,7 @@ import { appColor } from './palette';
             [style.background]="color(row.app_name)"
           ></div>
         </div>
-        <span class="bar-value">{{ row.avg_rating.toFixed(2) }}</span>
+        <span class="bar-value">{{ (row.avg_rating ?? 0).toFixed(2) }}</span>
       </div>
     }
   `,

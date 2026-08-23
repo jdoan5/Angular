@@ -21,7 +21,7 @@ interface WeekBar {
           <title>{{ b.title }}</title>
         </rect>
       }
-      @for (t of ticks(); track t.label) {
+      @for (t of ticks(); track t.week) {
         <text [attr.x]="t.x" [attr.y]="H - 6" class="tick" text-anchor="middle">{{ t.label }}</text>
       }
     </svg>
@@ -85,6 +85,7 @@ export class WeeklyBars {
     return weeks
       .filter((_, i) => i % step === 0)
       .map((w) => ({
+        week: w.week,
         label: w.week.slice(0, 7),
         x: weeks.findIndex((x) => x.week === w.week) * slot + slot / 2,
       }));
