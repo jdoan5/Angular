@@ -1,6 +1,6 @@
 {
   "totals": {
-    "reviews_collected": 4855,
+    "reviews_collected": 5022,
     "overall_avg_rating": 3.94,
     "apps_tracked": 6
   },
@@ -31,11 +31,11 @@
     },
     {
       "app_name": "Finch: Self-Care Pet",
-      "reviews_collected": 1017,
-      "avg_rating": 4.7,
+      "reviews_collected": 1030,
+      "avg_rating": 4.69,
       "versions_seen": 281,
       "oldest_review_at": "2021-10-19T13:59:17.000Z",
-      "newest_review_at": "2026-08-22T04:56:27.000Z"
+      "newest_review_at": "2026-08-23T01:30:10.000Z"
     },
     {
       "app_name": "HabitKit",
@@ -47,11 +47,11 @@
     },
     {
       "app_name": "Duolingo (high-volume control)",
-      "reviews_collected": 1199,
-      "avg_rating": 3.73,
+      "reviews_collected": 1353,
+      "avg_rating": 3.74,
       "versions_seen": 259,
       "oldest_review_at": "2017-09-10T02:37:43.000Z",
-      "newest_review_at": "2026-08-22T06:00:16.000Z"
+      "newest_review_at": "2026-08-23T06:56:31.000Z"
     }
   ],
   "rating_by_version": [
@@ -70,6 +70,13 @@
       "first_review_at": "2026-07-30T20:24:56.000Z"
     },
     {
+      "app_name": "Finch: Self-Care Pet",
+      "app_version": "3.73.197",
+      "n_reviews": 153,
+      "avg_rating": 4.73,
+      "first_review_at": "2026-08-14T03:39:37.000Z"
+    },
+    {
       "app_name": "HabitKit",
       "app_version": "1.14.4",
       "n_reviews": 22,
@@ -82,13 +89,6 @@
       "n_reviews": 42,
       "avg_rating": 4.64,
       "first_review_at": "2026-08-04T21:15:02.000Z"
-    },
-    {
-      "app_name": "Finch: Self-Care Pet",
-      "app_version": "3.73.197",
-      "n_reviews": 140,
-      "avg_rating": 4.77,
-      "first_review_at": "2026-08-14T03:39:37.000Z"
     },
     {
       "app_name": "Productive - Habit Tracker",
@@ -217,6 +217,13 @@
       "first_review_at": "2022-07-27T20:54:05.000Z"
     },
     {
+      "app_name": "Duolingo (high-volume control)",
+      "app_version": "7.136.0",
+      "n_reviews": 738,
+      "avg_rating": 3.71,
+      "first_review_at": "2026-08-18T14:00:36.000Z"
+    },
+    {
       "app_name": "Atoms - from Atomic Habits",
       "app_version": "1.2.0",
       "n_reviews": 41,
@@ -231,11 +238,11 @@
       "first_review_at": "2026-07-28T22:06:13.000Z"
     },
     {
-      "app_name": "Duolingo (high-volume control)",
-      "app_version": "7.136.0",
-      "n_reviews": 584,
-      "avg_rating": 3.7,
-      "first_review_at": "2026-08-18T14:00:36.000Z"
+      "app_name": "Finch: Self-Care Pet",
+      "app_version": "3.73.191",
+      "n_reviews": 31,
+      "avg_rating": 4.81,
+      "first_review_at": "2026-07-27T09:21:57.000Z"
     },
     {
       "app_name": "Habit Tracker",
@@ -243,13 +250,6 @@
       "n_reviews": 38,
       "avg_rating": 4.03,
       "first_review_at": "2026-07-10T12:01:32.000Z"
-    },
-    {
-      "app_name": "Finch: Self-Care Pet",
-      "app_version": "3.73.191",
-      "n_reviews": 31,
-      "avg_rating": 4.81,
-      "first_review_at": "2026-07-27T09:21:57.000Z"
     },
     {
       "app_name": "Habit Tracker",
@@ -303,10 +303,10 @@
       "is_partial_week": false
     },
     {
-      "app_name": "Atoms - from Atomic Habits",
+      "app_name": "Productive - Habit Tracker",
       "week": "2024-07-15T00:00:00.000Z",
       "n_reviews": 1,
-      "avg_rating": 3.0,
+      "avg_rating": 1.0,
       "is_partial_week": false
     },
     {
@@ -318,23 +318,9 @@
     },
     {
       "app_name": "HabitKit",
-      "week": "2025-02-10T00:00:00.000Z",
-      "n_reviews": 2,
-      "avg_rating": 4.5,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "HabitKit",
       "week": "2025-06-16T00:00:00.000Z",
       "n_reviews": 4,
       "avg_rating": 3.75,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "Productive - Habit Tracker",
-      "week": "2025-09-15T00:00:00.000Z",
-      "n_reviews": 1,
-      "avg_rating": 4.0,
       "is_partial_week": false
     },
     {
@@ -373,8 +359,29 @@
       "is_partial_week": false
     },
     {
+      "app_name": "Productive - Habit Tracker",
+      "week": "2026-01-19T00:00:00.000Z",
+      "n_reviews": 2,
+      "avg_rating": 3.5,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "Atoms - from Atomic Habits",
+      "week": "2026-05-04T00:00:00.000Z",
+      "n_reviews": 1,
+      "avg_rating": 3.0,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "Productive - Habit Tracker",
+      "week": "2026-06-15T00:00:00.000Z",
+      "n_reviews": 1,
+      "avg_rating": 5.0,
+      "is_partial_week": false
+    },
+    {
       "app_name": "HabitKit",
-      "week": "2026-02-16T00:00:00.000Z",
+      "week": "2026-07-27T00:00:00.000Z",
       "n_reviews": 1,
       "avg_rating": 5.0,
       "is_partial_week": false
@@ -402,16 +409,51 @@
     },
     {
       "app_name": "Atoms - from Atomic Habits",
-      "week": "2024-11-11T00:00:00.000Z",
-      "n_reviews": 3,
-      "avg_rating": 4.33,
+      "week": "2024-07-15T00:00:00.000Z",
+      "n_reviews": 1,
+      "avg_rating": 3.0,
       "is_partial_week": false
     },
     {
       "app_name": "HabitKit",
-      "week": "2024-11-25T00:00:00.000Z",
+      "week": "2025-02-10T00:00:00.000Z",
+      "n_reviews": 2,
+      "avg_rating": 4.5,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "Productive - Habit Tracker",
+      "week": "2025-09-15T00:00:00.000Z",
+      "n_reviews": 1,
+      "avg_rating": 4.0,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "HabitKit",
+      "week": "2026-02-16T00:00:00.000Z",
       "n_reviews": 1,
       "avg_rating": 5.0,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "Habit Tracker",
+      "week": "2026-03-23T00:00:00.000Z",
+      "n_reviews": 16,
+      "avg_rating": 3.69,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "HabitKit",
+      "week": "2024-07-29T00:00:00.000Z",
+      "n_reviews": 2,
+      "avg_rating": 4.5,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "Atoms - from Atomic Habits",
+      "week": "2024-11-11T00:00:00.000Z",
+      "n_reviews": 3,
+      "avg_rating": 4.33,
       "is_partial_week": false
     },
     {
@@ -422,10 +464,10 @@
       "is_partial_week": false
     },
     {
-      "app_name": "HabitKit",
-      "week": "2025-01-20T00:00:00.000Z",
+      "app_name": "Atoms - from Atomic Habits",
+      "week": "2025-02-17T00:00:00.000Z",
       "n_reviews": 1,
-      "avg_rating": 4.0,
+      "avg_rating": 3.0,
       "is_partial_week": false
     },
     {
@@ -436,13 +478,6 @@
       "is_partial_week": false
     },
     {
-      "app_name": "Atoms - from Atomic Habits",
-      "week": "2025-06-09T00:00:00.000Z",
-      "n_reviews": 1,
-      "avg_rating": 5.0,
-      "is_partial_week": false
-    },
-    {
       "app_name": "HabitKit",
       "week": "2025-10-06T00:00:00.000Z",
       "n_reviews": 3,
@@ -450,8 +485,8 @@
       "is_partial_week": false
     },
     {
-      "app_name": "HabitKit",
-      "week": "2025-10-13T00:00:00.000Z",
+      "app_name": "Atoms - from Atomic Habits",
+      "week": "2025-10-27T00:00:00.000Z",
       "n_reviews": 1,
       "avg_rating": 5.0,
       "is_partial_week": false
@@ -464,6 +499,13 @@
       "is_partial_week": false
     },
     {
+      "app_name": "HabitKit",
+      "week": "2026-01-12T00:00:00.000Z",
+      "n_reviews": 1,
+      "avg_rating": 5.0,
+      "is_partial_week": false
+    },
+    {
       "app_name": "Habit Tracker",
       "week": "2026-02-09T00:00:00.000Z",
       "n_reviews": 8,
@@ -471,17 +513,10 @@
       "is_partial_week": false
     },
     {
-      "app_name": "Habit Tracker",
-      "week": "2026-03-23T00:00:00.000Z",
-      "n_reviews": 16,
-      "avg_rating": 3.69,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "Productive - Habit Tracker",
-      "week": "2026-06-29T00:00:00.000Z",
+      "app_name": "Atoms - from Atomic Habits",
+      "week": "2026-06-22T00:00:00.000Z",
       "n_reviews": 1,
-      "avg_rating": 1.0,
+      "avg_rating": 4.0,
       "is_partial_week": false
     },
     {
@@ -506,10 +541,38 @@
       "is_partial_week": false
     },
     {
+      "app_name": "HabitKit",
+      "week": "2024-11-25T00:00:00.000Z",
+      "n_reviews": 1,
+      "avg_rating": 5.0,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "HabitKit",
+      "week": "2025-01-20T00:00:00.000Z",
+      "n_reviews": 1,
+      "avg_rating": 4.0,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "Atoms - from Atomic Habits",
+      "week": "2025-06-09T00:00:00.000Z",
+      "n_reviews": 1,
+      "avg_rating": 5.0,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "HabitKit",
+      "week": "2025-10-13T00:00:00.000Z",
+      "n_reviews": 1,
+      "avg_rating": 5.0,
+      "is_partial_week": false
+    },
+    {
       "app_name": "Productive - Habit Tracker",
-      "week": "2023-12-11T00:00:00.000Z",
-      "n_reviews": 2,
-      "avg_rating": 3.5,
+      "week": "2026-06-29T00:00:00.000Z",
+      "n_reviews": 1,
+      "avg_rating": 1.0,
       "is_partial_week": false
     },
     {
@@ -521,9 +584,16 @@
     },
     {
       "app_name": "HabitKit",
-      "week": "2024-07-22T00:00:00.000Z",
+      "week": "2024-04-01T00:00:00.000Z",
+      "n_reviews": 1,
+      "avg_rating": 4.0,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "Atoms - from Atomic Habits",
+      "week": "2024-06-17T00:00:00.000Z",
       "n_reviews": 2,
-      "avg_rating": 5.0,
+      "avg_rating": 3.0,
       "is_partial_week": false
     },
     {
@@ -548,6 +618,90 @@
       "is_partial_week": false
     },
     {
+      "app_name": "HabitKit",
+      "week": "2025-03-24T00:00:00.000Z",
+      "n_reviews": 1,
+      "avg_rating": 5.0,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "Atoms - from Atomic Habits",
+      "week": "2025-06-23T00:00:00.000Z",
+      "n_reviews": 4,
+      "avg_rating": 3.0,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "Productive - Habit Tracker",
+      "week": "2025-08-18T00:00:00.000Z",
+      "n_reviews": 1,
+      "avg_rating": 5.0,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "Habit Tracker",
+      "week": "2025-12-01T00:00:00.000Z",
+      "n_reviews": 4,
+      "avg_rating": 3.0,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "Productive - Habit Tracker",
+      "week": "2026-03-30T00:00:00.000Z",
+      "n_reviews": 1,
+      "avg_rating": 1.0,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "HabitKit",
+      "week": "2026-05-18T00:00:00.000Z",
+      "n_reviews": 1,
+      "avg_rating": 4.0,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "Atoms - from Atomic Habits",
+      "week": "2026-06-15T00:00:00.000Z",
+      "n_reviews": 2,
+      "avg_rating": 5.0,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "Productive - Habit Tracker",
+      "week": "2026-07-06T00:00:00.000Z",
+      "n_reviews": 3,
+      "avg_rating": 2.33,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "Productive - Habit Tracker",
+      "week": "2022-07-18T00:00:00.000Z",
+      "n_reviews": 4,
+      "avg_rating": 3.0,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "HabitKit",
+      "week": "2022-12-19T00:00:00.000Z",
+      "n_reviews": 1,
+      "avg_rating": 5.0,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "Productive - Habit Tracker",
+      "week": "2023-12-11T00:00:00.000Z",
+      "n_reviews": 2,
+      "avg_rating": 3.5,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "HabitKit",
+      "week": "2024-07-22T00:00:00.000Z",
+      "n_reviews": 2,
+      "avg_rating": 5.0,
+      "is_partial_week": false
+    },
+    {
       "app_name": "Atoms - from Atomic Habits",
       "week": "2025-04-07T00:00:00.000Z",
       "n_reviews": 4,
@@ -563,13 +717,6 @@
     },
     {
       "app_name": "Atoms - from Atomic Habits",
-      "week": "2025-06-23T00:00:00.000Z",
-      "n_reviews": 4,
-      "avg_rating": 3.0,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "Atoms - from Atomic Habits",
       "week": "2025-08-18T00:00:00.000Z",
       "n_reviews": 1,
       "avg_rating": 5.0,
@@ -580,27 +727,6 @@
       "week": "2025-11-24T00:00:00.000Z",
       "n_reviews": 1,
       "avg_rating": 2.0,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "Habit Tracker",
-      "week": "2025-12-01T00:00:00.000Z",
-      "n_reviews": 4,
-      "avg_rating": 3.0,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "Productive - Habit Tracker",
-      "week": "2026-07-06T00:00:00.000Z",
-      "n_reviews": 3,
-      "avg_rating": 2.33,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "Productive - Habit Tracker",
-      "week": "2022-07-18T00:00:00.000Z",
-      "n_reviews": 4,
-      "avg_rating": 3.0,
       "is_partial_week": false
     },
     {
@@ -639,24 +765,10 @@
       "is_partial_week": false
     },
     {
-      "app_name": "Atoms - from Atomic Habits",
-      "week": "2024-04-29T00:00:00.000Z",
-      "n_reviews": 1,
-      "avg_rating": 5.0,
-      "is_partial_week": false
-    },
-    {
       "app_name": "HabitKit",
       "week": "2024-06-17T00:00:00.000Z",
       "n_reviews": 3,
       "avg_rating": 5.0,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "Productive - Habit Tracker",
-      "week": "2024-06-24T00:00:00.000Z",
-      "n_reviews": 1,
-      "avg_rating": 2.0,
       "is_partial_week": false
     },
     {
@@ -674,24 +786,24 @@
       "is_partial_week": false
     },
     {
-      "app_name": "HabitKit",
-      "week": "2024-09-30T00:00:00.000Z",
-      "n_reviews": 1,
-      "avg_rating": 3.0,
-      "is_partial_week": false
-    },
-    {
       "app_name": "Productive - Habit Tracker",
-      "week": "2024-11-18T00:00:00.000Z",
+      "week": "2024-09-16T00:00:00.000Z",
       "n_reviews": 1,
-      "avg_rating": 3.0,
+      "avg_rating": 1.0,
       "is_partial_week": false
     },
     {
       "app_name": "Atoms - from Atomic Habits",
-      "week": "2025-03-17T00:00:00.000Z",
-      "n_reviews": 3,
-      "avg_rating": 4.33,
+      "week": "2025-05-19T00:00:00.000Z",
+      "n_reviews": 2,
+      "avg_rating": 3.0,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "HabitKit",
+      "week": "2025-08-04T00:00:00.000Z",
+      "n_reviews": 1,
+      "avg_rating": 5.0,
       "is_partial_week": false
     },
     {
@@ -710,9 +822,16 @@
     },
     {
       "app_name": "HabitKit",
-      "week": "2026-03-23T00:00:00.000Z",
+      "week": "2026-02-23T00:00:00.000Z",
       "n_reviews": 1,
       "avg_rating": 5.0,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "Productive - Habit Tracker",
+      "week": "2026-02-23T00:00:00.000Z",
+      "n_reviews": 2,
+      "avg_rating": 2.5,
       "is_partial_week": false
     },
     {
@@ -744,13 +863,6 @@
       "is_partial_week": false
     },
     {
-      "app_name": "HabitKit",
-      "week": "2026-06-08T00:00:00.000Z",
-      "n_reviews": 1,
-      "avg_rating": 4.0,
-      "is_partial_week": false
-    },
-    {
       "app_name": "Habit Tracker",
       "week": "2026-06-08T00:00:00.000Z",
       "n_reviews": 9,
@@ -758,10 +870,24 @@
       "is_partial_week": false
     },
     {
+      "app_name": "Atoms - from Atomic Habits",
+      "week": "2026-07-06T00:00:00.000Z",
+      "n_reviews": 1,
+      "avg_rating": 2.0,
+      "is_partial_week": false
+    },
+    {
       "app_name": "Habit Tracker",
       "week": "2026-08-10T00:00:00.000Z",
       "n_reviews": 8,
       "avg_rating": 3.75,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "HabitKit",
+      "week": "2026-08-17T00:00:00.000Z",
+      "n_reviews": 1,
+      "avg_rating": 5.0,
       "is_partial_week": false
     },
     {
@@ -780,13 +906,6 @@
     },
     {
       "app_name": "Productive - Habit Tracker",
-      "week": "2023-02-13T00:00:00.000Z",
-      "n_reviews": 1,
-      "avg_rating": 1.0,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "Productive - Habit Tracker",
       "week": "2023-03-06T00:00:00.000Z",
       "n_reviews": 2,
       "avg_rating": 4.0,
@@ -801,15 +920,197 @@
     },
     {
       "app_name": "HabitKit",
-      "week": "2024-01-08T00:00:00.000Z",
+      "week": "2023-05-01T00:00:00.000Z",
+      "n_reviews": 1,
+      "avg_rating": 5.0,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "Atoms - from Atomic Habits",
+      "week": "2024-04-29T00:00:00.000Z",
       "n_reviews": 1,
       "avg_rating": 5.0,
       "is_partial_week": false
     },
     {
       "app_name": "Productive - Habit Tracker",
+      "week": "2024-06-24T00:00:00.000Z",
+      "n_reviews": 1,
+      "avg_rating": 2.0,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "HabitKit",
+      "week": "2024-09-30T00:00:00.000Z",
+      "n_reviews": 1,
+      "avg_rating": 3.0,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "Productive - Habit Tracker",
+      "week": "2024-11-18T00:00:00.000Z",
+      "n_reviews": 1,
+      "avg_rating": 3.0,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "Atoms - from Atomic Habits",
+      "week": "2025-03-17T00:00:00.000Z",
+      "n_reviews": 3,
+      "avg_rating": 4.33,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "HabitKit",
+      "week": "2026-03-23T00:00:00.000Z",
+      "n_reviews": 1,
+      "avg_rating": 5.0,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "HabitKit",
+      "week": "2026-06-08T00:00:00.000Z",
+      "n_reviews": 1,
+      "avg_rating": 4.0,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "Productive - Habit Tracker",
+      "week": "2023-02-13T00:00:00.000Z",
+      "n_reviews": 1,
+      "avg_rating": 1.0,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "Habit Tracker",
+      "week": "2026-08-17T00:00:00.000Z",
+      "n_reviews": 12,
+      "avg_rating": 3.58,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "Productive - Habit Tracker",
       "week": "2024-01-08T00:00:00.000Z",
       "n_reviews": 2,
+      "avg_rating": 5.0,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "Atoms - from Atomic Habits",
+      "week": "2024-06-10T00:00:00.000Z",
+      "n_reviews": 2,
+      "avg_rating": 3.5,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "HabitKit",
+      "week": "2024-12-23T00:00:00.000Z",
+      "n_reviews": 3,
+      "avg_rating": 4.67,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "Atoms - from Atomic Habits",
+      "week": "2025-01-06T00:00:00.000Z",
+      "n_reviews": 5,
+      "avg_rating": 3.6,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "Atoms - from Atomic Habits",
+      "week": "2025-01-13T00:00:00.000Z",
+      "n_reviews": 6,
+      "avg_rating": 2.17,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "Productive - Habit Tracker",
+      "week": "2025-01-27T00:00:00.000Z",
+      "n_reviews": 3,
+      "avg_rating": 2.67,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "HabitKit",
+      "week": "2025-02-17T00:00:00.000Z",
+      "n_reviews": 4,
+      "avg_rating": 4.5,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "Atoms - from Atomic Habits",
+      "week": "2025-03-31T00:00:00.000Z",
+      "n_reviews": 1,
+      "avg_rating": 1.0,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "HabitKit",
+      "week": "2025-05-05T00:00:00.000Z",
+      "n_reviews": 1,
+      "avg_rating": 5.0,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "Productive - Habit Tracker",
+      "week": "2025-12-08T00:00:00.000Z",
+      "n_reviews": 3,
+      "avg_rating": 3.0,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "Atoms - from Atomic Habits",
+      "week": "2026-03-02T00:00:00.000Z",
+      "n_reviews": 2,
+      "avg_rating": 1.5,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "Productive - Habit Tracker",
+      "week": "2026-03-09T00:00:00.000Z",
+      "n_reviews": 1,
+      "avg_rating": 1.0,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "Productive - Habit Tracker",
+      "week": "2026-03-23T00:00:00.000Z",
+      "n_reviews": 1,
+      "avg_rating": 1.0,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "Habit Tracker",
+      "week": "2026-07-20T00:00:00.000Z",
+      "n_reviews": 14,
+      "avg_rating": 4.14,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "HabitKit",
+      "week": "2022-12-12T00:00:00.000Z",
+      "n_reviews": 1,
+      "avg_rating": 5.0,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "Productive - Habit Tracker",
+      "week": "2023-04-17T00:00:00.000Z",
+      "n_reviews": 7,
+      "avg_rating": 4.57,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "Productive - Habit Tracker",
+      "week": "2023-04-24T00:00:00.000Z",
+      "n_reviews": 4,
+      "avg_rating": 3.75,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "HabitKit",
+      "week": "2024-01-08T00:00:00.000Z",
+      "n_reviews": 1,
       "avg_rating": 5.0,
       "is_partial_week": false
     },
@@ -843,44 +1144,9 @@
     },
     {
       "app_name": "HabitKit",
-      "week": "2024-12-23T00:00:00.000Z",
-      "n_reviews": 3,
-      "avg_rating": 4.67,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "Atoms - from Atomic Habits",
-      "week": "2025-01-06T00:00:00.000Z",
-      "n_reviews": 5,
-      "avg_rating": 3.6,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "Atoms - from Atomic Habits",
-      "week": "2025-01-13T00:00:00.000Z",
-      "n_reviews": 6,
-      "avg_rating": 2.17,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "HabitKit",
       "week": "2025-03-10T00:00:00.000Z",
       "n_reviews": 1,
       "avg_rating": 5.0,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "Productive - Habit Tracker",
-      "week": "2025-12-08T00:00:00.000Z",
-      "n_reviews": 3,
-      "avg_rating": 3.0,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "Atoms - from Atomic Habits",
-      "week": "2026-03-02T00:00:00.000Z",
-      "n_reviews": 2,
-      "avg_rating": 1.5,
       "is_partial_week": false
     },
     {
@@ -898,38 +1164,31 @@
       "is_partial_week": false
     },
     {
-      "app_name": "Habit Tracker",
-      "week": "2026-07-20T00:00:00.000Z",
-      "n_reviews": 14,
-      "avg_rating": 4.14,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "Habit Tracker",
-      "week": "2026-08-17T00:00:00.000Z",
-      "n_reviews": 12,
-      "avg_rating": 3.58,
-      "is_partial_week": true
-    },
-    {
-      "app_name": "Productive - Habit Tracker",
-      "week": "2023-04-17T00:00:00.000Z",
-      "n_reviews": 7,
-      "avg_rating": 4.57,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "Productive - Habit Tracker",
-      "week": "2023-04-24T00:00:00.000Z",
-      "n_reviews": 4,
-      "avg_rating": 3.75,
-      "is_partial_week": false
-    },
-    {
       "app_name": "Productive - Habit Tracker",
       "week": "2023-07-10T00:00:00.000Z",
       "n_reviews": 5,
       "avg_rating": 4.4,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "HabitKit",
+      "week": "2023-09-25T00:00:00.000Z",
+      "n_reviews": 1,
+      "avg_rating": 5.0,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "HabitKit",
+      "week": "2023-11-20T00:00:00.000Z",
+      "n_reviews": 1,
+      "avg_rating": 4.0,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "HabitKit",
+      "week": "2023-12-11T00:00:00.000Z",
+      "n_reviews": 1,
+      "avg_rating": 5.0,
       "is_partial_week": false
     },
     {
@@ -947,15 +1206,8 @@
       "is_partial_week": false
     },
     {
-      "app_name": "Productive - Habit Tracker",
-      "week": "2024-05-13T00:00:00.000Z",
-      "n_reviews": 2,
-      "avg_rating": 3.0,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "Atoms - from Atomic Habits",
-      "week": "2024-05-20T00:00:00.000Z",
+      "app_name": "HabitKit",
+      "week": "2024-02-26T00:00:00.000Z",
       "n_reviews": 1,
       "avg_rating": 5.0,
       "is_partial_week": false
@@ -965,20 +1217,6 @@
       "week": "2024-08-19T00:00:00.000Z",
       "n_reviews": 2,
       "avg_rating": 1.0,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "HabitKit",
-      "week": "2024-08-26T00:00:00.000Z",
-      "n_reviews": 1,
-      "avg_rating": 5.0,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "HabitKit",
-      "week": "2025-07-14T00:00:00.000Z",
-      "n_reviews": 1,
-      "avg_rating": 5.0,
       "is_partial_week": false
     },
     {
@@ -996,13 +1234,6 @@
       "is_partial_week": false
     },
     {
-      "app_name": "Productive - Habit Tracker",
-      "week": "2025-12-22T00:00:00.000Z",
-      "n_reviews": 1,
-      "avg_rating": 1.0,
-      "is_partial_week": false
-    },
-    {
       "app_name": "Habit Tracker",
       "week": "2026-01-26T00:00:00.000Z",
       "n_reviews": 12,
@@ -1017,6 +1248,20 @@
       "is_partial_week": false
     },
     {
+      "app_name": "HabitKit",
+      "week": "2026-07-13T00:00:00.000Z",
+      "n_reviews": 1,
+      "avg_rating": 5.0,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "HabitKit",
+      "week": "2022-12-26T00:00:00.000Z",
+      "n_reviews": 1,
+      "avg_rating": 5.0,
+      "is_partial_week": false
+    },
+    {
       "app_name": "Productive - Habit Tracker",
       "week": "2023-01-16T00:00:00.000Z",
       "n_reviews": 2,
@@ -1025,16 +1270,51 @@
     },
     {
       "app_name": "Productive - Habit Tracker",
-      "week": "2023-10-16T00:00:00.000Z",
+      "week": "2024-05-13T00:00:00.000Z",
       "n_reviews": 2,
-      "avg_rating": 2.0,
+      "avg_rating": 3.0,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "Atoms - from Atomic Habits",
+      "week": "2024-05-20T00:00:00.000Z",
+      "n_reviews": 1,
+      "avg_rating": 5.0,
       "is_partial_week": false
     },
     {
       "app_name": "HabitKit",
-      "week": "2024-02-12T00:00:00.000Z",
+      "week": "2024-08-26T00:00:00.000Z",
       "n_reviews": 1,
       "avg_rating": 5.0,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "HabitKit",
+      "week": "2025-07-14T00:00:00.000Z",
+      "n_reviews": 1,
+      "avg_rating": 5.0,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "Productive - Habit Tracker",
+      "week": "2025-12-22T00:00:00.000Z",
+      "n_reviews": 1,
+      "avg_rating": 1.0,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "Duolingo (high-volume control)",
+      "week": "2026-08-17T00:00:00.000Z",
+      "n_reviews": 854,
+      "avg_rating": 3.69,
+      "is_partial_week": true
+    },
+    {
+      "app_name": "Productive - Habit Tracker",
+      "week": "2023-12-18T00:00:00.000Z",
+      "n_reviews": 1,
+      "avg_rating": 1.0,
       "is_partial_week": false
     },
     {
@@ -1049,6 +1329,97 @@
       "week": "2024-03-04T00:00:00.000Z",
       "n_reviews": 7,
       "avg_rating": 3.14,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "HabitKit",
+      "week": "2024-12-30T00:00:00.000Z",
+      "n_reviews": 6,
+      "avg_rating": 4.83,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "Atoms - from Atomic Habits",
+      "week": "2025-05-05T00:00:00.000Z",
+      "n_reviews": 1,
+      "avg_rating": 5.0,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "Atoms - from Atomic Habits",
+      "week": "2025-09-08T00:00:00.000Z",
+      "n_reviews": 3,
+      "avg_rating": 5.0,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "Habit Tracker",
+      "week": "2025-09-29T00:00:00.000Z",
+      "n_reviews": 4,
+      "avg_rating": 4.5,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "Atoms - from Atomic Habits",
+      "week": "2025-11-03T00:00:00.000Z",
+      "n_reviews": 2,
+      "avg_rating": 5.0,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "Habit Tracker",
+      "week": "2025-12-29T00:00:00.000Z",
+      "n_reviews": 12,
+      "avg_rating": 3.67,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "HabitKit",
+      "week": "2026-04-27T00:00:00.000Z",
+      "n_reviews": 2,
+      "avg_rating": 5.0,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "Habit Tracker",
+      "week": "2026-06-29T00:00:00.000Z",
+      "n_reviews": 10,
+      "avg_rating": 4.6,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "Habit Tracker",
+      "week": "2026-07-13T00:00:00.000Z",
+      "n_reviews": 14,
+      "avg_rating": 3.71,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "Productive - Habit Tracker",
+      "week": "2022-11-21T00:00:00.000Z",
+      "n_reviews": 3,
+      "avg_rating": 3.67,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "Productive - Habit Tracker",
+      "week": "2023-02-06T00:00:00.000Z",
+      "n_reviews": 5,
+      "avg_rating": 1.8,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "Productive - Habit Tracker",
+      "week": "2023-10-16T00:00:00.000Z",
+      "n_reviews": 2,
+      "avg_rating": 2.0,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "HabitKit",
+      "week": "2024-02-12T00:00:00.000Z",
+      "n_reviews": 1,
+      "avg_rating": 5.0,
       "is_partial_week": false
     },
     {
@@ -1074,13 +1445,6 @@
     },
     {
       "app_name": "HabitKit",
-      "week": "2024-12-30T00:00:00.000Z",
-      "n_reviews": 6,
-      "avg_rating": 4.83,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "HabitKit",
       "week": "2025-02-24T00:00:00.000Z",
       "n_reviews": 1,
       "avg_rating": 5.0,
@@ -1101,38 +1465,10 @@
       "is_partial_week": false
     },
     {
-      "app_name": "Atoms - from Atomic Habits",
-      "week": "2025-09-08T00:00:00.000Z",
-      "n_reviews": 3,
-      "avg_rating": 5.0,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "Habit Tracker",
-      "week": "2025-09-29T00:00:00.000Z",
-      "n_reviews": 4,
-      "avg_rating": 4.5,
-      "is_partial_week": false
-    },
-    {
       "app_name": "HabitKit",
       "week": "2025-10-27T00:00:00.000Z",
       "n_reviews": 1,
       "avg_rating": 5.0,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "Atoms - from Atomic Habits",
-      "week": "2025-11-03T00:00:00.000Z",
-      "n_reviews": 2,
-      "avg_rating": 5.0,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "Habit Tracker",
-      "week": "2025-12-29T00:00:00.000Z",
-      "n_reviews": 12,
-      "avg_rating": 3.67,
       "is_partial_week": false
     },
     {
@@ -1143,66 +1479,17 @@
       "is_partial_week": false
     },
     {
-      "app_name": "HabitKit",
-      "week": "2026-04-27T00:00:00.000Z",
-      "n_reviews": 2,
-      "avg_rating": 5.0,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "Habit Tracker",
-      "week": "2026-06-29T00:00:00.000Z",
-      "n_reviews": 10,
-      "avg_rating": 4.6,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "Habit Tracker",
-      "week": "2026-07-13T00:00:00.000Z",
-      "n_reviews": 14,
-      "avg_rating": 3.71,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "Duolingo (high-volume control)",
-      "week": "2026-08-17T00:00:00.000Z",
-      "n_reviews": 700,
-      "avg_rating": 3.68,
-      "is_partial_week": true
-    },
-    {
-      "app_name": "Productive - Habit Tracker",
-      "week": "2022-11-21T00:00:00.000Z",
-      "n_reviews": 3,
-      "avg_rating": 3.67,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "Productive - Habit Tracker",
-      "week": "2023-02-06T00:00:00.000Z",
-      "n_reviews": 5,
-      "avg_rating": 1.8,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "HabitKit",
-      "week": "2023-06-05T00:00:00.000Z",
-      "n_reviews": 1,
-      "avg_rating": 5.0,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "Productive - Habit Tracker",
-      "week": "2023-08-21T00:00:00.000Z",
-      "n_reviews": 1,
-      "avg_rating": 2.0,
-      "is_partial_week": false
-    },
-    {
       "app_name": "Productive - Habit Tracker",
       "week": "2023-09-18T00:00:00.000Z",
       "n_reviews": 2,
       "avg_rating": 1.0,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "Productive - Habit Tracker",
+      "week": "2023-10-09T00:00:00.000Z",
+      "n_reviews": 2,
+      "avg_rating": 3.5,
       "is_partial_week": false
     },
     {
@@ -1234,17 +1521,10 @@
       "is_partial_week": false
     },
     {
-      "app_name": "Atoms - from Atomic Habits",
+      "app_name": "HabitKit",
       "week": "2024-06-24T00:00:00.000Z",
-      "n_reviews": 2,
-      "avg_rating": 1.5,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "Productive - Habit Tracker",
-      "week": "2024-09-23T00:00:00.000Z",
-      "n_reviews": 2,
-      "avg_rating": 1.0,
+      "n_reviews": 1,
+      "avg_rating": 5.0,
       "is_partial_week": false
     },
     {
@@ -1276,6 +1556,13 @@
       "is_partial_week": false
     },
     {
+      "app_name": "HabitKit",
+      "week": "2025-07-07T00:00:00.000Z",
+      "n_reviews": 1,
+      "avg_rating": 5.0,
+      "is_partial_week": false
+    },
+    {
       "app_name": "Habit Tracker",
       "week": "2025-09-01T00:00:00.000Z",
       "n_reviews": 7,
@@ -1297,17 +1584,17 @@
       "is_partial_week": false
     },
     {
-      "app_name": "Atoms - from Atomic Habits",
-      "week": "2026-01-05T00:00:00.000Z",
-      "n_reviews": 2,
-      "avg_rating": 3.0,
-      "is_partial_week": false
-    },
-    {
       "app_name": "HabitKit",
       "week": "2026-01-05T00:00:00.000Z",
       "n_reviews": 3,
       "avg_rating": 4.67,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "Atoms - from Atomic Habits",
+      "week": "2026-03-16T00:00:00.000Z",
+      "n_reviews": 1,
+      "avg_rating": 2.0,
       "is_partial_week": false
     },
     {
@@ -1368,6 +1655,48 @@
     },
     {
       "app_name": "Productive - Habit Tracker",
+      "week": "2023-02-20T00:00:00.000Z",
+      "n_reviews": 3,
+      "avg_rating": 5.0,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "HabitKit",
+      "week": "2023-06-05T00:00:00.000Z",
+      "n_reviews": 1,
+      "avg_rating": 5.0,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "Productive - Habit Tracker",
+      "week": "2023-08-21T00:00:00.000Z",
+      "n_reviews": 1,
+      "avg_rating": 2.0,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "Atoms - from Atomic Habits",
+      "week": "2024-06-24T00:00:00.000Z",
+      "n_reviews": 2,
+      "avg_rating": 1.5,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "Productive - Habit Tracker",
+      "week": "2024-09-23T00:00:00.000Z",
+      "n_reviews": 2,
+      "avg_rating": 1.0,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "Atoms - from Atomic Habits",
+      "week": "2026-01-05T00:00:00.000Z",
+      "n_reviews": 2,
+      "avg_rating": 3.0,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "Productive - Habit Tracker",
       "week": "2023-05-15T00:00:00.000Z",
       "n_reviews": 1,
       "avg_rating": 5.0,
@@ -1396,13 +1725,6 @@
     },
     {
       "app_name": "Atoms - from Atomic Habits",
-      "week": "2024-05-27T00:00:00.000Z",
-      "n_reviews": 2,
-      "avg_rating": 2.5,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "Atoms - from Atomic Habits",
       "week": "2024-07-01T00:00:00.000Z",
       "n_reviews": 2,
       "avg_rating": 4.0,
@@ -1410,7 +1732,14 @@
     },
     {
       "app_name": "Productive - Habit Tracker",
-      "week": "2024-10-07T00:00:00.000Z",
+      "week": "2024-07-29T00:00:00.000Z",
+      "n_reviews": 3,
+      "avg_rating": 1.33,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "HabitKit",
+      "week": "2024-11-18T00:00:00.000Z",
       "n_reviews": 1,
       "avg_rating": 5.0,
       "is_partial_week": false
@@ -1423,13 +1752,6 @@
       "is_partial_week": false
     },
     {
-      "app_name": "Productive - Habit Tracker",
-      "week": "2024-12-16T00:00:00.000Z",
-      "n_reviews": 1,
-      "avg_rating": 1.0,
-      "is_partial_week": false
-    },
-    {
       "app_name": "HabitKit",
       "week": "2025-01-27T00:00:00.000Z",
       "n_reviews": 5,
@@ -1437,10 +1759,17 @@
       "is_partial_week": false
     },
     {
-      "app_name": "HabitKit",
+      "app_name": "Atoms - from Atomic Habits",
       "week": "2025-02-03T00:00:00.000Z",
       "n_reviews": 1,
       "avg_rating": 5.0,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "Productive - Habit Tracker",
+      "week": "2025-03-24T00:00:00.000Z",
+      "n_reviews": 1,
+      "avg_rating": 1.0,
       "is_partial_week": false
     },
     {
@@ -1451,9 +1780,16 @@
       "is_partial_week": false
     },
     {
-      "app_name": "Atoms - from Atomic Habits",
-      "week": "2025-08-04T00:00:00.000Z",
-      "n_reviews": 1,
+      "app_name": "HabitKit",
+      "week": "2025-06-23T00:00:00.000Z",
+      "n_reviews": 2,
+      "avg_rating": 5.0,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "Productive - Habit Tracker",
+      "week": "2025-08-11T00:00:00.000Z",
+      "n_reviews": 2,
       "avg_rating": 1.0,
       "is_partial_week": false
     },
@@ -1465,13 +1801,6 @@
       "is_partial_week": false
     },
     {
-      "app_name": "Productive - Habit Tracker",
-      "week": "2025-09-29T00:00:00.000Z",
-      "n_reviews": 1,
-      "avg_rating": 5.0,
-      "is_partial_week": false
-    },
-    {
       "app_name": "Habit Tracker",
       "week": "2025-10-13T00:00:00.000Z",
       "n_reviews": 9,
@@ -1479,24 +1808,10 @@
       "is_partial_week": false
     },
     {
-      "app_name": "HabitKit",
-      "week": "2025-11-10T00:00:00.000Z",
-      "n_reviews": 1,
-      "avg_rating": 5.0,
-      "is_partial_week": false
-    },
-    {
       "app_name": "Habit Tracker",
       "week": "2025-12-22T00:00:00.000Z",
       "n_reviews": 4,
       "avg_rating": 3.75,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "Productive - Habit Tracker",
-      "week": "2026-02-16T00:00:00.000Z",
-      "n_reviews": 1,
-      "avg_rating": 1.0,
       "is_partial_week": false
     },
     {
@@ -1511,6 +1826,20 @@
       "week": "2026-03-09T00:00:00.000Z",
       "n_reviews": 5,
       "avg_rating": 4.4,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "Atoms - from Atomic Habits",
+      "week": "2026-03-09T00:00:00.000Z",
+      "n_reviews": 3,
+      "avg_rating": 3.67,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "Atoms - from Atomic Habits",
+      "week": "2026-03-23T00:00:00.000Z",
+      "n_reviews": 1,
+      "avg_rating": 3.0,
       "is_partial_week": false
     },
     {
@@ -1549,6 +1878,62 @@
       "is_partial_week": false
     },
     {
+      "app_name": "Atoms - from Atomic Habits",
+      "week": "2024-05-27T00:00:00.000Z",
+      "n_reviews": 2,
+      "avg_rating": 2.5,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "Productive - Habit Tracker",
+      "week": "2024-10-07T00:00:00.000Z",
+      "n_reviews": 1,
+      "avg_rating": 5.0,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "Productive - Habit Tracker",
+      "week": "2024-12-16T00:00:00.000Z",
+      "n_reviews": 1,
+      "avg_rating": 1.0,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "HabitKit",
+      "week": "2025-02-03T00:00:00.000Z",
+      "n_reviews": 1,
+      "avg_rating": 5.0,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "Atoms - from Atomic Habits",
+      "week": "2025-08-04T00:00:00.000Z",
+      "n_reviews": 1,
+      "avg_rating": 1.0,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "Productive - Habit Tracker",
+      "week": "2025-09-29T00:00:00.000Z",
+      "n_reviews": 1,
+      "avg_rating": 5.0,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "HabitKit",
+      "week": "2025-11-10T00:00:00.000Z",
+      "n_reviews": 1,
+      "avg_rating": 5.0,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "Productive - Habit Tracker",
+      "week": "2026-02-16T00:00:00.000Z",
+      "n_reviews": 1,
+      "avg_rating": 1.0,
+      "is_partial_week": false
+    },
+    {
       "app_name": "Productive - Habit Tracker",
       "week": "2023-06-05T00:00:00.000Z",
       "n_reviews": 3,
@@ -1559,20 +1944,6 @@
       "app_name": "Productive - Habit Tracker",
       "week": "2023-07-17T00:00:00.000Z",
       "n_reviews": 4,
-      "avg_rating": 3.0,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "Productive - Habit Tracker",
-      "week": "2023-09-11T00:00:00.000Z",
-      "n_reviews": 2,
-      "avg_rating": 4.5,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "Productive - Habit Tracker",
-      "week": "2024-02-19T00:00:00.000Z",
-      "n_reviews": 2,
       "avg_rating": 3.0,
       "is_partial_week": false
     },
@@ -1626,20 +1997,6 @@
       "is_partial_week": false
     },
     {
-      "app_name": "Productive - Habit Tracker",
-      "week": "2025-02-03T00:00:00.000Z",
-      "n_reviews": 1,
-      "avg_rating": 5.0,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "HabitKit",
-      "week": "2025-06-30T00:00:00.000Z",
-      "n_reviews": 1,
-      "avg_rating": 1.0,
-      "is_partial_week": false
-    },
-    {
       "app_name": "HabitKit",
       "week": "2025-07-21T00:00:00.000Z",
       "n_reviews": 3,
@@ -1647,10 +2004,24 @@
       "is_partial_week": false
     },
     {
-      "app_name": "Productive - Habit Tracker",
-      "week": "2025-11-24T00:00:00.000Z",
+      "app_name": "Atoms - from Atomic Habits",
+      "week": "2025-07-21T00:00:00.000Z",
       "n_reviews": 1,
       "avg_rating": 5.0,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "HabitKit",
+      "week": "2025-11-03T00:00:00.000Z",
+      "n_reviews": 1,
+      "avg_rating": 5.0,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "Atoms - from Atomic Habits",
+      "week": "2025-12-29T00:00:00.000Z",
+      "n_reviews": 3,
+      "avg_rating": 2.67,
       "is_partial_week": false
     },
     {
@@ -1658,13 +2029,6 @@
       "week": "2026-01-19T00:00:00.000Z",
       "n_reviews": 7,
       "avg_rating": 3.57,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "Atoms - from Atomic Habits",
-      "week": "2026-02-16T00:00:00.000Z",
-      "n_reviews": 2,
-      "avg_rating": 3.5,
       "is_partial_week": false
     },
     {
@@ -1696,6 +2060,13 @@
       "is_partial_week": false
     },
     {
+      "app_name": "HabitKit",
+      "week": "2026-08-03T00:00:00.000Z",
+      "n_reviews": 2,
+      "avg_rating": 5.0,
+      "is_partial_week": false
+    },
+    {
       "app_name": "Productive - Habit Tracker",
       "week": "2022-08-29T00:00:00.000Z",
       "n_reviews": 4,
@@ -1703,10 +2074,73 @@
       "is_partial_week": false
     },
     {
+      "app_name": "HabitKit",
+      "week": "2022-11-28T00:00:00.000Z",
+      "n_reviews": 1,
+      "avg_rating": 5.0,
+      "is_partial_week": true
+    },
+    {
+      "app_name": "HabitKit",
+      "week": "2023-04-10T00:00:00.000Z",
+      "n_reviews": 1,
+      "avg_rating": 5.0,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "Productive - Habit Tracker",
+      "week": "2023-09-11T00:00:00.000Z",
+      "n_reviews": 2,
+      "avg_rating": 4.5,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "Productive - Habit Tracker",
+      "week": "2024-02-19T00:00:00.000Z",
+      "n_reviews": 2,
+      "avg_rating": 3.0,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "Productive - Habit Tracker",
+      "week": "2025-02-03T00:00:00.000Z",
+      "n_reviews": 1,
+      "avg_rating": 5.0,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "HabitKit",
+      "week": "2025-06-30T00:00:00.000Z",
+      "n_reviews": 1,
+      "avg_rating": 1.0,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "Productive - Habit Tracker",
+      "week": "2025-11-24T00:00:00.000Z",
+      "n_reviews": 1,
+      "avg_rating": 5.0,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "Atoms - from Atomic Habits",
+      "week": "2026-02-16T00:00:00.000Z",
+      "n_reviews": 2,
+      "avg_rating": 3.5,
+      "is_partial_week": false
+    },
+    {
       "app_name": "Productive - Habit Tracker",
       "week": "2022-11-28T00:00:00.000Z",
       "n_reviews": 1,
       "avg_rating": 3.0,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "Habit Tracker",
+      "week": "2026-08-03T00:00:00.000Z",
+      "n_reviews": 12,
+      "avg_rating": 3.75,
       "is_partial_week": false
     },
     {
@@ -1721,13 +2155,6 @@
       "week": "2023-11-06T00:00:00.000Z",
       "n_reviews": 4,
       "avg_rating": 4.25,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "Productive - Habit Tracker",
-      "week": "2023-11-20T00:00:00.000Z",
-      "n_reviews": 1,
-      "avg_rating": 3.0,
       "is_partial_week": false
     },
     {
@@ -1760,16 +2187,16 @@
     },
     {
       "app_name": "HabitKit",
-      "week": "2024-09-09T00:00:00.000Z",
-      "n_reviews": 1,
+      "week": "2024-09-23T00:00:00.000Z",
+      "n_reviews": 2,
       "avg_rating": 5.0,
       "is_partial_week": false
     },
     {
       "app_name": "Atoms - from Atomic Habits",
-      "week": "2024-12-02T00:00:00.000Z",
+      "week": "2025-05-26T00:00:00.000Z",
       "n_reviews": 1,
-      "avg_rating": 5.0,
+      "avg_rating": 4.0,
       "is_partial_week": false
     },
     {
@@ -1801,20 +2228,6 @@
       "is_partial_week": false
     },
     {
-      "app_name": "Atoms - from Atomic Habits",
-      "week": "2026-05-11T00:00:00.000Z",
-      "n_reviews": 2,
-      "avg_rating": 4.0,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "Habit Tracker",
-      "week": "2026-08-03T00:00:00.000Z",
-      "n_reviews": 12,
-      "avg_rating": 3.75,
-      "is_partial_week": false
-    },
-    {
       "app_name": "Productive - Habit Tracker",
       "week": "2022-08-01T00:00:00.000Z",
       "n_reviews": 9,
@@ -1830,7 +2243,7 @@
     },
     {
       "app_name": "Productive - Habit Tracker",
-      "week": "2022-12-05T00:00:00.000Z",
+      "week": "2022-10-31T00:00:00.000Z",
       "n_reviews": 1,
       "avg_rating": 1.0,
       "is_partial_week": false
@@ -1865,6 +2278,48 @@
     },
     {
       "app_name": "Productive - Habit Tracker",
+      "week": "2023-11-20T00:00:00.000Z",
+      "n_reviews": 1,
+      "avg_rating": 3.0,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "HabitKit",
+      "week": "2024-09-09T00:00:00.000Z",
+      "n_reviews": 1,
+      "avg_rating": 5.0,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "Atoms - from Atomic Habits",
+      "week": "2024-12-02T00:00:00.000Z",
+      "n_reviews": 1,
+      "avg_rating": 5.0,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "Atoms - from Atomic Habits",
+      "week": "2026-05-11T00:00:00.000Z",
+      "n_reviews": 2,
+      "avg_rating": 4.0,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "Productive - Habit Tracker",
+      "week": "2022-12-05T00:00:00.000Z",
+      "n_reviews": 1,
+      "avg_rating": 1.0,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "Finch: Self-Care Pet",
+      "week": "2026-08-17T00:00:00.000Z",
+      "n_reviews": 95,
+      "avg_rating": 4.68,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "Productive - Habit Tracker",
       "week": "2023-07-31T00:00:00.000Z",
       "n_reviews": 4,
       "avg_rating": 2.0,
@@ -1882,13 +2337,6 @@
       "week": "2023-10-02T00:00:00.000Z",
       "n_reviews": 4,
       "avg_rating": 2.5,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "Productive - Habit Tracker",
-      "week": "2023-10-30T00:00:00.000Z",
-      "n_reviews": 1,
-      "avg_rating": 5.0,
       "is_partial_week": false
     },
     {
@@ -1927,17 +2375,17 @@
       "is_partial_week": false
     },
     {
-      "app_name": "Productive - Habit Tracker",
-      "week": "2024-11-25T00:00:00.000Z",
+      "app_name": "HabitKit",
+      "week": "2024-10-21T00:00:00.000Z",
       "n_reviews": 1,
       "avg_rating": 5.0,
       "is_partial_week": false
     },
     {
-      "app_name": "HabitKit",
-      "week": "2024-12-09T00:00:00.000Z",
-      "n_reviews": 1,
-      "avg_rating": 5.0,
+      "app_name": "Atoms - from Atomic Habits",
+      "week": "2024-11-25T00:00:00.000Z",
+      "n_reviews": 2,
+      "avg_rating": 1.0,
       "is_partial_week": false
     },
     {
@@ -1945,20 +2393,6 @@
       "week": "2024-12-30T00:00:00.000Z",
       "n_reviews": 4,
       "avg_rating": 2.75,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "HabitKit",
-      "week": "2025-05-19T00:00:00.000Z",
-      "n_reviews": 1,
-      "avg_rating": 3.0,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "HabitKit",
-      "week": "2025-05-26T00:00:00.000Z",
-      "n_reviews": 2,
-      "avg_rating": 4.0,
       "is_partial_week": false
     },
     {
@@ -1976,13 +2410,6 @@
       "is_partial_week": false
     },
     {
-      "app_name": "Atoms - from Atomic Habits",
-      "week": "2025-09-29T00:00:00.000Z",
-      "n_reviews": 3,
-      "avg_rating": 4.0,
-      "is_partial_week": false
-    },
-    {
       "app_name": "HabitKit",
       "week": "2025-10-20T00:00:00.000Z",
       "n_reviews": 2,
@@ -1997,6 +2424,55 @@
       "is_partial_week": false
     },
     {
+      "app_name": "Productive - Habit Tracker",
+      "week": "2022-12-19T00:00:00.000Z",
+      "n_reviews": 9,
+      "avg_rating": 2.44,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "Productive - Habit Tracker",
+      "week": "2023-10-30T00:00:00.000Z",
+      "n_reviews": 1,
+      "avg_rating": 5.0,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "Productive - Habit Tracker",
+      "week": "2024-11-25T00:00:00.000Z",
+      "n_reviews": 1,
+      "avg_rating": 5.0,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "HabitKit",
+      "week": "2024-12-09T00:00:00.000Z",
+      "n_reviews": 1,
+      "avg_rating": 5.0,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "HabitKit",
+      "week": "2025-05-19T00:00:00.000Z",
+      "n_reviews": 1,
+      "avg_rating": 3.0,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "HabitKit",
+      "week": "2025-05-26T00:00:00.000Z",
+      "n_reviews": 2,
+      "avg_rating": 4.0,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "Atoms - from Atomic Habits",
+      "week": "2025-09-29T00:00:00.000Z",
+      "n_reviews": 3,
+      "avg_rating": 4.0,
+      "is_partial_week": false
+    },
+    {
       "app_name": "Atoms - from Atomic Habits",
       "week": "2026-02-23T00:00:00.000Z",
       "n_reviews": 2,
@@ -2008,20 +2484,6 @@
       "week": "2026-03-02T00:00:00.000Z",
       "n_reviews": 2,
       "avg_rating": 1.0,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "Finch: Self-Care Pet",
-      "week": "2026-08-17T00:00:00.000Z",
-      "n_reviews": 82,
-      "avg_rating": 4.76,
-      "is_partial_week": true
-    },
-    {
-      "app_name": "Productive - Habit Tracker",
-      "week": "2022-12-19T00:00:00.000Z",
-      "n_reviews": 9,
-      "avg_rating": 2.44,
       "is_partial_week": false
     },
     {
@@ -2047,6 +2509,13 @@
     },
     {
       "app_name": "Productive - Habit Tracker",
+      "week": "2023-09-25T00:00:00.000Z",
+      "n_reviews": 1,
+      "avg_rating": 5.0,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "Productive - Habit Tracker",
       "week": "2023-12-25T00:00:00.000Z",
       "n_reviews": 6,
       "avg_rating": 1.33,
@@ -2057,13 +2526,6 @@
       "week": "2024-03-11T00:00:00.000Z",
       "n_reviews": 2,
       "avg_rating": 3.0,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "Productive - Habit Tracker",
-      "week": "2024-04-01T00:00:00.000Z",
-      "n_reviews": 2,
-      "avg_rating": 2.0,
       "is_partial_week": false
     },
     {
@@ -2081,17 +2543,10 @@
       "is_partial_week": false
     },
     {
-      "app_name": "HabitKit",
-      "week": "2024-07-01T00:00:00.000Z",
+      "app_name": "Productive - Habit Tracker",
+      "week": "2024-07-22T00:00:00.000Z",
       "n_reviews": 1,
-      "avg_rating": 5.0,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "HabitKit",
-      "week": "2024-08-12T00:00:00.000Z",
-      "n_reviews": 1,
-      "avg_rating": 5.0,
+      "avg_rating": 1.0,
       "is_partial_week": false
     },
     {
@@ -2099,6 +2554,20 @@
       "week": "2024-10-07T00:00:00.000Z",
       "n_reviews": 2,
       "avg_rating": 1.0,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "Productive - Habit Tracker",
+      "week": "2024-10-28T00:00:00.000Z",
+      "n_reviews": 1,
+      "avg_rating": 2.0,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "HabitKit",
+      "week": "2024-11-04T00:00:00.000Z",
+      "n_reviews": 1,
+      "avg_rating": 5.0,
       "is_partial_week": false
     },
     {
@@ -2117,6 +2586,27 @@
     },
     {
       "app_name": "Atoms - from Atomic Habits",
+      "week": "2025-02-24T00:00:00.000Z",
+      "n_reviews": 1,
+      "avg_rating": 5.0,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "Atoms - from Atomic Habits",
+      "week": "2025-03-10T00:00:00.000Z",
+      "n_reviews": 2,
+      "avg_rating": 5.0,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "Atoms - from Atomic Habits",
+      "week": "2025-06-30T00:00:00.000Z",
+      "n_reviews": 1,
+      "avg_rating": 5.0,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "Atoms - from Atomic Habits",
       "week": "2025-07-07T00:00:00.000Z",
       "n_reviews": 2,
       "avg_rating": 5.0,
@@ -2127,6 +2617,13 @@
       "week": "2025-11-17T00:00:00.000Z",
       "n_reviews": 2,
       "avg_rating": 5.0,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "Productive - Habit Tracker",
+      "week": "2026-01-05T00:00:00.000Z",
+      "n_reviews": 1,
+      "avg_rating": 1.0,
       "is_partial_week": false
     },
     {
@@ -2179,6 +2676,34 @@
       "is_partial_week": false
     },
     {
+      "app_name": "Productive - Habit Tracker",
+      "week": "2023-05-01T00:00:00.000Z",
+      "n_reviews": 3,
+      "avg_rating": 2.67,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "Productive - Habit Tracker",
+      "week": "2024-04-01T00:00:00.000Z",
+      "n_reviews": 2,
+      "avg_rating": 2.0,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "HabitKit",
+      "week": "2024-07-01T00:00:00.000Z",
+      "n_reviews": 1,
+      "avg_rating": 5.0,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "HabitKit",
+      "week": "2024-08-12T00:00:00.000Z",
+      "n_reviews": 1,
+      "avg_rating": 5.0,
+      "is_partial_week": false
+    },
+    {
       "app_name": "HabitKit",
       "week": "2023-04-24T00:00:00.000Z",
       "n_reviews": 1,
@@ -2186,10 +2711,17 @@
       "is_partial_week": false
     },
     {
+      "app_name": "Finch: Self-Care Pet",
+      "week": "2026-07-27T00:00:00.000Z",
+      "n_reviews": 140,
+      "avg_rating": 4.66,
+      "is_partial_week": true
+    },
+    {
       "app_name": "Productive - Habit Tracker",
-      "week": "2023-05-01T00:00:00.000Z",
-      "n_reviews": 3,
-      "avg_rating": 2.67,
+      "week": "2023-06-19T00:00:00.000Z",
+      "n_reviews": 2,
+      "avg_rating": 1.0,
       "is_partial_week": false
     },
     {
@@ -2201,7 +2733,7 @@
     },
     {
       "app_name": "HabitKit",
-      "week": "2023-08-28T00:00:00.000Z",
+      "week": "2023-11-27T00:00:00.000Z",
       "n_reviews": 1,
       "avg_rating": 5.0,
       "is_partial_week": false
@@ -2214,10 +2746,24 @@
       "is_partial_week": false
     },
     {
+      "app_name": "Productive - Habit Tracker",
+      "week": "2024-09-02T00:00:00.000Z",
+      "n_reviews": 1,
+      "avg_rating": 2.0,
+      "is_partial_week": false
+    },
+    {
       "app_name": "Atoms - from Atomic Habits",
       "week": "2024-11-04T00:00:00.000Z",
       "n_reviews": 2,
       "avg_rating": 1.5,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "Productive - Habit Tracker",
+      "week": "2024-11-11T00:00:00.000Z",
+      "n_reviews": 1,
+      "avg_rating": 1.0,
       "is_partial_week": false
     },
     {
@@ -2228,10 +2774,10 @@
       "is_partial_week": false
     },
     {
-      "app_name": "Productive - Habit Tracker",
-      "week": "2025-05-26T00:00:00.000Z",
-      "n_reviews": 1,
-      "avg_rating": 4.0,
+      "app_name": "HabitKit",
+      "week": "2025-08-11T00:00:00.000Z",
+      "n_reviews": 2,
+      "avg_rating": 5.0,
       "is_partial_week": false
     },
     {
@@ -2249,13 +2795,6 @@
       "is_partial_week": false
     },
     {
-      "app_name": "Atoms - from Atomic Habits",
-      "week": "2025-12-15T00:00:00.000Z",
-      "n_reviews": 1,
-      "avg_rating": 2.0,
-      "is_partial_week": false
-    },
-    {
       "app_name": "Productive - Habit Tracker",
       "week": "2025-12-29T00:00:00.000Z",
       "n_reviews": 2,
@@ -2267,20 +2806,6 @@
       "week": "2026-04-20T00:00:00.000Z",
       "n_reviews": 3,
       "avg_rating": 3.67,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "Productive - Habit Tracker",
-      "week": "2026-06-01T00:00:00.000Z",
-      "n_reviews": 1,
-      "avg_rating": 5.0,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "Productive - Habit Tracker",
-      "week": "2026-06-08T00:00:00.000Z",
-      "n_reviews": 1,
-      "avg_rating": 2.0,
       "is_partial_week": false
     },
     {
@@ -2299,13 +2824,6 @@
     },
     {
       "app_name": "Finch: Self-Care Pet",
-      "week": "2026-07-27T00:00:00.000Z",
-      "n_reviews": 140,
-      "avg_rating": 4.66,
-      "is_partial_week": true
-    },
-    {
-      "app_name": "Finch: Self-Care Pet",
       "week": "2026-08-03T00:00:00.000Z",
       "n_reviews": 159,
       "avg_rating": 4.6,
@@ -2316,6 +2834,48 @@
       "week": "2023-04-03T00:00:00.000Z",
       "n_reviews": 3,
       "avg_rating": 3.0,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "HabitKit",
+      "week": "2023-05-08T00:00:00.000Z",
+      "n_reviews": 1,
+      "avg_rating": 5.0,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "HabitKit",
+      "week": "2023-08-28T00:00:00.000Z",
+      "n_reviews": 1,
+      "avg_rating": 5.0,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "Productive - Habit Tracker",
+      "week": "2025-05-26T00:00:00.000Z",
+      "n_reviews": 1,
+      "avg_rating": 4.0,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "Atoms - from Atomic Habits",
+      "week": "2025-12-15T00:00:00.000Z",
+      "n_reviews": 1,
+      "avg_rating": 2.0,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "Productive - Habit Tracker",
+      "week": "2026-06-01T00:00:00.000Z",
+      "n_reviews": 1,
+      "avg_rating": 5.0,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "Productive - Habit Tracker",
+      "week": "2026-06-08T00:00:00.000Z",
+      "n_reviews": 1,
+      "avg_rating": 2.0,
       "is_partial_week": false
     },
     {
@@ -2355,16 +2915,16 @@
     },
     {
       "app_name": "Productive - Habit Tracker",
-      "week": "2024-08-26T00:00:00.000Z",
-      "n_reviews": 3,
-      "avg_rating": 3.67,
+      "week": "2024-08-05T00:00:00.000Z",
+      "n_reviews": 1,
+      "avg_rating": 2.0,
       "is_partial_week": false
     },
     {
-      "app_name": "Atoms - from Atomic Habits",
-      "week": "2024-09-16T00:00:00.000Z",
-      "n_reviews": 1,
-      "avg_rating": 3.0,
+      "app_name": "Productive - Habit Tracker",
+      "week": "2024-08-26T00:00:00.000Z",
+      "n_reviews": 3,
+      "avg_rating": 3.67,
       "is_partial_week": false
     },
     {
@@ -2383,9 +2943,9 @@
     },
     {
       "app_name": "Productive - Habit Tracker",
-      "week": "2025-05-05T00:00:00.000Z",
+      "week": "2024-12-23T00:00:00.000Z",
       "n_reviews": 1,
-      "avg_rating": 3.0,
+      "avg_rating": 4.0,
       "is_partial_week": false
     },
     {
@@ -2393,13 +2953,6 @@
       "week": "2025-09-01T00:00:00.000Z",
       "n_reviews": 2,
       "avg_rating": 5.0,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "Atoms - from Atomic Habits",
-      "week": "2025-09-22T00:00:00.000Z",
-      "n_reviews": 1,
-      "avg_rating": 2.0,
       "is_partial_week": false
     },
     {
@@ -2445,13 +2998,6 @@
       "is_partial_week": false
     },
     {
-      "app_name": "Atoms - from Atomic Habits",
-      "week": "2026-05-25T00:00:00.000Z",
-      "n_reviews": 1,
-      "avg_rating": 3.0,
-      "is_partial_week": false
-    },
-    {
       "app_name": "HabitKit",
       "week": "2026-05-25T00:00:00.000Z",
       "n_reviews": 3,
@@ -2463,13 +3009,6 @@
       "week": "2026-06-01T00:00:00.000Z",
       "n_reviews": 4,
       "avg_rating": 3.25,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "HabitKit",
-      "week": "2026-06-01T00:00:00.000Z",
-      "n_reviews": 1,
-      "avg_rating": 1.0,
       "is_partial_week": false
     },
     {
@@ -2487,17 +3026,52 @@
       "is_partial_week": false
     },
     {
+      "app_name": "HabitKit",
+      "week": "2023-01-16T00:00:00.000Z",
+      "n_reviews": 1,
+      "avg_rating": 5.0,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "Atoms - from Atomic Habits",
+      "week": "2024-09-16T00:00:00.000Z",
+      "n_reviews": 1,
+      "avg_rating": 3.0,
+      "is_partial_week": false
+    },
+    {
       "app_name": "Productive - Habit Tracker",
-      "week": "2023-03-13T00:00:00.000Z",
-      "n_reviews": 3,
-      "avg_rating": 2.67,
+      "week": "2025-05-05T00:00:00.000Z",
+      "n_reviews": 1,
+      "avg_rating": 3.0,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "Atoms - from Atomic Habits",
+      "week": "2025-09-22T00:00:00.000Z",
+      "n_reviews": 1,
+      "avg_rating": 2.0,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "Atoms - from Atomic Habits",
+      "week": "2026-05-25T00:00:00.000Z",
+      "n_reviews": 1,
+      "avg_rating": 3.0,
       "is_partial_week": false
     },
     {
       "app_name": "HabitKit",
-      "week": "2023-07-03T00:00:00.000Z",
+      "week": "2026-06-01T00:00:00.000Z",
       "n_reviews": 1,
-      "avg_rating": 5.0,
+      "avg_rating": 1.0,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "Productive - Habit Tracker",
+      "week": "2023-03-13T00:00:00.000Z",
+      "n_reviews": 3,
+      "avg_rating": 2.67,
       "is_partial_week": false
     },
     {
@@ -2519,6 +3093,90 @@
       "week": "2024-02-26T00:00:00.000Z",
       "n_reviews": 170,
       "avg_rating": 3.99,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "Atoms - from Atomic Habits",
+      "week": "2025-06-02T00:00:00.000Z",
+      "n_reviews": 4,
+      "avg_rating": 4.0,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "Atoms - from Atomic Habits",
+      "week": "2025-06-16T00:00:00.000Z",
+      "n_reviews": 1,
+      "avg_rating": 5.0,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "Habit Tracker",
+      "week": "2025-08-25T00:00:00.000Z",
+      "n_reviews": 5,
+      "avg_rating": 3.0,
+      "is_partial_week": true
+    },
+    {
+      "app_name": "Habit Tracker",
+      "week": "2025-11-24T00:00:00.000Z",
+      "n_reviews": 4,
+      "avg_rating": 4.0,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "HabitKit",
+      "week": "2025-12-29T00:00:00.000Z",
+      "n_reviews": 4,
+      "avg_rating": 3.75,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "Habit Tracker",
+      "week": "2026-02-02T00:00:00.000Z",
+      "n_reviews": 14,
+      "avg_rating": 3.5,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "Habit Tracker",
+      "week": "2026-03-09T00:00:00.000Z",
+      "n_reviews": 7,
+      "avg_rating": 4.29,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "HabitKit",
+      "week": "2026-08-10T00:00:00.000Z",
+      "n_reviews": 1,
+      "avg_rating": 5.0,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "Productive - Habit Tracker",
+      "week": "2022-07-04T00:00:00.000Z",
+      "n_reviews": 2,
+      "avg_rating": 1.0,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "Productive - Habit Tracker",
+      "week": "2022-09-12T00:00:00.000Z",
+      "n_reviews": 7,
+      "avg_rating": 1.71,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "Productive - Habit Tracker",
+      "week": "2023-03-27T00:00:00.000Z",
+      "n_reviews": 4,
+      "avg_rating": 2.5,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "HabitKit",
+      "week": "2023-07-03T00:00:00.000Z",
+      "n_reviews": 1,
+      "avg_rating": 5.0,
       "is_partial_week": false
     },
     {
@@ -2557,27 +3215,6 @@
       "is_partial_week": false
     },
     {
-      "app_name": "Atoms - from Atomic Habits",
-      "week": "2025-06-02T00:00:00.000Z",
-      "n_reviews": 4,
-      "avg_rating": 4.0,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "Habit Tracker",
-      "week": "2025-08-25T00:00:00.000Z",
-      "n_reviews": 5,
-      "avg_rating": 3.0,
-      "is_partial_week": true
-    },
-    {
-      "app_name": "Habit Tracker",
-      "week": "2025-11-24T00:00:00.000Z",
-      "n_reviews": 4,
-      "avg_rating": 4.0,
-      "is_partial_week": false
-    },
-    {
       "app_name": "HabitKit",
       "week": "2025-12-22T00:00:00.000Z",
       "n_reviews": 1,
@@ -2585,31 +3222,10 @@
       "is_partial_week": false
     },
     {
-      "app_name": "HabitKit",
-      "week": "2025-12-29T00:00:00.000Z",
-      "n_reviews": 4,
-      "avg_rating": 3.75,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "Habit Tracker",
-      "week": "2026-02-02T00:00:00.000Z",
-      "n_reviews": 14,
-      "avg_rating": 3.5,
-      "is_partial_week": false
-    },
-    {
       "app_name": "Atoms - from Atomic Habits",
       "week": "2026-02-02T00:00:00.000Z",
       "n_reviews": 3,
       "avg_rating": 4.0,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "Habit Tracker",
-      "week": "2026-03-09T00:00:00.000Z",
-      "n_reviews": 7,
-      "avg_rating": 4.29,
       "is_partial_week": false
     },
     {
@@ -2631,13 +3247,6 @@
       "week": "2026-07-06T00:00:00.000Z",
       "n_reviews": 1,
       "avg_rating": 5.0,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "Productive - Habit Tracker",
-      "week": "2022-07-04T00:00:00.000Z",
-      "n_reviews": 2,
-      "avg_rating": 1.0,
       "is_partial_week": false
     },
     {
@@ -2646,616 +3255,7 @@
       "n_reviews": 1,
       "avg_rating": 5.0,
       "is_partial_week": false
-    },
-    {
-      "app_name": "Productive - Habit Tracker",
-      "week": "2022-09-12T00:00:00.000Z",
-      "n_reviews": 7,
-      "avg_rating": 1.71,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "Productive - Habit Tracker",
-      "week": "2023-03-27T00:00:00.000Z",
-      "n_reviews": 4,
-      "avg_rating": 2.5,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "Productive - Habit Tracker",
-      "week": "2024-07-15T00:00:00.000Z",
-      "n_reviews": 1,
-      "avg_rating": 1.0,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "Productive - Habit Tracker",
-      "week": "2026-01-19T00:00:00.000Z",
-      "n_reviews": 2,
-      "avg_rating": 3.5,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "Atoms - from Atomic Habits",
-      "week": "2026-05-04T00:00:00.000Z",
-      "n_reviews": 1,
-      "avg_rating": 3.0,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "Productive - Habit Tracker",
-      "week": "2026-06-15T00:00:00.000Z",
-      "n_reviews": 1,
-      "avg_rating": 5.0,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "HabitKit",
-      "week": "2026-07-27T00:00:00.000Z",
-      "n_reviews": 1,
-      "avg_rating": 5.0,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "HabitKit",
-      "week": "2024-07-29T00:00:00.000Z",
-      "n_reviews": 2,
-      "avg_rating": 4.5,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "Atoms - from Atomic Habits",
-      "week": "2025-02-17T00:00:00.000Z",
-      "n_reviews": 1,
-      "avg_rating": 3.0,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "Atoms - from Atomic Habits",
-      "week": "2025-10-27T00:00:00.000Z",
-      "n_reviews": 1,
-      "avg_rating": 5.0,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "HabitKit",
-      "week": "2026-01-12T00:00:00.000Z",
-      "n_reviews": 1,
-      "avg_rating": 5.0,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "Atoms - from Atomic Habits",
-      "week": "2026-06-22T00:00:00.000Z",
-      "n_reviews": 1,
-      "avg_rating": 4.0,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "HabitKit",
-      "week": "2024-04-01T00:00:00.000Z",
-      "n_reviews": 1,
-      "avg_rating": 4.0,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "Atoms - from Atomic Habits",
-      "week": "2024-06-17T00:00:00.000Z",
-      "n_reviews": 2,
-      "avg_rating": 3.0,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "HabitKit",
-      "week": "2025-03-24T00:00:00.000Z",
-      "n_reviews": 1,
-      "avg_rating": 5.0,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "Productive - Habit Tracker",
-      "week": "2025-08-18T00:00:00.000Z",
-      "n_reviews": 1,
-      "avg_rating": 5.0,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "Productive - Habit Tracker",
-      "week": "2026-03-30T00:00:00.000Z",
-      "n_reviews": 1,
-      "avg_rating": 1.0,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "HabitKit",
-      "week": "2026-05-18T00:00:00.000Z",
-      "n_reviews": 1,
-      "avg_rating": 4.0,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "Atoms - from Atomic Habits",
-      "week": "2026-06-15T00:00:00.000Z",
-      "n_reviews": 2,
-      "avg_rating": 5.0,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "HabitKit",
-      "week": "2022-12-19T00:00:00.000Z",
-      "n_reviews": 1,
-      "avg_rating": 5.0,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "Productive - Habit Tracker",
-      "week": "2024-09-16T00:00:00.000Z",
-      "n_reviews": 1,
-      "avg_rating": 1.0,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "Atoms - from Atomic Habits",
-      "week": "2025-05-19T00:00:00.000Z",
-      "n_reviews": 2,
-      "avg_rating": 3.0,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "HabitKit",
-      "week": "2025-08-04T00:00:00.000Z",
-      "n_reviews": 1,
-      "avg_rating": 5.0,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "HabitKit",
-      "week": "2026-02-23T00:00:00.000Z",
-      "n_reviews": 1,
-      "avg_rating": 5.0,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "Productive - Habit Tracker",
-      "week": "2026-02-23T00:00:00.000Z",
-      "n_reviews": 2,
-      "avg_rating": 2.5,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "Atoms - from Atomic Habits",
-      "week": "2026-07-06T00:00:00.000Z",
-      "n_reviews": 1,
-      "avg_rating": 2.0,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "HabitKit",
-      "week": "2026-08-17T00:00:00.000Z",
-      "n_reviews": 1,
-      "avg_rating": 5.0,
-      "is_partial_week": true
-    },
-    {
-      "app_name": "HabitKit",
-      "week": "2023-05-01T00:00:00.000Z",
-      "n_reviews": 1,
-      "avg_rating": 5.0,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "Atoms - from Atomic Habits",
-      "week": "2024-06-10T00:00:00.000Z",
-      "n_reviews": 2,
-      "avg_rating": 3.5,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "Productive - Habit Tracker",
-      "week": "2025-01-27T00:00:00.000Z",
-      "n_reviews": 3,
-      "avg_rating": 2.67,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "HabitKit",
-      "week": "2025-02-17T00:00:00.000Z",
-      "n_reviews": 4,
-      "avg_rating": 4.5,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "Atoms - from Atomic Habits",
-      "week": "2025-03-31T00:00:00.000Z",
-      "n_reviews": 1,
-      "avg_rating": 1.0,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "HabitKit",
-      "week": "2025-05-05T00:00:00.000Z",
-      "n_reviews": 1,
-      "avg_rating": 5.0,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "Productive - Habit Tracker",
-      "week": "2026-03-09T00:00:00.000Z",
-      "n_reviews": 1,
-      "avg_rating": 1.0,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "Productive - Habit Tracker",
-      "week": "2026-03-23T00:00:00.000Z",
-      "n_reviews": 1,
-      "avg_rating": 1.0,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "HabitKit",
-      "week": "2022-12-12T00:00:00.000Z",
-      "n_reviews": 1,
-      "avg_rating": 5.0,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "HabitKit",
-      "week": "2023-09-25T00:00:00.000Z",
-      "n_reviews": 1,
-      "avg_rating": 5.0,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "HabitKit",
-      "week": "2023-11-20T00:00:00.000Z",
-      "n_reviews": 1,
-      "avg_rating": 4.0,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "HabitKit",
-      "week": "2023-12-11T00:00:00.000Z",
-      "n_reviews": 1,
-      "avg_rating": 5.0,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "HabitKit",
-      "week": "2024-02-26T00:00:00.000Z",
-      "n_reviews": 1,
-      "avg_rating": 5.0,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "HabitKit",
-      "week": "2026-07-13T00:00:00.000Z",
-      "n_reviews": 1,
-      "avg_rating": 5.0,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "HabitKit",
-      "week": "2022-12-26T00:00:00.000Z",
-      "n_reviews": 1,
-      "avg_rating": 5.0,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "Productive - Habit Tracker",
-      "week": "2023-12-18T00:00:00.000Z",
-      "n_reviews": 1,
-      "avg_rating": 1.0,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "Atoms - from Atomic Habits",
-      "week": "2025-05-05T00:00:00.000Z",
-      "n_reviews": 1,
-      "avg_rating": 5.0,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "Productive - Habit Tracker",
-      "week": "2023-10-09T00:00:00.000Z",
-      "n_reviews": 2,
-      "avg_rating": 3.5,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "HabitKit",
-      "week": "2024-06-24T00:00:00.000Z",
-      "n_reviews": 1,
-      "avg_rating": 5.0,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "HabitKit",
-      "week": "2025-07-07T00:00:00.000Z",
-      "n_reviews": 1,
-      "avg_rating": 5.0,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "Atoms - from Atomic Habits",
-      "week": "2026-03-16T00:00:00.000Z",
-      "n_reviews": 1,
-      "avg_rating": 2.0,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "Productive - Habit Tracker",
-      "week": "2023-02-20T00:00:00.000Z",
-      "n_reviews": 3,
-      "avg_rating": 5.0,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "Productive - Habit Tracker",
-      "week": "2024-07-29T00:00:00.000Z",
-      "n_reviews": 3,
-      "avg_rating": 1.33,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "HabitKit",
-      "week": "2024-11-18T00:00:00.000Z",
-      "n_reviews": 1,
-      "avg_rating": 5.0,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "Atoms - from Atomic Habits",
-      "week": "2025-02-03T00:00:00.000Z",
-      "n_reviews": 1,
-      "avg_rating": 5.0,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "Productive - Habit Tracker",
-      "week": "2025-03-24T00:00:00.000Z",
-      "n_reviews": 1,
-      "avg_rating": 1.0,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "HabitKit",
-      "week": "2025-06-23T00:00:00.000Z",
-      "n_reviews": 2,
-      "avg_rating": 5.0,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "Productive - Habit Tracker",
-      "week": "2025-08-11T00:00:00.000Z",
-      "n_reviews": 2,
-      "avg_rating": 1.0,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "Atoms - from Atomic Habits",
-      "week": "2026-03-09T00:00:00.000Z",
-      "n_reviews": 3,
-      "avg_rating": 3.67,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "Atoms - from Atomic Habits",
-      "week": "2026-03-23T00:00:00.000Z",
-      "n_reviews": 1,
-      "avg_rating": 3.0,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "Atoms - from Atomic Habits",
-      "week": "2025-07-21T00:00:00.000Z",
-      "n_reviews": 1,
-      "avg_rating": 5.0,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "HabitKit",
-      "week": "2025-11-03T00:00:00.000Z",
-      "n_reviews": 1,
-      "avg_rating": 5.0,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "Atoms - from Atomic Habits",
-      "week": "2025-12-29T00:00:00.000Z",
-      "n_reviews": 3,
-      "avg_rating": 2.67,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "HabitKit",
-      "week": "2026-08-03T00:00:00.000Z",
-      "n_reviews": 2,
-      "avg_rating": 5.0,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "HabitKit",
-      "week": "2022-11-28T00:00:00.000Z",
-      "n_reviews": 1,
-      "avg_rating": 5.0,
-      "is_partial_week": true
-    },
-    {
-      "app_name": "HabitKit",
-      "week": "2023-04-10T00:00:00.000Z",
-      "n_reviews": 1,
-      "avg_rating": 5.0,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "HabitKit",
-      "week": "2024-09-23T00:00:00.000Z",
-      "n_reviews": 2,
-      "avg_rating": 5.0,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "Atoms - from Atomic Habits",
-      "week": "2025-05-26T00:00:00.000Z",
-      "n_reviews": 1,
-      "avg_rating": 4.0,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "Productive - Habit Tracker",
-      "week": "2022-10-31T00:00:00.000Z",
-      "n_reviews": 1,
-      "avg_rating": 1.0,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "HabitKit",
-      "week": "2024-10-21T00:00:00.000Z",
-      "n_reviews": 1,
-      "avg_rating": 5.0,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "Atoms - from Atomic Habits",
-      "week": "2024-11-25T00:00:00.000Z",
-      "n_reviews": 2,
-      "avg_rating": 1.0,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "Productive - Habit Tracker",
-      "week": "2023-09-25T00:00:00.000Z",
-      "n_reviews": 1,
-      "avg_rating": 5.0,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "Productive - Habit Tracker",
-      "week": "2024-07-22T00:00:00.000Z",
-      "n_reviews": 1,
-      "avg_rating": 1.0,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "Productive - Habit Tracker",
-      "week": "2024-10-28T00:00:00.000Z",
-      "n_reviews": 1,
-      "avg_rating": 2.0,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "HabitKit",
-      "week": "2024-11-04T00:00:00.000Z",
-      "n_reviews": 1,
-      "avg_rating": 5.0,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "Atoms - from Atomic Habits",
-      "week": "2025-02-24T00:00:00.000Z",
-      "n_reviews": 1,
-      "avg_rating": 5.0,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "Atoms - from Atomic Habits",
-      "week": "2025-03-10T00:00:00.000Z",
-      "n_reviews": 2,
-      "avg_rating": 5.0,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "Atoms - from Atomic Habits",
-      "week": "2025-06-30T00:00:00.000Z",
-      "n_reviews": 1,
-      "avg_rating": 5.0,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "Productive - Habit Tracker",
-      "week": "2026-01-05T00:00:00.000Z",
-      "n_reviews": 1,
-      "avg_rating": 1.0,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "Productive - Habit Tracker",
-      "week": "2023-06-19T00:00:00.000Z",
-      "n_reviews": 2,
-      "avg_rating": 1.0,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "HabitKit",
-      "week": "2023-11-27T00:00:00.000Z",
-      "n_reviews": 1,
-      "avg_rating": 5.0,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "Productive - Habit Tracker",
-      "week": "2024-09-02T00:00:00.000Z",
-      "n_reviews": 1,
-      "avg_rating": 2.0,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "Productive - Habit Tracker",
-      "week": "2024-11-11T00:00:00.000Z",
-      "n_reviews": 1,
-      "avg_rating": 1.0,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "HabitKit",
-      "week": "2025-08-11T00:00:00.000Z",
-      "n_reviews": 2,
-      "avg_rating": 5.0,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "HabitKit",
-      "week": "2023-05-08T00:00:00.000Z",
-      "n_reviews": 1,
-      "avg_rating": 5.0,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "Productive - Habit Tracker",
-      "week": "2024-08-05T00:00:00.000Z",
-      "n_reviews": 1,
-      "avg_rating": 2.0,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "Productive - Habit Tracker",
-      "week": "2024-12-23T00:00:00.000Z",
-      "n_reviews": 1,
-      "avg_rating": 4.0,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "HabitKit",
-      "week": "2023-01-16T00:00:00.000Z",
-      "n_reviews": 1,
-      "avg_rating": 5.0,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "Atoms - from Atomic Habits",
-      "week": "2025-06-16T00:00:00.000Z",
-      "n_reviews": 1,
-      "avg_rating": 5.0,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "HabitKit",
-      "week": "2026-08-10T00:00:00.000Z",
-      "n_reviews": 1,
-      "avg_rating": 5.0,
-      "is_partial_week": false
     }
   ],
-  "generated_at": "2026-08-23T13:53:50Z"
+  "generated_at": "2026-08-24T14:10:29Z"
 }
