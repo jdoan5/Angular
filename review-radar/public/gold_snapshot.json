@@ -1,6 +1,6 @@
 {
   "totals": {
-    "reviews_collected": 5087,
+    "reviews_collected": 5091,
     "overall_avg_rating": 3.94,
     "apps_tracked": 6
   },
@@ -39,11 +39,11 @@
     },
     {
       "app_name": "HabitKit",
-      "reviews_collected": 204,
-      "avg_rating": 4.65,
-      "versions_seen": 50,
+      "reviews_collected": 208,
+      "avg_rating": 4.63,
+      "versions_seen": 51,
       "oldest_review_at": "2022-11-28T01:43:59.000Z",
-      "newest_review_at": "2026-08-17T23:15:26.000Z"
+      "newest_review_at": "2026-08-25T15:25:03.000Z"
     },
     {
       "app_name": "Duolingo (high-volume control)",
@@ -886,8 +886,8 @@
     {
       "app_name": "HabitKit",
       "week": "2026-08-17T00:00:00.000Z",
-      "n_reviews": 1,
-      "avg_rating": 5.0,
+      "n_reviews": 3,
+      "avg_rating": 4.33,
       "is_partial_week": false
     },
     {
@@ -3269,7 +3269,14 @@
       "n_reviews": 2,
       "avg_rating": 5.0,
       "is_partial_week": true
+    },
+    {
+      "app_name": "HabitKit",
+      "week": "2026-08-24T00:00:00.000Z",
+      "n_reviews": 2,
+      "avg_rating": 3.0,
+      "is_partial_week": true
     }
   ],
-  "generated_at": "2026-08-26T14:10:59Z"
+  "generated_at": "2026-08-27T23:01:27Z"
 }
