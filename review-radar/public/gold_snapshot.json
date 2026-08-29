@@ -1,7 +1,7 @@
 {
   "totals": {
-    "reviews_collected": 5091,
-    "overall_avg_rating": 3.94,
+    "reviews_collected": 5664,
+    "overall_avg_rating": 3.92,
     "apps_tracked": 6
   },
   "overview": [
@@ -15,11 +15,11 @@
     },
     {
       "app_name": "Habit Tracker",
-      "reviews_collected": 960,
+      "reviews_collected": 969,
       "avg_rating": 4.18,
       "versions_seen": 203,
       "oldest_review_at": "2019-01-29T10:35:04.000Z",
-      "newest_review_at": "2026-08-22T03:11:09.000Z"
+      "newest_review_at": "2026-08-27T17:41:10.000Z"
     },
     {
       "app_name": "Atoms - from Atomic Habits",
@@ -31,11 +31,11 @@
     },
     {
       "app_name": "Finch: Self-Care Pet",
-      "reviews_collected": 1045,
+      "reviews_collected": 1109,
       "avg_rating": 4.69,
-      "versions_seen": 281,
+      "versions_seen": 282,
       "oldest_review_at": "2021-10-19T13:59:17.000Z",
-      "newest_review_at": "2026-08-24T01:48:39.000Z"
+      "newest_review_at": "2026-08-28T02:26:56.000Z"
     },
     {
       "app_name": "HabitKit",
@@ -47,11 +47,11 @@
     },
     {
       "app_name": "Duolingo (high-volume control)",
-      "reviews_collected": 1403,
-      "avg_rating": 3.73,
-      "versions_seen": 259,
+      "reviews_collected": 1903,
+      "avg_rating": 3.72,
+      "versions_seen": 260,
       "oldest_review_at": "2017-09-10T02:37:43.000Z",
-      "newest_review_at": "2026-08-24T08:28:37.000Z"
+      "newest_review_at": "2026-08-28T05:32:26.000Z"
     }
   ],
   "rating_by_version": [
@@ -72,8 +72,8 @@
     {
       "app_name": "Finch: Self-Care Pet",
       "app_version": "3.73.197",
-      "n_reviews": 168,
-      "avg_rating": 4.7,
+      "n_reviews": 180,
+      "avg_rating": 4.67,
       "first_review_at": "2026-08-14T03:39:37.000Z"
     },
     {
@@ -218,6 +218,13 @@
     },
     {
       "app_name": "Duolingo (high-volume control)",
+      "app_version": "7.137.0",
+      "n_reviews": 496,
+      "avg_rating": 3.68,
+      "first_review_at": "2026-08-25T20:23:16.000Z"
+    },
+    {
+      "app_name": "Duolingo (high-volume control)",
       "app_version": "7.136.0",
       "n_reviews": 788,
       "avg_rating": 3.7,
@@ -239,6 +246,13 @@
     },
     {
       "app_name": "Finch: Self-Care Pet",
+      "app_version": "3.73.199",
+      "n_reviews": 52,
+      "avg_rating": 4.69,
+      "first_review_at": "2026-08-24T23:07:46.000Z"
+    },
+    {
+      "app_name": "Finch: Self-Care Pet",
       "app_version": "3.73.191",
       "n_reviews": 31,
       "avg_rating": 4.81,
@@ -250,6 +264,13 @@
       "n_reviews": 38,
       "avg_rating": 4.03,
       "first_review_at": "2026-07-10T12:01:32.000Z"
+    },
+    {
+      "app_name": "Habit Tracker",
+      "app_version": "2.14.23",
+      "n_reviews": 21,
+      "avg_rating": 3.9,
+      "first_review_at": "2026-08-17T14:26:03.000Z"
     },
     {
       "app_name": "Habit Tracker",
@@ -434,6 +455,13 @@
       "n_reviews": 1,
       "avg_rating": 5.0,
       "is_partial_week": false
+    },
+    {
+      "app_name": "Duolingo (high-volume control)",
+      "week": "2026-08-24T00:00:00.000Z",
+      "n_reviews": 544,
+      "avg_rating": 3.66,
+      "is_partial_week": true
     },
     {
       "app_name": "Habit Tracker",
@@ -2137,6 +2165,13 @@
       "is_partial_week": false
     },
     {
+      "app_name": "Finch: Self-Care Pet",
+      "week": "2026-08-24T00:00:00.000Z",
+      "n_reviews": 66,
+      "avg_rating": 4.64,
+      "is_partial_week": true
+    },
+    {
       "app_name": "Habit Tracker",
       "week": "2026-08-03T00:00:00.000Z",
       "n_reviews": 12,
@@ -2310,6 +2345,13 @@
       "n_reviews": 1,
       "avg_rating": 1.0,
       "is_partial_week": false
+    },
+    {
+      "app_name": "Habit Tracker",
+      "week": "2026-08-24T00:00:00.000Z",
+      "n_reviews": 9,
+      "avg_rating": 4.33,
+      "is_partial_week": true
     },
     {
       "app_name": "Finch: Self-Care Pet",
@@ -3257,20 +3299,6 @@
       "is_partial_week": false
     },
     {
-      "app_name": "Duolingo (high-volume control)",
-      "week": "2026-08-24T00:00:00.000Z",
-      "n_reviews": 44,
-      "avg_rating": 3.45,
-      "is_partial_week": true
-    },
-    {
-      "app_name": "Finch: Self-Care Pet",
-      "week": "2026-08-24T00:00:00.000Z",
-      "n_reviews": 2,
-      "avg_rating": 5.0,
-      "is_partial_week": true
-    },
-    {
       "app_name": "HabitKit",
       "week": "2026-08-24T00:00:00.000Z",
       "n_reviews": 2,
@@ -3278,5 +3306,5 @@
       "is_partial_week": true
     }
   ],
-  "generated_at": "2026-08-28T23:08:30Z"
+  "generated_at": "2026-08-29T17:18:13Z"
 }
