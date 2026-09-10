@@ -27,3 +27,4 @@ dist/
 
 # OS noise
 .DS_Store
+.vercel

@@ -5,7 +5,7 @@
 // proves the secret app's name cannot survive redaction. A future release
 // whose store copy defeats the redactor turns the game into a giveaway, and
 // nothing else in the app would notice — so this fails loudly instead.
-import { seal, unseal, redactName, nameVariants, guessMatches, startGame, loadGame, checkGuess, giveUp, QUESTION_LIMIT } from './game.mjs';
+import { seal, unseal, redactName, nameVariants, guessMatches, startGame, resumeGame, loadGame, checkGuess, giveUp, QUESTION_LIMIT } from './game.mjs';
 import { listMyApps, getAppDetails } from './tools.mjs';
 
 let fails = 0;
@@ -31,26 +31,47 @@ ok(!guessMatches('to', 'Toehold: Sudoku Explained'), '2-char fragment rejected')
 ok(!guessMatches('', 'Cosmic Cadets'), 'empty guess rejected');
 
 // ---- leak audit over the whole live catalog ------------------------------
+//
+// Audits the REAL fact sheet for EVERY app, not a random one. The game round
+// below picks at random, so a per-app defect there shows up only 1 run in N —
+// which is exactly how a "Soccer 2026" / "Price Trail" issue stayed hidden
+// through eight consecutive green runs. Determinism belongs in the audit.
 const { apps } = await listMyApps();
 console.log(`\n--- leak audit: ${apps.length} apps ---`);
 const norm = (s) => s.toLowerCase().replace(/[^a-z0-9]/g, '');
+
+/** The name, plus any multi-word part of it. These ARE the name and may never
+ *  appear in anything the model sees, under any punctuation. */
+const namePhrases = (name) =>
+  [name, ...name.split(':').map((x) => x.trim()).filter((x) => x.includes(' '))];
+
+/** The description section of a fact sheet — the only part redaction covers. */
+const DESC_MARKER = 'what it does (name removed): ';
+const descriptionOf = (facts) => facts.slice(facts.indexOf(DESC_MARKER) + DESC_MARKER.length);
+
 for (const a of apps) {
-  const d = await getAppDetails({ appId: a.appId });
-  const redacted = redactName(d.description, d.name);
-  // Two standards, because they answer different questions.
+  const { facts } = await resumeGame({ appId: a.appId, name: a.name, url: a.url, asked: 0, over: false });
+  const problems = [];
+
+  // Standard 1 — the name itself must be absent from the WHOLE fact sheet.
+  const leaked = namePhrases(a.name).filter((x) => norm(facts).includes(norm(x)));
+  if (leaked.length) problems.push('LEAKS: ' + leaked.join(' | '));
+
+  // Standard 2 — no residue in the description: if a second redaction pass
+  // would still find something, the first missed a standalone name word.
   //
-  // Hard fail: the full title, or any multi-word part of it, still readable.
-  // Those are the name itself and can never survive, in any punctuation.
-  const phrases = [d.name, ...d.name.split(':').map((x) => x.trim()).filter((x) => x.includes(' '))];
-  const leaked = phrases.filter((x) => norm(redacted).includes(norm(x)));
-  //
-  // Also fail on residue: if a second pass would still find something to
-  // redact, the first pass missed a standalone occurrence of a name word.
-  // (An inflection like "prices" is NOT residue — it is ordinary domain
-  // vocabulary, and scrubbing it would leave no clues to play with.)
-  const clean = redactName(redacted, d.name) === redacted;
-  ok(leaked.length === 0 && clean,
-     `${d.name} — ${leaked.length ? 'LEAKS: ' + leaked.join(' | ') : clean ? 'clean' : 'RESIDUE left'}`);
+  // Scoped to the description on purpose. The metadata lines above it are
+  // generated from constants and store fields, where a name word can appear
+  // legitimately — "Soccer 2026: Live Scores" meets `released: June 2026`,
+  // "Price Trail: Drop Alerts" meets `price: free`. Redacting those would leak
+  // far MORE than leaving them: `price: [the app name]` announces that the
+  // name contains "price". (An inflection like "prices" is not residue either
+  // — it is ordinary domain vocabulary, and scrubbing it leaves no clues.)
+  const desc = descriptionOf(facts);
+  if (!desc) problems.push('no description section');
+  else if (redactName(desc, a.name) !== desc) problems.push('RESIDUE in description');
+
+  ok(problems.length === 0, `${a.name} — ${problems.join('; ') || 'clean'}`);
 }
 
 // ---- full round ----------------------------------------------------------
@@ -58,10 +79,10 @@ console.log('\n--- game round ---');
 const g = await startGame();
 ok(g.fresh === true, 'startGame deals a fresh round');
 ok(typeof g.state.name === 'string' && g.state.name.length > 0, 'secret app chosen');
-const secretPhrases = [g.state.name, ...g.state.name.split(':').map((x) => x.trim()).filter((x) => x.includes(' '))];
-ok(secretPhrases.every((v) => !norm(g.facts).includes(norm(v))),
+ok(namePhrases(g.state.name).every((v) => !norm(g.facts).includes(norm(v))),
    `fact sheet hides the secret name (${g.state.name})`);
-ok(redactName(g.facts, g.state.name) === g.facts, 'fact sheet leaves no un-redacted name token');
+const dealtDesc = descriptionOf(g.facts);
+ok(redactName(dealtDesc, g.state.name) === dealtDesc, 'dealt description leaves no un-redacted name token');
 ok(g.facts.includes('category:') && g.facts.includes('what it does'), 'fact sheet has playable attributes');
 
 const wrong = checkGuess({ name: 'Definitely Not This App' }, { state: g.state });

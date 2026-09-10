@@ -99,7 +99,7 @@ export function getDeveloperProfile() {
       { name: 'Personal Budget Planner', kind: 'Angular web app', note: 'income and expense tracking with per-category monthly budgets and a donut-chart dashboard, runs fully in the browser (localStorage)' },
       { name: 'Hangman Encyclopedia', kind: 'Angular web app', note: 'hangman plus a collectible encyclopedia of fact-checked entries' },
       { name: 'Review Radar', kind: 'Angular web app over a Databricks lakehouse', note: 'dashboard of App Store review aggregates, fed by a bronze/silver/gold medallion pipeline in Databricks; a GitHub Action refreshes the committed gold snapshot daily. Aggregates only by design — no review text, no author names. Charts are hand-rolled SVG, no chart library' },
-      { name: "John's AI Lab", kind: 'Angular + Gemini agents', note: 'this very app — agents with live App Store tools, on Google Gemini via an AI Studio key by default (Vertex express mode is an opt-in switch)' },
+      { name: "John's AI Lab", kind: 'Angular + Gemini agents', note: 'this very app — agents with live App Store tools on Google Gemini. The deployed lab runs on Vertex AI with an express key; the same code also supports a plain AI Studio key, or keyless Vertex through Application Default Credentials (Workload Identity when it runs on GKE), selected by environment variable with no code change' },
     ],
     iosAppsNote: 'The authoritative list of published iOS apps (names, ratings, versions) comes from the list_my_apps tool — always prefer it over memory. appNotes below adds the "what it is and who it is for" that store metadata does not carry; it covers only some of the apps, so fall back to get_app_details for the rest.',
     appNotes: [
