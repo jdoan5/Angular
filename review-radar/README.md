@@ -20,7 +20,10 @@ The page renders from the committed snapshot; no Databricks access needed.
 
 1. **GitHub secrets** — repo **Settings → Secrets and variables → Actions →
    New repository secret**, three of them:
-   - `DATABRICKS_HOST` — `https://dbc-4662e673-32b4.cloud.databricks.com`
+   - `DATABRICKS_HOST` — your workspace URL, `https://dbc-xxxxxxxx-xxxx.cloud.databricks.com`
+     (Databricks → top-right workspace menu, or just the host part of the
+     browser URL). Keep the real value out of this file — it belongs in the
+     repo secret only.
    - `DATABRICKS_TOKEN` — the `github-action-snapshot` PAT (SQL scope)
    - `DATABRICKS_WAREHOUSE_ID` — SQL Warehouses → Serverless Starter
      Warehouse → ID

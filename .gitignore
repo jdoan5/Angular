@@ -1,0 +1,29 @@
+# Repo-wide safety net. Each project keeps its own .gitignore; this one exists
+# so a secret dropped anywhere in the tree — including at the root, or in a
+# project whose .gitignore has no .env rule — cannot be committed by accident.
+
+# Secrets: ignore every .env variant, everywhere, except the checked-in samples.
+.env
+.env.*
+!.env.example
+!.env.sample
+!.env.template
+
+# Credentials and keys
+*.pem
+*.p12
+*.pfx
+*.key
+*.keystore
+*.jks
+id_rsa
+id_ed25519
+*service-account*.json
+credentials.json
+
+# Dependencies and build output (belt-and-braces; projects also ignore these)
+node_modules/
+dist/
+
+# OS noise
+.DS_Store
