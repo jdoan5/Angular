@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild, effect, inject, input } from '@angular/core';
+import { Component, ElementRef, ViewChild, computed, effect, inject, input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AgentService } from '../../services/agent.service';
 
@@ -24,6 +24,10 @@ export class AgentChat {
   get state() {
     return this.agent.state(this.agentId());
   }
+
+  /** Questions left in the current Guess My App round, straight from the
+   *  server's sealed state; null for every other agent and between rounds. */
+  readonly questionsLeft = computed(() => this.agent.state(this.agentId()).gameRemaining());
 
   constructor() {
     this.agent.checkHealth();

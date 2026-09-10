@@ -54,6 +54,18 @@
     }
   </div>
 
+  <!-- Guess My App only. The server owns this number (it re-seals the round's
+       question count each turn), so it is rendered from the game event rather
+       than from anything the model says — models paraphrase and miscount. -->
+  <!-- Not `as left`: that treats 0 as absent and would hide the counter at
+       exactly the moment it matters — the last guess. -->
+  @if (questionsLeft() !== null) {
+    <p class="questions-left" role="status">
+      <span class="count" [class.low]="questionsLeft()! <= 5">{{ questionsLeft() }}</span>
+      {{ questionsLeft() === 1 ? 'question left' : 'questions left' }}
+    </p>
+  }
+
   <form class="composer" (ngSubmit)="send()">
     <!-- Deliberately never disabled: users can compose the next question while
          the agent works, and focus isn't dropped after each send. Double-submit

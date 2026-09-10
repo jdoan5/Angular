@@ -236,3 +236,31 @@
   font-size: 0.75rem;
   color: var(--dim);
 }
+
+/* Guess My App's question budget. Server-owned value, so it sits apart from
+   the answer text — it is not something the model said. */
+.questions-left {
+  margin: 10px 0 0;
+  text-align: center;
+  font-size: 0.8rem;
+  color: var(--dim);
+
+  .count {
+    display: inline-block;
+    min-width: 1.6em;
+    padding: 2px 8px;
+    margin-right: 4px;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--accent) 16%, transparent);
+    border: 1px solid color-mix(in srgb, var(--accent) 38%, transparent);
+    color: var(--accent);
+    font-variant-numeric: tabular-nums;
+    font-weight: 600;
+  }
+
+  .count.low {
+    background: color-mix(in srgb, var(--warm) 16%, transparent);
+    border-color: color-mix(in srgb, var(--warm) 45%, transparent);
+    color: var(--warm);
+  }
+}
