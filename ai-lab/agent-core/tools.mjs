@@ -95,13 +95,23 @@ export function getDeveloperProfile() {
     webApps: [
       { name: 'Personal Budget Planner', kind: 'Angular web app', note: 'income and expense tracking with per-category monthly budgets and a donut-chart dashboard, runs fully in the browser (localStorage)' },
       { name: 'Hangman Encyclopedia', kind: 'Angular web app', note: 'hangman plus a collectible encyclopedia of fact-checked entries' },
-      { name: "John's AI Lab", kind: 'Angular + Gemini agents', note: 'this very app — agents with live App Store tools on Vertex AI' },
+      { name: 'Review Radar', kind: 'Angular web app over a Databricks lakehouse', note: 'dashboard of App Store review aggregates, fed by a bronze/silver/gold medallion pipeline in Databricks; a GitHub Action refreshes the committed gold snapshot daily. Aggregates only by design — no review text, no author names. Charts are hand-rolled SVG, no chart library' },
+      { name: "John's AI Lab", kind: 'Angular + Gemini agents', note: 'this very app — agents with live App Store tools, on Google Gemini via an AI Studio key by default (Vertex express mode is an opt-in switch)' },
     ],
-    iosAppsNote: 'The authoritative list of published iOS apps (names, ratings, versions) comes from the list_my_apps tool — always prefer it over memory.',
+    iosAppsNote: 'The authoritative list of published iOS apps (names, ratings, versions) comes from the list_my_apps tool — always prefer it over memory. appNotes below adds the "what it is and who it is for" that store metadata does not carry; it covers only some of the apps, so fall back to get_app_details for the rest.',
+    appNotes: [
+      { name: 'VietFix English', appId: 6796511772, note: 'English for Vietnamese speakers, explained in Vietnamese. Built around 60 mistakes Vietnamese learners actually make — each showing the wrong sentence, the right one, and the Vietnamese habit that caused it. Plus 13 Vietnamese-to-English sentence patterns, 12 grammar topics, and 112 words with IPA and audio. Only makes sense to someone who speaks Vietnamese, which is the point' },
+      { name: 'Homefolio: Home Inventory', appId: 6806631158, note: 'Private home inventory for insurance. Photograph your belongings room by room with values, brands, serial numbers, receipts and warranty dates, then export a claim-ready Personal Property Inventory PDF for an adjuster — no page cap, no watermark, no account' },
+      { name: 'Toehold: Sudoku Explained', appId: 6801322941, note: 'Sudoku that teaches instead of solving for you. A live panel inventories which techniques are available on the board right now and explains why one works, without saying where to place the digit. Eleven named techniques, and difficulty graded by the hardest technique a puzzle actually requires rather than by clue count. Every puzzle is verified to have one solution reachable by logic alone — never a guess' },
+      { name: 'Price Trail: Drop Alerts', appId: 6792765641, note: 'Paste any product link (Amazon, Walmart, Best Buy, Target and most other stores) and it watches the price in the background, notifying you on any drop or when a target price is crossed. Compares the same product across stores side by side, charts price history, and gives an on-device "should you wait?" estimate with a confidence meter' },
+      { name: 'Learn English: Pronunciation', appId: 6775637573, note: 'Trains the listening skill most English apps skip: 14 sound contrasts and 70 minimal pairs (sheep/ship, think/sink, best/vest) where the sound changes the meaning. Hear a word, pick which one you heard. IPA plus a sound-it-out hint on all 361 words' },
+      { name: 'Cosmic Cadets', appId: 6782706983, note: 'Space math adventure for kids 5-8, adaptive difficulty, no ads or purchases' },
+      { name: 'Streak Rings', appId: 6784836738, note: 'Habit tracker with an Apple Watch app and iCloud sync' },
+    ],
     highlights: [
-      'Cosmic Cadets — space math adventure for kids 5-8, adaptive difficulty, no ads or purchases',
-      'Streak Rings — habit tracker with an Apple Watch app and iCloud sync',
-      'All apps are ad-free with no tracking; several are fully offline',
+      'All apps are free and ad-free with no tracking; several are fully offline and need no account',
+      'Range is deliberate: language learning, personal finance, health, productivity, shopping, and games',
+      'The newest releases are Homefolio (home inventory) and VietFix English (English for Vietnamese speakers) — check list_my_apps for exact dates',
     ],
   };
 }
