@@ -19,13 +19,16 @@ export const SKILLS = {
 const PROBLEM_COUNT = 5;
 const CHOICES = 4;
 
-/** Number ranges per difficulty tier, mirroring the Cosmic Cadets curve. */
+/** Number ranges per difficulty tier, mirroring the Cosmic Cadets curve.
+ *  `level` is the digit that goes into the prompt: the tier the caller passed
+ *  is used purely as a lookup key, so nothing from the request is ever
+ *  interpolated as text. */
 const TIER_GUIDE = {
-  1: 'numbers up to 5; very simple words',
-  2: 'numbers up to 10',
-  3: 'numbers up to 15',
-  4: 'numbers up to 20, sums may cross ten',
-  5: 'numbers up to 20 with regrouping; multiplication may use groups of 2, 5 or 10',
+  1: { level: '1', guide: 'numbers up to 5; very simple words' },
+  2: { level: '2', guide: 'numbers up to 10' },
+  3: { level: '3', guide: 'numbers up to 15' },
+  4: { level: '4', guide: 'numbers up to 20, sums may cross ten' },
+  5: { level: '5', guide: 'numbers up to 20 with regrouping; multiplication may use groups of 2, 5 or 10' },
 };
 
 const MISSION_SCHEMA = {
@@ -53,13 +56,28 @@ const MISSION_SCHEMA = {
   required: ['title', 'intro', 'problems'],
 };
 
+/**
+ * Build the system prompt out of this module's own constants.
+ *
+ * api/mission.mjs already allowlists `skill` and range-checks `tier`, so no
+ * request can reach the prompt as text today. This function re-checks anyway,
+ * because relying on a caller in another file is a guarantee that quietly
+ * expires: add a second call site that forgets, and a request field becomes
+ * system-prompt injection (CWE-1427). Both arguments are lookup keys here,
+ * never interpolated values.
+ */
 function systemInstruction(skill, tier) {
+  const practices = typeof skill === 'string' && Object.hasOwn(SKILLS, skill) ? SKILLS[skill] : null;
+  const level = Number.isInteger(tier) && Object.hasOwn(TIER_GUIDE, tier) ? TIER_GUIDE[tier] : null;
+  if (!practices || !level) {
+    throw Object.assign(new Error('unknown skill or tier'), { code: 'BAD_REQUEST' });
+  }
   return `You write math missions for children ages 5-8, in the style of the
 iOS game Cosmic Cadets: a warm, wonder-filled space adventure. Each mission is
 a set of ${PROBLEM_COUNT} bite-sized word problems.
 
-This mission practices: ${SKILLS[skill]}.
-Difficulty tier ${tier} of 5: ${TIER_GUIDE[tier]}.
+This mission practices: ${practices}.
+Difficulty tier ${level.level} of 5: ${level.guide}.
 
 Rules:
 - One short sentence per problem, concrete and visual (stars, moons, rockets,

@@ -35,6 +35,12 @@ export default async function handler(req, res) {
       res.status(503).json({ error: 'Agent not configured: GEMINI_API_KEY is missing.' });
       return;
     }
+    if (err?.code === 'BAD_REQUEST') {
+      // Unreachable while the checks above run first — this is the safety net
+      // for a future call path that skips them.
+      res.status(400).json({ error: 'unknown skill or tier' });
+      return;
+    }
     if (err?.code === 'BAD_MISSION') {
       res.status(502).json({ error: 'The mission came back scrambled — try again.' });
       return;
