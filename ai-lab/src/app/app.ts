@@ -21,6 +21,21 @@ interface LabStage {
 export class App {
   readonly stages: LabStage[] = [
     {
+      id: 'guess',
+      title: 'Guess My App',
+      blurb: 'Twenty questions against my live App Store catalog',
+      live: true,
+      kind: 'chat',
+      description:
+        "I've secretly dealt one of my published iOS apps. Ask yes/no questions to narrow it down, then guess the name. The host answers from live App Store data with the app's name redacted out of it — it genuinely does not know the answer, so it cannot let it slip. Only the server can confirm your guess.",
+      starters: [
+        'Is it a game?',
+        'Is it for kids?',
+        'Was it released this year?',
+        'Does it cost anything?',
+      ],
+    },
+    {
       id: 'reviews',
       title: 'App Review Analyst',
       blurb: 'Live App Store reviews, analyzed by an agent with tools',
@@ -61,6 +76,6 @@ export class App {
     },
   ];
 
-  readonly active = signal('reviews');
+  readonly active = signal('guess');
   readonly activeStage = computed(() => this.stages.find((s) => s.id === this.active()));
 }

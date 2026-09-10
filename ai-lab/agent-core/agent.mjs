@@ -4,8 +4,15 @@
 // server (dev-server.mjs).
 
 import { toolRegistry } from './tools.mjs';
+import { gameTools } from './game.mjs';
 import { makeGenAI } from './client.mjs';
 import { AGENTS, DEFAULT_AGENT } from './agents.mjs';
+
+// Guess My App's tools live in game.mjs, beside the sealed state they read.
+// They are merged here rather than inside tools.mjs so that module stays free
+// of any dependency on game.mjs — game.mjs imports it, and a cycle would put
+// this const in the temporal dead zone at module-eval time.
+const registry = { ...toolRegistry, ...gameTools };
 
 const MODEL = process.env.GEMINI_MODEL || 'gemini-3.5-flash';
 const MAX_TOOL_ROUNDS = 6;
@@ -15,9 +22,9 @@ const NO_ANSWER =
 
 function declarationsFor(agent) {
   return agent.tools
-    .filter((name) => toolRegistry[name])
+    .filter((name) => registry[name])
     .map((name) => {
-      const t = toolRegistry[name];
+      const t = registry[name];
       return {
         name,
         description: t.description,
@@ -26,13 +33,13 @@ function declarationsFor(agent) {
     });
 }
 
-async function executeTool(agent, name, args) {
+async function executeTool(agent, name, args, context) {
   // Tools are scoped per agent: even if the model invents a name from another
   // agent's kit, it stays unavailable here.
-  const tool = agent.tools.includes(name) ? toolRegistry[name] : undefined;
+  const tool = agent.tools.includes(name) ? registry[name] : undefined;
   if (!tool) return { error: `Unknown tool: ${name}` };
   try {
-    return await tool.fn(args ?? {});
+    return await tool.fn(args ?? {}, context);
   } catch (err) {
     return { error: String(err?.message ?? err) };
   }
@@ -52,12 +59,28 @@ async function executeTool(agent, name, args) {
  * @param {string} message the new user message
  * @param {(event: object) => void} emit event sink (transport-agnostic)
  * @param {AbortSignal} [signal] stop doing work when the client disconnects
+ * @param {object} [context] per-turn state handed to tools and appended to the
+ *        system instruction. Guess My App uses it to hold the secret app; tools
+ *        may mutate context.state, and onFinish reports the result back.
  */
-export async function runAgentStream(agentId, history, message, emit, signal) {
+export async function runAgentStream(agentId, history, message, emit, signal, context) {
   // Object.hasOwn so prototype keys ("constructor" etc.) can't resolve.
   const agent = Object.hasOwn(AGENTS, agentId ?? '') ? AGENTS[agentId] : AGENTS[DEFAULT_AGENT];
   const ai = makeGenAI();   // throws NO_KEY when credentials are missing
   const send = (event) => { if (!signal?.aborted) emit(event); };
+
+  // Per-turn facts (e.g. the redacted fact sheet) ride along with the agent's
+  // static prompt — they must never be persisted into the chat history, which
+  // the browser holds and could read.
+  const systemInstruction = context?.systemSuffix
+    ? `${agent.systemInstruction}\n${context.systemSuffix}`
+    : agent.systemInstruction;
+
+  // Let the caller emit closing events (a refreshed game token) before 'done'.
+  const finish = () => {
+    context?.onFinish?.(send);
+    send({ type: 'done', model: MODEL });
+  };
 
   // Defensive re-filter (the API layer validates too): only well-formed,
   // non-empty turns may enter contents — Vertex rejects empty text parts.
@@ -75,7 +98,7 @@ export async function runAgentStream(agentId, history, message, emit, signal) {
       model: MODEL,
       contents,
       config: {
-        systemInstruction: agent.systemInstruction,
+        systemInstruction,
         tools: [{ functionDeclarations: declarationsFor(agent) }],
         temperature: 0.4,
         ...(signal ? { abortSignal: signal } : {}),
@@ -107,7 +130,7 @@ export async function runAgentStream(agentId, history, message, emit, signal) {
         roundText = '';
       }
       if (!roundText.trim()) send({ type: 'delta', text: NO_ANSWER });
-      send({ type: 'done', model: MODEL });
+      finish();
       return;
     }
 
@@ -121,7 +144,7 @@ export async function runAgentStream(agentId, history, message, emit, signal) {
     for (const call of calls) {
       if (signal?.aborted) return;
       send({ type: 'tool-start', tool: call.name, args: call.args ?? {} });
-      const result = await executeTool(agent, call.name, call.args);
+      const result = await executeTool(agent, call.name, call.args, context);
       send({ type: 'tool-end', tool: call.name, summary: summarize(call.name, result) });
       responseParts.push({
         functionResponse: {
@@ -136,7 +159,7 @@ export async function runAgentStream(agentId, history, message, emit, signal) {
   }
   // Unreachable (the final round returns above); kept as a safe fallback.
   send({ type: 'delta', text: NO_ANSWER });
-  send({ type: 'done', model: MODEL });
+  finish();
 }
 
 /** One-line human summary of a tool result for the UI trace. */
@@ -151,6 +174,14 @@ function summarize(name, result) {
       return `${result.count} reviews fetched (${result.sort}, ${result.country})`;
     case 'get_developer_profile':
       return 'profile loaded';
+    // The trace is visible to the player, so a wrong guess must never hint at
+    // the answer — it echoes only what they themselves typed.
+    case 'check_guess':
+      return result.correct
+        ? `correct — ${result.appName}`
+        : `"${String(result.guessed ?? '').slice(0, 60)}" is not it · ${result.questionsLeft ?? 0} questions left`;
+    case 'give_up':
+      return `revealed — ${result.appName}`;
     default:
       return 'done';
   }

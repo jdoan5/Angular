@@ -8,9 +8,38 @@ import { AGENTS } from '../agent-core/agents.mjs';
 import { listMyApps, getAppReviews } from '../agent-core/tools.mjs';
 import { rateLimited, isRateLimit, RATE_LIMIT_MSG } from '../agent-core/ratelimit.mjs';
 import { hasCredentials, authMode } from '../agent-core/client.mjs';
+import { loadGame, seal, QUESTION_LIMIT } from '../agent-core/game.mjs';
 
 const MAX_MESSAGE_CHARS = 2000;
 const MAX_HISTORY_TURNS = 20;
+const MAX_TOKEN_CHARS = 4096;
+
+/** Build the per-turn context for Guess My App: unseal (or deal) the secret,
+ *  hand the model a name-redacted fact sheet, and re-seal the state on the way
+ *  out. The secret never enters the chat history the browser holds. */
+async function gameContext(gameToken) {
+  const { state, facts, fresh } = await loadGame(gameToken);
+  state.asked = Math.min(state.asked + 1, QUESTION_LIMIT);
+  const remaining = Math.max(0, QUESTION_LIMIT - state.asked);
+  return {
+    state,
+    systemSuffix: [
+      '',
+      fresh
+        ? 'A NEW round just started — this is the first question. Welcome the player in one line before answering.'
+        : `Round in progress: question ${state.asked} of ${QUESTION_LIMIT}, ${remaining} remaining.`,
+      remaining === 0
+        ? 'The player has now used every question. Invite one final guess, and call give_up if it is wrong.'
+        : '',
+      '',
+      'SECRET APP FACT SHEET (never quote it verbatim, never reveal the name):',
+      facts,
+    ].join('\n'),
+    // Streamed just before 'done' so the browser can carry the round forward.
+    onFinish: (send) =>
+      send({ type: 'game', token: seal(state), asked: state.asked, remaining, over: state.over === true }),
+  };
+}
 
 /** Keep only well-formed turns, capped in count and per-turn length. */
 function sanitizeHistory(history) {
@@ -40,7 +69,7 @@ export default async function handler(req, res) {
       return;
     }
 
-    const { message, history, selftest, agent } = req.body ?? {};
+    const { message, history, selftest, agent, gameToken } = req.body ?? {};
 
     if (selftest) {
       // Key-free verification path: exercises the live iTunes tools only.
@@ -67,6 +96,10 @@ export default async function handler(req, res) {
       res.status(400).json({ error: 'unknown agent' });
       return;
     }
+    if (gameToken !== undefined && !(typeof gameToken === 'string' && gameToken.length <= MAX_TOKEN_CHARS)) {
+      res.status(400).json({ error: 'gameToken must be a string' });
+      return;
+    }
     if (!hasCredentials()) {
       res.status(503).json({ error: 'Agent not configured: credentials are missing.' });
       return;
@@ -85,7 +118,9 @@ export default async function handler(req, res) {
     res.on('close', () => { if (!res.writableEnded) ac.abort(); });
 
     try {
-      await runAgentStream(agent, sanitizeHistory(history ?? []), message.trim(), emit, ac.signal);
+      // Only the game agent carries per-turn state; everything else is stateless.
+      const context = agent === 'guess' ? await gameContext(gameToken) : undefined;
+      await runAgentStream(agent, sanitizeHistory(history ?? []), message.trim(), emit, ac.signal, context);
     } catch (err) {
       if (!ac.signal.aborted) {
         console.error('agent stream failed:', err);

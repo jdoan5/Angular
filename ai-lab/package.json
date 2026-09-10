@@ -8,7 +8,8 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "api": "node dev-server.mjs",
-    "dev": "node dev-server.mjs & ng serve --proxy-config proxy.conf.json"
+    "dev": "node dev-server.mjs & ng serve --proxy-config proxy.conf.json",
+    "test:game": "node agent-core/game.test.mjs"
   },
   "private": true,
   "packageManager": "npm@11.13.0",

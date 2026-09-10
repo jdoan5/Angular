@@ -1,10 +1,9 @@
 # John's AI Lab
 
 Agent demos on **Google Gemini**, built in **Angular 22**, using **live App
-Store data**. Stage 1 is the **App Review Analyst**: an agent with
-function-calling tools that lists my published iOS apps, pulls their public
-reviews and ratings, analyzes sentiment and themes, and drafts developer
-replies.
+Store data**. The landing stage is **Guess My App**: twenty questions played
+against my real App Store catalog, where the model is handed a name-redacted
+fact sheet and genuinely cannot leak the answer.
 
 ## Architecture
 
@@ -23,6 +22,25 @@ Apple iTunes Search & RSS APIs (public, no auth)
   · get_app_details     store metadata for one app
   · get_app_reviews     recent public customer reviews
 ```
+
+### Keeping a secret in a stateless app
+
+Guess My App has to hide one fact from a browser that holds the entire
+conversation. Three rules do it (`agent-core/game.mjs`):
+
+1. **The model never learns the answer.** It gets a fact sheet with the app's
+   name scrubbed out — every colon-separated part and every word inside them,
+   matched loosely enough to catch `50/30/20` for "503020: Budget Coach". It
+   cannot leak what it does not have.
+2. **The secret rides in a sealed token.** AES-256-GCM, opaque to the browser,
+   echoed back each turn and reopened server-side. No session store, so it
+   survives serverless cold starts. Set `GAME_SECRET` in the deploy
+   environment to keep tokens valid across instances; without it each process
+   derives its own key and a token from another instance simply starts a new
+   round.
+3. **Only `check_guess` and `give_up` can reveal it**, server-side, against
+   the unsealed state — so the tool trace can show a guess being checked
+   without showing what it was checked against.
 
 The UI shows the agent's **tool-call trace** for every answer — you can watch
 it decide to list apps, pick an id, and fetch reviews before it writes a word.
@@ -43,15 +61,18 @@ exercises the live iTunes tools without Gemini.
 Standard Angular deploy plus one env var: set `GEMINI_API_KEY` in Vercel
 project settings. `api/agent.mjs` becomes a serverless function automatically.
 
-## The three stages
+## The four stages
 
-- **Stage 1 — App Review Analyst** ✅ · agentic tool-calling with a live,
-  streamed trace (NDJSON events: tool-start / tool-end / delta / done)
-- **Stage 2 — Portfolio Concierge** ✅ · grounded Q&A over live store data +
-  a curated profile tool; per-agent tool scoping
-- **Stage 3 — Math Mission Maker** ✅ · schema-constrained generation
-  (`responseSchema` → server-validated JSON) rendered as a playable mission,
-  in the style of [Cosmic Cadets](https://apps.apple.com/us/app/cosmic-cadets/id6782706983)
+- **Guess My App** ✅ · twenty questions over the live catalog; hidden state in
+  a sealed token, and a prompt the model cannot betray because the answer was
+  never in it
+- **App Review Analyst** ✅ · agentic tool-calling with a live, streamed trace
+  (NDJSON events: tool-start / tool-end / delta / done)
+- **Portfolio Concierge** ✅ · grounded Q&A over live store data + a curated
+  profile tool; per-agent tool scoping
+- **Math Mission Maker** ✅ · schema-constrained generation (`responseSchema` →
+  server-validated JSON) rendered as a playable mission, in the style of
+  [Cosmic Cadets](https://apps.apple.com/us/app/cosmic-cadets/id6782706983)
 
-Three stages, three distinct Gemini patterns: tool loops, grounding, and
-structured output.
+Four stages, four distinct Gemini patterns: hidden-state hosting, tool loops,
+grounding, and structured output.

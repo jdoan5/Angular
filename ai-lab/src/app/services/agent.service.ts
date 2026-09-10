@@ -22,6 +22,11 @@ export interface AgentChatState {
   busy: WritableSignal<boolean>;
   model: WritableSignal<string>;
   draft: WritableSignal<string>;
+  /** Guess My App only: the sealed round, opaque to the browser. We hold it
+   *  and echo it back so the server can resume the same secret app; we cannot
+   *  read it, and the server deals a new round once a finished one comes back. */
+  gameToken: WritableSignal<string>;
+  gameRemaining: WritableSignal<number | null>;
 }
 
 type StreamEvent =
@@ -30,6 +35,7 @@ type StreamEvent =
   | { type: 'tool-start'; tool: string; args: Record<string, unknown> }
   | { type: 'tool-end'; tool: string; summary: string }
   | { type: 'done'; model: string }
+  | { type: 'game'; token: string; asked: number; remaining: number; over: boolean }
   | { type: 'error'; error: string };
 
 /** Talks to the server-side agents (POST /api/agent, NDJSON streaming). The
@@ -42,7 +48,14 @@ export class AgentService {
   state(agentId: string): AgentChatState {
     let s = this.states.get(agentId);
     if (!s) {
-      s = { messages: signal<ChatMessage[]>([]), busy: signal(false), model: signal(''), draft: signal('') };
+      s = {
+        messages: signal<ChatMessage[]>([]),
+        busy: signal(false),
+        model: signal(''),
+        draft: signal(''),
+        gameToken: signal(''),
+        gameRemaining: signal<number | null>(null),
+      };
       this.states.set(agentId, s);
     }
     return s;
@@ -77,7 +90,12 @@ export class AgentService {
       const res = await fetch('/api/agent', {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ agent: agentId, message: text, history }),
+        body: JSON.stringify({
+          agent: agentId,
+          message: text,
+          history,
+          ...(s.gameToken() ? { gameToken: s.gameToken() } : {}),
+        }),
       });
       if (!res.ok) {
         // Platform errors (e.g. Vercel timeouts) return non-JSON bodies — read
@@ -118,6 +136,12 @@ export class AgentService {
               }
               return { ...p, trace };
             });
+            break;
+          case 'game':
+            // Carry the round forward. A finished round is kept as-is: the
+            // server sees over:true and deals a fresh app on the next message.
+            s.gameToken.set(event.token);
+            s.gameRemaining.set(event.over ? null : event.remaining);
             break;
           case 'done':
             s.model.set(event.model);
