@@ -7,9 +7,20 @@
       served here as aggregates.
     </p>
     @if (snapshot(); as s) {
-      <p class="freshness">
+      <p class="freshness" [class]="'freshness--' + staleness()">
         @if (s.generated_at) {
-          Data refreshed daily by the lakehouse · snapshot generated
+          @switch (staleness()) {
+            @case ('warn') {
+              <strong>Data is {{ snapshotAgeDays() }} days old.</strong>
+              The daily refresh should run every day — it looks like it has stopped.
+            }
+            @case ('critical') {
+              <strong>Data is {{ snapshotAgeDays() }} days stale.</strong>
+              The daily refresh has been failing; the Databricks token may have expired.
+            }
+            @default { Data refreshed daily by the lakehouse · }
+          }
+          Snapshot generated
           {{ s.generated_at | date: 'MMM d, y, h:mm a' : 'UTC' }} UTC
         } @else {
           Seed snapshot — automated daily refresh from the lakehouse pending.

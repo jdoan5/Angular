@@ -22,6 +22,31 @@ export class App {
       (a, b) => b.reviews_collected - a.reviews_collected,
     ),
   );
+  /** Whole days since the lakehouse generated this snapshot; null if the file
+   *  predates the generated_at field or carries an unparseable value.
+   *
+   *  Read once at load — the page is a static snapshot viewer, so there is
+   *  nothing to re-evaluate against a ticking clock. */
+  readonly snapshotAgeDays = computed(() => {
+    const at = this.snapshot()?.generated_at;
+    if (!at) return null;
+    const ms = Date.parse(at);
+    if (Number.isNaN(ms)) return null;
+    return Math.max(0, Math.floor((Date.now() - ms) / 86_400_000));
+  });
+
+  /** The daily Action refreshes this file, so anything older than a couple of
+   *  days means a run has been failing. That went unnoticed for eleven days
+   *  once, because a red mark in the Actions tab is easy not to look at — the
+   *  warning belongs here, where the stale data is actually being read. */
+  readonly staleness = computed<'fresh' | 'warn' | 'critical' | 'unknown'>(() => {
+    const days = this.snapshotAgeDays();
+    if (days === null) return 'unknown';
+    if (days >= 7) return 'critical';
+    if (days >= 2) return 'warn';
+    return 'fresh';
+  });
+
   readonly versionRows = computed(() => this.snapshot()?.rating_by_version ?? []);
   readonly weeklyRows = computed(() => this.snapshot()?.weekly_velocity ?? []);
   // Complete weeks only — if every row is partial (a sparse first snapshot),

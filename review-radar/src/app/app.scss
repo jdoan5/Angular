@@ -23,6 +23,21 @@ header {
     margin: 10px 0 0;
     font-size: 0.85rem;
     color: var(--good);
+
+    /* Staleness states. The daily Action keeps this green; amber and red mean
+       a run has been failing and the numbers below are older than they look. */
+    &.freshness--warn,
+    &.freshness--critical {
+      display: inline-block;
+      padding: 8px 12px;
+      border-radius: 8px;
+      border: 1px solid currentColor;
+      background: color-mix(in srgb, currentColor 10%, transparent);
+    }
+
+    &.freshness--warn { color: var(--warn); }
+    &.freshness--critical { color: var(--bad); }
+    &.freshness--unknown { color: var(--ink-dim); }
   }
 }
 
