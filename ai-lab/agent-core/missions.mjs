@@ -3,6 +3,7 @@
 // single structured call whose output the UI renders as a playable mission.
 // Server-side only, like the rest of the agent core.
 
+import { ThinkingLevel } from '@google/genai';
 import { makeGenAI } from './client.mjs';
 
 const MODEL = process.env.GEMINI_MODEL || 'gemini-3.5-flash';
@@ -15,6 +16,9 @@ export const SKILLS = {
   comparison: 'comparing numbers (which is more / less)',
   multiplication: 'intro multiplication as groups of 2, 5 or 10',
 };
+
+// Headroom for the ~350-token mission plus LOW thinking; same cap as the chat loop.
+const MAX_OUTPUT_TOKENS = 4096;
 
 const PROBLEM_COUNT = 5;
 const CHOICES = 4;
@@ -281,6 +285,11 @@ export async function generateMission({ skill, tier }, signal) {
         responseMimeType: 'application/json',
         responseSchema: MISSION_SCHEMA,
         temperature: 0.9,
+        // Measured live with no cap: ~1,650 thinking tokens against ~350 of
+        // actual mission, and 12-22s per call. LOW matches the chat loop; the
+        // validator and its one corrective retry still guard the math.
+        maxOutputTokens: MAX_OUTPUT_TOKENS,
+        thinkingConfig: { thinkingLevel: ThinkingLevel.LOW },
         ...(signal ? { abortSignal: signal } : {}),
       },
     });
