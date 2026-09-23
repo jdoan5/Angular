@@ -187,6 +187,16 @@ export async function runAgentStream(agentId, history, message, emit, signal, co
   let retriedBrokenCall = false;
   const wasOver = context?.state?.over === true;
 
+  // Stopping on the turn's budget is not an answer, so a Guess round is not
+  // charged a question for it (finish() would seal asked+1). The exception is
+  // a round a tool already ended this turn — a correct guess or give_up —
+  // which must be sealed, or the browser keeps playing a finished round.
+  const budgetStop = () => {
+    send({ type: 'delta', text: NO_ANSWER });
+    if (!wasOver && context?.state?.over === true) context.onFinish?.(send);
+    send({ type: 'done', model: MODEL });
+  };
+
   for (let round = 0; round <= MAX_TOOL_ROUNDS; round++) {
     if (signal?.aborted) return;   // client is gone — stop spending quota
 
@@ -226,15 +236,17 @@ export async function runAgentStream(agentId, history, message, emit, signal, co
     const { allParts, calls } = r;
     let roundText = r.text;
 
-    if (calls.length === 0 || round === MAX_TOOL_ROUNDS) {
+    // No calls: the empty-round guard above means there is real text, so
+    // this is the answer.
+    if (calls.length === 0) {
+      finish();
+      return;
+    }
+    if (round === MAX_TOOL_ROUNDS) {
       // Budget exhausted with calls still pending: whatever text streamed was
       // pre-tool chatter, not an answer — discard it and say so.
-      if (calls.length > 0 && roundText.trim()) {
-        send({ type: 'draft-discard' });
-        roundText = '';
-      }
-      if (!roundText.trim()) send({ type: 'delta', text: NO_ANSWER });
-      finish();
+      if (roundText.trim()) send({ type: 'draft-discard' });
+      budgetStop();
       return;
     }
 
@@ -272,18 +284,16 @@ export async function runAgentStream(agentId, history, message, emit, signal, co
     }
     contents.push({ role: 'user', parts: responseParts });
 
-    // Tools already ran (a guess may have ended the round), so this goes out
-    // through finish() like any other budget stop.
+    // Tools already ran and a guess may have ended the round; budgetStop()
+    // seals that case and charges nothing otherwise.
     if (JSON.stringify(contents).length > MAX_CONTENTS_CHARS) {
       console.warn(`agent: contents passed ${MAX_CONTENTS_CHARS} chars after round ${round}; stopping`);
-      send({ type: 'delta', text: NO_ANSWER });
-      finish();
+      budgetStop();
       return;
     }
   }
   // Unreachable (the final round returns above); kept as a safe fallback.
-  send({ type: 'delta', text: NO_ANSWER });
-  finish();
+  budgetStop();
 }
 
 /** One-line human summary of a tool result for the UI trace. */
@@ -301,9 +311,13 @@ function summarize(name, result) {
     // The trace is visible to the player, so a wrong guess must never hint at
     // the answer — it echoes only what they themselves typed.
     case 'check_guess':
-      return result.correct
-        ? `correct — ${result.appName}`
-        : `"${String(result.guessed ?? '').slice(0, 60)}" is not it · ${result.questionsLeft ?? 0} questions left`;
+      if (result.correct) return `correct — ${result.appName}`;
+      // Not a catalog name at all: it isn't judged or counted, so the trace
+      // must not read like a wrong guess ("is not it · 17 left").
+      if (result.recognized === false) {
+        return `"${String(result.guessed ?? '').slice(0, 60)}" is not one of John's apps · not counted`;
+      }
+      return `"${String(result.guessed ?? '').slice(0, 60)}" is not it · ${result.questionsLeft ?? 0} questions left`;
     case 'give_up':
       return `revealed — ${result.appName}`;
     default:

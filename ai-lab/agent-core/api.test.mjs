@@ -222,7 +222,22 @@ test('round cap: 4 tool rounds, then the budget-exhausted answer', async () => {
   assert.equal(ai.requests.length, 5, '4 tool rounds + the final round whose calls are dropped');
   assert.match(of('delta').map((e) => e.text).join(''), NO_ANSWER_RE);
   assert.equal(of('done').length, 1);
-  assert.equal(ctx.finished, 1, 'a genuine budget stop still carries the round forward');
+  assert.equal(ctx.finished, 0, 'a budget stop is not an answer, so no Guess question is charged');
+});
+
+test('round cap after a give_up this turn: the finished round is still sealed', async () => {
+  // give_up ends the round in round 0, then the model keeps calling tools
+  // until the cap. Not charging would leave the browser playing a round whose
+  // answer it has just been shown.
+  const ai = fakeAI(() => [chunk([fnCall('give_up')])]);
+  const ctx = gameCtx();
+  const { error, of } = await runTurn({ agent: 'guess', ai, context: ctx });
+  assert.equal(error, null);
+  assert.equal(ctx.state.over, true);
+  assert.match(of('delta').map((e) => e.text).join(''), NO_ANSWER_RE);
+  assert.equal(ctx.finished, 1);
+  assert.equal(of('game').length, 1);
+  assert.equal(of('done').length, 1);
 });
 
 test('generation config caps output and sets a thinking level (no budget, no thoughts)', async () => {

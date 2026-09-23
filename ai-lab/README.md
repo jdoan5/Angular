@@ -53,7 +53,7 @@ cp .env.example .env.local     # paste your Gemini API key (aistudio.google.com/
 npm run dev                    # agent API on :8787 + Angular on :4200 (proxied)
 ```
 
-No key yet? The UI still runs, and `POST /api/agent {"selftest":true}`
+No key yet? The UI still runs, and `curl -H 'content-type: application/json' -d '{"selftest":true}' localhost:8787/api/agent`
 exercises the live iTunes tools without Gemini.
 
 ## Deploy (Vercel)

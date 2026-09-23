@@ -9,7 +9,10 @@
     "test": "ng test",
     "api": "node dev-server.mjs",
     "dev": "node dev-server.mjs & ng serve --proxy-config proxy.conf.json",
-    "test:game": "node agent-core/game.test.mjs"
+    "test:game": "node agent-core/game.test.mjs",
+    "test:api": "node --test agent-core/api.test.mjs",
+    "test:missions": "node --test agent-core/missions.test.mjs",
+    "test:server": "node --test agent-core/api.test.mjs agent-core/missions.test.mjs && node agent-core/game.test.mjs"
   },
   "private": true,
   "packageManager": "npm@11.13.0",
