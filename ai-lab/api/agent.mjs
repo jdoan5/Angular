@@ -12,16 +12,44 @@ import { loadGame, seal, QUESTION_LIMIT } from '../agent-core/game.mjs';
 
 const MAX_MESSAGE_CHARS = 2000;
 const MAX_HISTORY_TURNS = 20;
+// 20 turns x 2000 chars is 40k of replay per request; this caps the sum.
+const MAX_HISTORY_CHARS = 16_000;
 const MAX_TOKEN_CHARS = 4096;
+
+/** Reject anything a third-party page could send without a CORS preflight.
+ *  A cross-site form-encoded POST (mode:'no-cors') used to be parsed into
+ *  req.body by Vercel and run the agent on John's key from each visitor's
+ *  browser. JSON forces a preflight, which fails with no CORS headers, and
+ *  Sec-Fetch-Site catches what's left. Absent Sec-Fetch-Site is allowed:
+ *  curl and servers don't send it, and they can't borrow a visitor's IP.
+ *  Returns true when it has already answered. */
+function rejectForeign(req, res) {
+  const type = String(req.headers?.['content-type'] ?? '').trim().toLowerCase();
+  if (!type.startsWith('application/json')) {
+    res.status(415).json({ error: 'JSON only' });
+    return true;
+  }
+  const site = req.headers?.['sec-fetch-site'];
+  if (site !== undefined && site !== 'same-origin') {
+    res.status(403).json({ error: 'cross-site request' });
+    return true;
+  }
+  return false;
+}
 
 /** Build the per-turn context for Guess My App: unseal (or deal) the secret,
  *  hand the model a name-redacted fact sheet, and re-seal the state on the way
  *  out. The secret never enters the chat history the browser holds. */
-async function gameContext(gameToken) {
+async function gameContext(gameToken, history) {
   const { state, facts, fresh } = await loadGame(gameToken);
   state.asked = Math.min(state.asked + 1, QUESTION_LIMIT);
   const remaining = Math.max(0, QUESTION_LIMIT - state.asked);
+  // Where this round begins in the browser's history, which only ever grows
+  // by appending pairs. Later questions slice from here so the old round's
+  // reveal stays out; unseal() carries the field between turns.
+  if (fresh) state.historyStart = history.length;
   return {
+    fresh,
     state,
     systemSuffix: [
       '',
@@ -41,9 +69,11 @@ async function gameContext(gameToken) {
   };
 }
 
-/** Keep only well-formed turns, capped in count and per-turn length. */
-function sanitizeHistory(history) {
-  return history
+/** Keep only well-formed turns, capped in count, per-turn length and total
+ *  length. The oldest turns go first, a user turn together with its reply,
+ *  so the history never opens on a model turn and alternation survives. */
+export function sanitizeHistory(history) {
+  const turns = history
     .filter(
       (t) =>
         t && (t.role === 'user' || t.role === 'model') &&
@@ -51,6 +81,34 @@ function sanitizeHistory(history) {
     )
     .slice(-MAX_HISTORY_TURNS)
     .map((t) => ({ role: t.role, text: t.text.slice(0, MAX_MESSAGE_CHARS) }));
+
+  let total = turns.reduce((n, t) => n + t.text.length, 0);
+  const dropOldest = () => { total -= turns.shift().text.length; };
+  // An odd count sliced above can leave a reply whose question was cut.
+  while (turns[0]?.role === 'model') dropOldest();
+  while (total > MAX_HISTORY_CHARS && turns.length) {
+    dropOldest();
+    while (turns[0]?.role === 'model') dropOldest();
+  }
+  return turns;
+}
+
+/** The history the model may see this turn. A freshly dealt Guess round sees
+ *  none: an earlier "It was Toehold!" and the old round's Q&A would otherwise
+ *  ride along as context for the new secret. */
+export function historyForTurn(history, context) {
+  if (context?.fresh) return [];
+  const start = context?.state?.historyStart;
+  return sanitizeHistory(Number.isInteger(start) && start > 0 ? history.slice(start) : history);
+}
+
+/** The text an in-stream 'error' event may carry. EMPTY_ROUND messages are
+ *  written for visitors in agent.mjs; every other error stays generic so
+ *  internals never reach the page. */
+export function visitorError(err) {
+  if (isRateLimit(err)) return RATE_LIMIT_MSG;
+  if (err?.code === 'EMPTY_ROUND') return err.message;
+  return 'Agent request failed.';
 }
 
 export default async function handler(req, res) {
@@ -63,6 +121,8 @@ export default async function handler(req, res) {
     res.status(405).json({ error: 'POST only' });
     return;
   }
+  // Before the limiter too, so a hostile page can't burn a visitor's quota.
+  if (rejectForeign(req, res)) return;
   try {
     if (rateLimited(req)) {
       res.status(429).json({ error: 'Too many requests — try again in a minute.' });
@@ -119,12 +179,12 @@ export default async function handler(req, res) {
 
     try {
       // Only the game agent carries per-turn state; everything else is stateless.
-      const context = agent === 'guess' ? await gameContext(gameToken) : undefined;
-      await runAgentStream(agent, sanitizeHistory(history ?? []), message.trim(), emit, ac.signal, context);
+      const context = agent === 'guess' ? await gameContext(gameToken, history ?? []) : undefined;
+      await runAgentStream(agent, historyForTurn(history ?? [], context), message.trim(), emit, ac.signal, context);
     } catch (err) {
       if (!ac.signal.aborted) {
         console.error('agent stream failed:', err);
-        emit({ type: 'error', error: isRateLimit(err) ? RATE_LIMIT_MSG : 'Agent request failed.' });
+        emit({ type: 'error', error: visitorError(err) });
       }
     }
     res.end();

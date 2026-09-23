@@ -3,6 +3,7 @@
 // Shared verbatim by the Vercel function (api/agent.mjs) and the local dev
 // server (dev-server.mjs).
 
+import { FinishReason, ThinkingLevel } from '@google/genai';
 import { toolRegistry } from './tools.mjs';
 import { gameTools } from './game.mjs';
 import { makeGenAI } from './client.mjs';
@@ -15,10 +16,55 @@ import { AGENTS, DEFAULT_AGENT } from './agents.mjs';
 const registry = { ...toolRegistry, ...gameTools };
 
 const MODEL = process.env.GEMINI_MODEL || 'gemini-3.5-flash';
-const MAX_TOOL_ROUNDS = 6;
+
+// Cost ceilings for one visitor message, all paid from John's key. Before
+// these, one request could run six tool rounds with unlimited parallel calls
+// in each, with output and thinking uncapped.
+const MAX_TOOL_ROUNDS = 4;
+// list_my_apps plus get_app_details on every one of the 15 apps.
+const MAX_CALLS_PER_TURN = 16;
+// Every round re-sends all prior tool output; past this the turn is mostly
+// paying to re-read results, so stop instead of growing it further.
+const MAX_CONTENTS_CHARS = 150_000;
+// Headroom, not a length target. genai.d.ts reports thoughtsTokenCount apart
+// from candidatesTokenCount but never says whether thinking is carved out of
+// this cap, so assume it is: LOW thinking must not starve the visible answer.
+const MAX_OUTPUT_TOKENS = 4096;
 
 const NO_ANSWER =
   "I ran out of tool budget before I could finish that one — try asking something more specific.";
+const CALL_BUDGET_ERROR = 'tool budget for this turn is used up';
+
+// Finish reasons that mean a filter withheld the output, as opposed to the
+// model simply producing nothing.
+const FILTERED = new Set([
+  FinishReason.SAFETY, FinishReason.PROHIBITED_CONTENT, FinishReason.BLOCKLIST,
+  FinishReason.SPII, FinishReason.RECITATION,
+]);
+// The model tried to call a tool and produced something unusable. Usually a
+// one-off, so the round earns a single retry.
+const BROKEN_CALL = new Set([FinishReason.MALFORMED_FUNCTION_CALL, FinishReason.UNEXPECTED_TOOL_CALL]);
+// The only ends that leave streamed text standing as the answer. MAX_TOKENS
+// is a cut, but the text is still the model's own reply. Anything else (a
+// filter mid-answer, chatter before a broken call, LANGUAGE, OTHER) used to
+// be kept too, and was then charged and replayed as a real answer.
+const ANSWER_ENDS = new Set([
+  undefined, FinishReason.FINISH_REASON_UNSPECIFIED, FinishReason.STOP, FinishReason.MAX_TOKENS,
+]);
+
+/** A round that ends without an answer: nothing at all, a broken call, or a
+ *  filter cut. The message is shown to the visitor verbatim (api/agent.mjs
+ *  passes EMPTY_ROUND through), so it names no internals; the raw reasons
+ *  ride along for the server log. */
+function emptyRoundError({ finishReason, blockReason }) {
+  const filtered = Boolean(blockReason) || FILTERED.has(finishReason);
+  const err = new Error(
+    filtered
+      ? 'The model declined to answer that one. Try rephrasing your question.'
+      : 'The model came back without an answer. Please try again.'
+  );
+  return Object.assign(err, { code: 'EMPTY_ROUND', finishReason, blockReason });
+}
 
 function declarationsFor(agent) {
   return agent.tools
@@ -54,6 +100,12 @@ async function executeTool(agent, name, args, context) {
  *                                       (the round turned out to be a tool round)
  *   {type:'done',       model}          turn complete
  *
+ * A round that ends without an answer (empty, filtered, a broken call) throws
+ * an Error with code EMPTY_ROUND instead: no 'done', and onFinish does not run,
+ * so a Guess round is not charged a question for an answer that never came.
+ * The one exception is a round a tool already ended this turn (give_up, a
+ * correct guess): onFinish still runs so the finished round is sealed.
+ *
  * @param {string} agentId which agent config to run (see agents.mjs)
  * @param {Array<{role:'user'|'model', text:string}>} history prior chat turns
  * @param {string} message the new user message
@@ -62,11 +114,12 @@ async function executeTool(agent, name, args, context) {
  * @param {object} [context] per-turn state handed to tools and appended to the
  *        system instruction. Guess My App uses it to hold the secret app; tools
  *        may mutate context.state, and onFinish reports the result back.
+ * @param {{ai?: object}} [deps] test seam: a stand-in for the GenAI client
  */
-export async function runAgentStream(agentId, history, message, emit, signal, context) {
+export async function runAgentStream(agentId, history, message, emit, signal, context, { ai } = {}) {
   // Object.hasOwn so prototype keys ("constructor" etc.) can't resolve.
   const agent = Object.hasOwn(AGENTS, agentId ?? '') ? AGENTS[agentId] : AGENTS[DEFAULT_AGENT];
-  const ai = makeGenAI();   // throws NO_KEY when credentials are missing
+  const client = ai ?? makeGenAI();   // throws NO_KEY when credentials are missing
   const send = (event) => { if (!signal?.aborted) emit(event); };
 
   // Per-turn facts (e.g. the redacted fact sheet) ride along with the agent's
@@ -92,35 +145,86 @@ export async function runAgentStream(agentId, history, message, emit, signal, co
     { role: 'user', parts: [{ text: message }] },
   ];
 
-  for (let round = 0; round <= MAX_TOOL_ROUNDS; round++) {
-    if (signal?.aborted) return;   // client is gone — stop spending quota
-    const stream = await ai.models.generateContentStream({
+  // Stream one model round: forward text deltas immediately (they're the
+  // answer in the common case) while collecting every part for the model turn.
+  const streamRound = async () => {
+    const stream = await client.models.generateContentStream({
       model: MODEL,
       contents,
       config: {
         systemInstruction,
         tools: [{ functionDeclarations: declarationsFor(agent) }],
         temperature: 0.4,
+        maxOutputTokens: MAX_OUTPUT_TOKENS,
+        // thinkingLevel, not thinkingBudget: genai.d.ts (tuning config) says
+        // Gemini 3.5 rejects thinking_budget as a user error; LOW keeps
+        // thinking cheap. No includeThoughts — thought text must never be
+        // streamed to the visitor.
+        thinkingConfig: { thinkingLevel: ThinkingLevel.LOW },
         ...(signal ? { abortSignal: signal } : {}),
       },
     });
-
-    // Stream this round: forward text deltas immediately (they're the answer
-    // in the common case) while collecting every part for the model turn.
-    const allParts = [];
-    const calls = [];
-    let roundText = '';
+    const r = { allParts: [], calls: [], text: '', finishReason: undefined, blockReason: undefined };
     for await (const chunk of stream) {
-      const parts = chunk.candidates?.[0]?.content?.parts ?? [];
-      for (const part of parts) {
-        allParts.push(part);
-        if (part.functionCall) calls.push(part.functionCall);
+      // A blocked prompt arrives as promptFeedback on the first chunk with no
+      // candidates at all; reading only parts made it look like a quiet reply.
+      r.blockReason ??= chunk.promptFeedback?.blockReason;
+      const candidate = chunk.candidates?.[0];
+      if (candidate?.finishReason) r.finishReason = candidate.finishReason;
+      for (const part of candidate?.content?.parts ?? []) {
+        r.allParts.push(part);
+        if (part.functionCall) r.calls.push(part.functionCall);
         if (part.text && !part.thought) {
-          roundText += part.text;
+          r.text += part.text;
           send({ type: 'delta', text: part.text });
         }
       }
     }
+    return r;
+  };
+
+  let callsLeft = MAX_CALLS_PER_TURN;
+  let retriedBrokenCall = false;
+  const wasOver = context?.state?.over === true;
+
+  for (let round = 0; round <= MAX_TOOL_ROUNDS; round++) {
+    if (signal?.aborted) return;   // client is gone — stop spending quota
+
+    let r;
+    try {
+      for (;;) {
+        r = await streamRound();
+        if (signal?.aborted) return;
+        if (r.calls.length) break;
+        if (r.text.trim() && !r.blockReason && ANSWER_ENDS.has(r.finishReason)) break;
+        // Not an answer. An empty round used to fall through to the no-calls
+        // branch: it streamed NO_ANSWER even on round 0 and ran onFinish, so
+        // a safety block was sealed into the Guess token as an answered
+        // question. Whatever did stream (pre-call chatter, a half answer a
+        // filter cut) is withdrawn before the retry or the error.
+        if (r.text) send({ type: 'draft-discard' });
+        if (BROKEN_CALL.has(r.finishReason) && !retriedBrokenCall) {
+          retriedBrokenCall = true;
+          console.warn(`agent: round ${round} ended with ${r.finishReason}; retrying once`);
+          continue;
+        }
+        throw emptyRoundError(r);
+      }
+    } catch (err) {
+      // A give_up or correct guess earlier this turn already put the name in
+      // the trace. Dropping the re-sealed token left the browser playing a
+      // round that was over, and it could "win" it next turn with the name
+      // it had just been shown. Seal it; still no 'done'.
+      if (!wasOver && context?.state?.over === true) context.onFinish?.(send);
+      throw err;
+    }
+    if (r.finishReason && r.finishReason !== FinishReason.STOP) {
+      // e.g. MAX_TOKENS mid-answer: the partial text is still worth showing.
+      console.warn(`agent: round ${round} ended with ${r.finishReason}; keeping the partial output`);
+    }
+
+    const { allParts, calls } = r;
+    let roundText = r.text;
 
     if (calls.length === 0 || round === MAX_TOOL_ROUNDS) {
       // Budget exhausted with calls still pending: whatever text streamed was
@@ -144,8 +248,19 @@ export async function runAgentStream(agentId, history, message, emit, signal, co
     for (const call of calls) {
       if (signal?.aborted) return;
       send({ type: 'tool-start', tool: call.name, args: call.args ?? {} });
-      const result = await executeTool(agent, call.name, call.args, context);
-      send({ type: 'tool-end', tool: call.name, summary: summarize(call.name, result) });
+      let result, summary;
+      if (callsLeft > 0) {
+        callsLeft--;
+        result = await executeTool(agent, call.name, call.args, context);
+        summary = summarize(call.name, result);
+      } else {
+        // Over budget: every functionCall still needs its functionResponse,
+        // but the tool does not run, and the trace says so rather than
+        // passing it off as a tool failure.
+        result = { error: CALL_BUDGET_ERROR };
+        summary = `skipped: ${CALL_BUDGET_ERROR}`;
+      }
+      send({ type: 'tool-end', tool: call.name, summary });
       responseParts.push({
         functionResponse: {
           // Echo the call id when the API populates one (parallel-call contract).
@@ -156,6 +271,15 @@ export async function runAgentStream(agentId, history, message, emit, signal, co
       });
     }
     contents.push({ role: 'user', parts: responseParts });
+
+    // Tools already ran (a guess may have ended the round), so this goes out
+    // through finish() like any other budget stop.
+    if (JSON.stringify(contents).length > MAX_CONTENTS_CHARS) {
+      console.warn(`agent: contents passed ${MAX_CONTENTS_CHARS} chars after round ${round}; stopping`);
+      send({ type: 'delta', text: NO_ANSWER });
+      finish();
+      return;
+    }
   }
   // Unreachable (the final round returns above); kept as a safe fallback.
   send({ type: 'delta', text: NO_ANSWER });

@@ -5,11 +5,31 @@
 import { generateMission, SKILLS } from '../agent-core/missions.mjs';
 import { rateLimited, isRateLimit, RATE_LIMIT_MSG } from '../agent-core/ratelimit.mjs';
 
+/** Same guard as api/agent.mjs (kept inline: each file here is its own
+ *  function bundle). A no-cors form POST from any page used to reach Gemini
+ *  on John's key; JSON forces a preflight, and Sec-Fetch-Site catches what's
+ *  left. Absent is allowed — curl and servers don't send it. */
+function rejectForeign(req, res) {
+  const type = String(req.headers?.['content-type'] ?? '').trim().toLowerCase();
+  if (!type.startsWith('application/json')) {
+    res.status(415).json({ error: 'JSON only' });
+    return true;
+  }
+  const site = req.headers?.['sec-fetch-site'];
+  if (site !== undefined && site !== 'same-origin') {
+    res.status(403).json({ error: 'cross-site request' });
+    return true;
+  }
+  return false;
+}
+
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
     res.status(405).json({ error: 'POST only' });
     return;
   }
+  // Before the limiter too, so a hostile page can't burn a visitor's quota.
+  if (rejectForeign(req, res)) return;
   try {
     if (rateLimited(req)) {
       res.status(429).json({ error: 'Too many requests — try again in a minute.' });

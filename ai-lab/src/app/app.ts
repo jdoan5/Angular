@@ -28,26 +28,33 @@ export class App {
       kind: 'chat',
       description:
         "I've secretly dealt one of my published iOS apps. Ask yes/no questions to narrow it down, then guess the name. The host answers from live App Store data with the app's name redacted out of it — it genuinely does not know the answer, so it cannot let it slip. Only the server can confirm your guess.",
+      // Each starter must split the live catalog. "Does it cost anything?"
+      // (all free) and "Was it released this year?" (all 2026, and the host
+      // is never told the date) got one answer for all 15 apps and wasted a
+      // counted question. Recheck against the lookup when the catalog grows.
       starters: [
         'Is it a game?',
         'Is it for kids?',
-        'Was it released this year?',
-        'Does it cost anything?',
+        'Is it about money?',
+        'Is it an education app?',
       ],
     },
     {
       id: 'reviews',
       title: 'App Review Analyst',
-      blurb: 'Live App Store reviews, analyzed by an agent with tools',
+      blurb: 'Live App Store ratings and releases, read by an agent with tools',
       live: true,
       kind: 'chat',
       description:
-        "An agent with live App Store tools: it lists John's published apps, pulls their public reviews and ratings, then analyzes sentiment, themes, and trends — and can draft developer replies. Watch its tool calls stream in live.",
+        "An agent with live App Store tools: it lists John's published apps and reads their ratings, versions, update dates and release notes, then checks the public review feed. The apps are new and written reviews are still rare — when there are none, it says so instead of inventing sentiment. Watch its tool calls stream in live.",
+      // Answerable from data that exists: the 15 apps have a handful of
+      // ratings and almost no written reviews, so three of the old four
+      // starters ended in "no reviews found".
       starters: [
-        'How are my apps rated overall?',
-        'Summarize the latest reviews of Cosmic Cadets',
-        'What do reviewers complain about most, across all my apps?',
-        'Draft a friendly reply to the most critical recent review',
+        "Which of John's apps have ratings so far?",
+        'What changed in the latest Cosmic Cadets update?',
+        "Which of John's apps were updated most recently?",
+        'Check the review feed for Learn English: Pronunciation',
       ],
     },
     {

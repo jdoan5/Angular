@@ -72,6 +72,12 @@ export function unseal(token) {
       url: typeof state.url === 'string' ? state.url : '',
       asked: Number.isInteger(state.asked) ? state.asked : 0,
       over: state.over === true,
+      // Where this round starts in the browser's history, set by api/agent.mjs
+      // when it deals. Dropping it here handed question 2 onward the whole
+      // history again, old reveal included.
+      ...(Number.isInteger(state.historyStart) && state.historyStart >= 0
+        ? { historyStart: state.historyStart }
+        : {}),
     };
   } catch {
     return null; // bad tag, wrong key, garbage input — all mean "start over"
@@ -97,6 +103,32 @@ export function nameVariants(name) {
     .sort((a, b) => b.length - a.length);
 }
 
+/** Other names an app answers to, by trackId: names its own live store copy
+ *  still uses, so the host reads them in the fact sheet and players say them.
+ *  Every alias is accepted as a correct guess.
+ *
+ *  `redact` marks proper nouns — retired names that ARE the app ("Invoice
+ *  Tracker is a simple, private ledger…") and must be scrubbed like its title.
+ *  Genre names ("Tic Tac Toe", "Habit Tracker") are left in: they describe
+ *  what the app is, and scrubbing them would gut the clue. A player who names
+ *  the app the way its own store page does has earned the win. */
+export const ALIASES = {
+  6782749406: [{ name: 'Invoice Tracker', redact: true }],
+  6778971932: [{ name: 'Civics Test 2025', redact: true }, { name: 'Civics Test', redact: true }],
+  // "503020" is written "50/30/20" in its own copy; the title redaction
+  // already covers it, the alias makes the guess count.
+  6780275076: [{ name: '50/30/20', redact: true }],
+  6784836738: [{ name: 'Habit Tracker', redact: false }],
+  6772803398: [
+    { name: 'Tic Tac Toe', redact: false },
+    { name: 'Tictactoe', redact: false },
+    { name: '3 in a row', redact: false },
+  ],
+};
+
+const redactedAliases = (appId) =>
+  (ALIASES[appId] ?? []).filter((a) => a.redact).map((a) => a.name);
+
 const escapeRe = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
 /** Match a name however the store copy happens to punctuate it. The title
@@ -112,10 +144,16 @@ function loosePattern(variant) {
 }
 
 /** Strip the app's name out of its own store copy. Deliberately aggressive:
- *  a redacted clue is a worse puzzle, but a leaked name is no puzzle at all. */
-export function redactName(text, name) {
+ *  a redacted clue is a worse puzzle, but a leaked name is no puzzle at all.
+ *  Pass appId to also strip the app's proper-noun aliases — whole phrases
+ *  only, since "invoice" and "test" alone are ordinary vocabulary. */
+export function redactName(text, name, appId) {
   let out = String(text ?? '');
-  for (const variant of nameVariants(name)) {
+  // One longest-first pass over both lists, so no shorter variant can split a
+  // longer one before it is consumed.
+  const variants = [...new Set([...nameVariants(name), ...redactedAliases(appId)])]
+    .sort((a, b) => b.length - a.length);
+  for (const variant of variants) {
     const re = loosePattern(variant);
     if (re) out = out.replace(re, REDACTED);
   }
@@ -131,6 +169,20 @@ async function catalog() {
   const { apps } = await listMyApps();
   cache = { at: Date.now(), apps };
   return apps;
+}
+
+// Every question rebuilds the fact sheet, and Apple throttles the lookup API
+// at roughly 20 calls a minute, so an app's details live as long as the
+// catalog does. Only successes are kept; a failure retries next time.
+const detailsCache = new Map();
+
+async function appDetails(appId) {
+  const hit = detailsCache.get(appId);
+  if (hit && Date.now() - hit.at < APPS_TTL_MS) return hit.details;
+  const details = await getAppDetails({ appId });
+  if (details?.error) throw new Error(details.error);
+  detailsCache.set(appId, { at: Date.now(), details });
+  return details;
 }
 
 // ---------------------------------------------------------------- fact sheet
@@ -159,19 +211,21 @@ function factSheet(details) {
     `download size: ${details.sizeMB ?? '?'} MB`,
     `age rating: ${details.contentRating ?? 'unknown'}`,
     `ratings: ${ratings}`,
-    `what it does (name removed): ${redactName(details.description, details.name).slice(0, DESCRIPTION_CHARS)}`,
+    `what it does (name removed): ${redactName(details.description, details.name, details.appId).slice(0, DESCRIPTION_CHARS)}`,
   ].join('\n');
 }
 
 // ------------------------------------------------------------------ lifecycle
 
-/** Pick a random app and build the turn context for a brand-new game. */
-export async function startGame() {
+/** Pick a random app and build the turn context for a brand-new game.
+ *  excludeAppId is never dealt unless it is the only app there is. */
+export async function startGame(excludeAppId) {
   const apps = await catalog();
   if (!apps.length) throw new Error('No apps available to play with.');
-  const pick = apps[randomInt(apps.length)];
-  const details = await getAppDetails({ appId: pick.appId });
-  if (details?.error) throw new Error(details.error);
+  const others = apps.filter((a) => a.appId !== excludeAppId);
+  const pool = others.length ? others : apps;
+  const pick = pool[randomInt(pool.length)];
+  const details = await appDetails(pick.appId);
   return {
     state: { appId: pick.appId, name: details.name, url: details.url ?? pick.url ?? '', asked: 0, over: false },
     facts: factSheet(details),
@@ -181,9 +235,7 @@ export async function startGame() {
 
 /** Rebuild the fact sheet for a game already in progress. */
 export async function resumeGame(state) {
-  const details = await getAppDetails({ appId: state.appId });
-  if (details?.error) throw new Error(details.error);
-  return { state, facts: factSheet(details), fresh: false };
+  return { state, facts: factSheet(await appDetails(state.appId)), fresh: false };
 }
 
 /** Resume the sealed game if there is one, otherwise deal a new app. */
@@ -193,40 +245,169 @@ export async function loadGame(token) {
     try {
       return await resumeGame(existing);
     } catch {
-      /* app pulled from the store mid-game — fall through to a new one */
+      /* app pulled from the store mid-game — fall through to a new one. With
+         details cached, that is noticed only once its cache entry expires,
+         up to APPS_TTL_MS after the pull. */
     }
   }
-  return startGame();
+  // Never re-deal the app just revealed (1 draw in 15 did): its name is still
+  // on screen and may still be in the history the model reads.
+  return startGame(existing?.appId);
 }
 
 // ------------------------------------------------------------- guess matching
 
-const normalize = (s) => String(s ?? '').toLowerCase().replace(/[^a-z0-9]/g, '');
+//
+// A guess is judged against the whole catalog, not just the secret. Matching
+// the secret alone could only ask "does this look like the answer?", which
+// rejected "Snake" and "Job Trail" (no colon, so only the full title counted)
+// while a prefix test accepted "Toeholds are fun" and "Cosmic Cadets or Streak
+// Rings". Asking "which app does this name?" gets both right.
 
-/** Accept the short name people actually say: "Toehold" for
- *  "Toehold: Sudoku Explained", but never a 2-letter fragment that would
- *  match half the catalog. */
-export function guessMatches(guess, name) {
-  const g = normalize(guess);
-  if (g.length < 3) return false;
-  const full = normalize(name);
-  const head = normalize(name.split(':')[0]);
-  return g === full || g === head || (head.length >= 4 && g.startsWith(head)) ;
+/** Lower-case words, punctuation gone, digits kept. "&" reads as "and" so
+ *  "Bills & Invoices" is one spelling, and apostrophes vanish rather than
+ *  splitting a word in two. */
+function words(s) {
+  return String(s ?? '')
+    .normalize('NFKD').replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .replace(/&/g, ' and ')
+    .replace(/['\u2019]/g, '')
+    .split(/[^a-z0-9]+/)
+    .filter(Boolean);
+}
+
+// Title words too generic to name an app on their own: "english" is in two
+// titles, and "budget", "sudoku" or "soccer" are what players ASK about ("is
+// it a sudoku app?"), which must not win the round or spend the guess. They
+// still count inside a longer phrase — "Budget Coach", "Sudoku Explained" and
+// "Soccer 2026" are names. 2026 is every app's release year.
+//
+// Known tradeoffs, kept on purpose:
+// - "Snake" stays a name: players say it for LCD Classic Snake, so "is it a
+//   snake game?" reads as a guess.
+// - Runs of generic words still count ("does it show live scores?" names
+//   Soccer 2026), because "Job Trail", "Medical Refill" and "Three in a Row"
+//   are made of nothing else. Aliases likewise: "is it about the civics
+//   test?" names US Citizenship. The host prompt only sends names here; this
+//   stoplist is the backstop for single words, not a question detector.
+const GENERIC_WORDS = new Set([
+  'english', 'learn', 'budget', 'coach', 'classic', 'medical', 'refill', 'family',
+  'questions', 'prep', 'applications', 'job', 'live', 'scores', 'drop', 'alerts',
+  'home', 'inventory', 'bills', 'invoices', 'explained', 'rings', 'trail', 'price',
+  'duel', 'three', 'row', '2026',
+  'sudoku', 'soccer', 'citizenship', 'pronunciation', 'streak',
+]);
+
+// Glue: a run of title words may not start or end on one, so "Three in a Row
+// Duel" yields "three in a row" but never "in a" or "a row".
+const GLUE_WORDS = new Set(['a', 'an', 'and', 'the', 'in', 'of', 'for', 'to', 'on', 'or', 'at', 'by', 'with']);
+
+/** Every word sequence that names this app: the full title, each colon
+ *  segment, each run of 2+ title words, each distinctive single word, and its
+ *  aliases. */
+function namePhrases(app) {
+  const phrases = [words(app.name)];
+  for (const segment of String(app.name).split(':')) {
+    const w = words(segment);
+    if (w.length > 1) phrases.push(w);
+    for (let i = 0; i < w.length; i++) {
+      if (GLUE_WORDS.has(w[i])) continue;
+      for (let j = i + 1; j < w.length; j++) {
+        if (!GLUE_WORDS.has(w[j])) phrases.push(w.slice(i, j + 1));
+      }
+      if (w[i].length >= 3 && !GENERIC_WORDS.has(w[i])) phrases.push([w[i]]);
+    }
+  }
+  for (const alias of ALIASES[app.appId] ?? []) phrases.push(words(alias.name));
+  return phrases.filter((p) => p.length);
+}
+
+/** The catalog apps a guess names, as appIds. Pure and synchronous so tests
+ *  can drive it with a fixed catalog.
+ *
+ *  Phrases match whole words ("toeholds" is not "toehold"), longest first.
+ *  A guess word belongs to the longest phrase covering it, so a longer name
+ *  is never also read as a shorter one inside it; phrases of equal length
+ *  tie, so a word two titles share stays ambiguous rather than going to
+ *  whichever app happens to be listed first. */
+export function matchGuess(guess, apps) {
+  const g = words(guess);
+  const candidates = (apps ?? [])
+    .flatMap((app) => namePhrases(app).map((phrase) => ({ appId: app.appId, phrase })))
+    .sort((a, b) => b.phrase.length - a.phrase.length);
+  const claimedBy = new Array(g.length).fill(0);   // length of the claiming phrase
+  const matched = new Set();
+  for (const { appId, phrase } of candidates) {
+    const n = phrase.length;
+    for (let i = 0; i + n <= g.length; i++) {
+      if (phrase.every((w, k) => g[i + k] === w && (claimedBy[i + k] === 0 || claimedBy[i + k] === n))) {
+        claimedBy.fill(n, i, i + n);
+        matched.add(appId);
+      }
+    }
+  }
+  return [...matched];
+}
+
+/** The catalog to judge against, always including the secret: if the app was
+ *  pulled mid-round, a right guess must still win. Null when the lookup fails.
+ *  Judging against the secret alone was the old fallback, and there a guess
+ *  listing several apps matched only the secret and won. */
+async function guessableApps(state) {
+  let apps;
+  try {
+    apps = await catalog();
+  } catch {
+    return null;
+  }
+  return apps.some((a) => a.appId === state.appId)
+    ? apps
+    : [...apps, { appId: state.appId, name: state.name }];
 }
 
 // ------------------------------------------------------------------- tools
 
-/** Check a name the player guessed. The only path that can confirm the answer. */
-export function checkGuess({ name } = {}, context = {}) {
+/** Check a name the player guessed. The only path that can confirm the answer.
+ *
+ *  One judged guess per question. The server charges one question per HTTP
+ *  turn, so a message listing all fifteen names fanned out into fifteen calls
+ *  and won on question 1. The context is built fresh per request, so the
+ *  count on it is exactly "this turn". Only a call that is actually judged
+ *  against the secret spends it: naming several apps, or none, reveals nothing
+ *  and must not burn the player's one real guess. */
+export async function checkGuess({ name } = {}, context = {}) {
   const state = context.state;
   if (!state) return { error: 'No game in progress.' };
   if (typeof name !== 'string' || !name.trim()) return { error: 'A guess needs an app name.' };
-  const correct = guessMatches(name, state.name);
-  if (correct) {
+  const apps = await guessableApps(state);
+  // Not judged, so the turn's guess is not spent.
+  if (!apps) return { error: "Can't check guesses right now - try again" };
+  // After the await, so the check and the count below run in one synchronous
+  // step: even calls executed in parallel cannot both get through.
+  if (context.guesses > 0) {
+    return { error: 'One guess per question - ask the player which single app they mean' };
+  }
+  const named = matchGuess(name, apps);
+  if (named.length > 1) return { error: 'Name one app at a time' };
+
+  const tally = { questionsUsed: state.asked, questionsLeft: Math.max(0, QUESTION_LIMIT - state.asked) };
+  if (named.length === 0) {
+    return {
+      correct: false, guessed: name.trim(), recognized: false,
+      // Also where a category question lands ("is it a sudoku app?") if the
+      // host mistakes it for a guess, so point it back at the fact sheet
+      // rather than let it tell the player no such app exists.
+      note: "That is not the name of one of John's apps, so it was not counted as a guess. If the player was asking about a feature or category, answer that from the fact sheet instead.",
+      ...tally,
+    };
+  }
+  context.guesses = (context.guesses ?? 0) + 1;
+  if (named[0] === state.appId) {
     state.over = true;
     return { correct: true, appName: state.name, appUrl: state.url, questionsUsed: state.asked };
   }
-  return { correct: false, guessed: name.trim(), questionsUsed: state.asked, questionsLeft: Math.max(0, QUESTION_LIMIT - state.asked) };
+  return { correct: false, guessed: name.trim(), ...tally };
 }
 
 /** Reveal the answer when the player gives up or runs out of questions. */
@@ -242,10 +423,10 @@ export const gameTools = {
   check_guess: {
     fn: checkGuess,
     description:
-      'Check whether the player has guessed the secret app correctly. Call this the moment the player names any app. Returns correct:true with the real name when they get it, or correct:false when they do not.',
+      'Check whether the player has guessed the secret app correctly. Call this the moment the player names an app, passing just that app name. Only one guess can be checked per question. Returns correct:true with the real name when they get it, or correct:false when they do not.',
     parameters: {
       type: 'OBJECT',
-      properties: { name: { type: 'STRING', description: 'The app name the player guessed, exactly as they wrote it' } },
+      properties: { name: { type: 'STRING', description: 'Just the app name the player guessed, without the rest of their message' } },
       required: ['name'],
     },
   },
