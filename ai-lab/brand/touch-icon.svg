@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <!-- Full-bleed: iOS applies its own corner mask, so no rx here. The star sits
+       a little inside the edges to clear the mask's curve. -->
+  <defs>
+    <radialGradient id="glow" cx="50%" cy="50%" r="55%">
+      <stop offset="0" stop-color="#ffd23b" stop-opacity="0.18"/>
+      <stop offset="1" stop-color="#ffd23b" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="64" height="64" fill="#0d0a26"/>
+  <rect width="64" height="64" fill="url(#glow)"/>
+  <path fill="#ffd23b" d="M32 10 Q35.8 28.2 54 32 Q35.8 35.8 32 54 Q28.2 35.8 10 32 Q28.2 28.2 32 10 Z"/>
+</svg>

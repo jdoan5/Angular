@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <!-- John's AI Lab mark: the header's ✦, drawn as a path so it never depends on fonts. -->
+  <rect width="64" height="64" rx="14" fill="#0d0a26"/>
+  <path fill="#ffd23b" d="M32 6 Q36.5 27.5 58 32 Q36.5 36.5 32 58 Q27.5 36.5 6 32 Q27.5 27.5 32 6 Z"/>
+</svg>
