@@ -25,7 +25,7 @@ jobs:
   snapshot:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Execute gold snapshot query
         env:
@@ -35,16 +35,37 @@ jobs:
         run: |
           set -euo pipefail
 
+          # Call the Databricks API and print its error body on failure. The old
+          # `RESP=$(curl --fail-with-body ...)` captured the body into RESP and
+          # then set -e exited before anything printed it: from 2026-09-15 the
+          # job failed nine days running showing only "curl: (22) ... 400",
+          # while Databricks was saying why. Errors go to stderr on purpose:
+          # dbx runs inside $(...), which would capture stdout and hide them
+          # all over again. Plain --retry retries only transient failures
+          # (timeouts, 408/429/5xx); --retry-all-errors retried every 400.
+          dbx() {
+            local method="$1" url="$2" data="${3:-}" out code
+            out=$(mktemp)
+            local args=(-sS -o "$out" -w '%{http_code}' --retry 3 --retry-delay 5
+              -X "$method" "$url" -H "Authorization: Bearer $TOKEN")
+            if [ -n "$data" ]; then
+              args+=(-H "Content-Type: application/json" -d "$data")
+            fi
+            code=$(curl "${args[@]}")
+            if [ "$code" -lt 200 ] || [ "$code" -ge 300 ]; then
+              echo "::error title=Databricks API returned $code::$(jq -r '"\(.error_code // "?"): \(.message // "no message")"' "$out" 2>/dev/null || head -c 300 "$out")" >&2
+              { jq . "$out" 2>/dev/null || cat "$out"; } >&2
+              exit 1
+            fi
+            cat "$out"
+          }
+
           BODY=$(jq -n \
             --arg wid "$WAREHOUSE_ID" \
             --rawfile stmt .github/workflows/gold_snapshot.sql \
             '{warehouse_id: $wid, statement: $stmt, wait_timeout: "50s", on_wait_timeout: "CONTINUE"}')
 
-          RESP=$(curl -sS --fail-with-body --retry 3 --retry-all-errors --retry-delay 5 \
-            -X POST "$HOST/api/2.0/sql/statements" \
-            -H "Authorization: Bearer $TOKEN" \
-            -H "Content-Type: application/json" \
-            -d "$BODY")
+          RESP=$(dbx POST "$HOST/api/2.0/sql/statements" "$BODY")
 
           STATEMENT_ID=$(echo "$RESP" | jq -r '.statement_id')
           STATE=$(echo "$RESP" | jq -r '.status.state')
@@ -58,9 +79,7 @@ jobs:
               exit 1
             fi
             sleep 10
-            RESP=$(curl -sS --fail-with-body --retry 3 --retry-all-errors --retry-delay 5 \
-              "$HOST/api/2.0/sql/statements/$STATEMENT_ID" \
-              -H "Authorization: Bearer $TOKEN")
+            RESP=$(dbx GET "$HOST/api/2.0/sql/statements/$STATEMENT_ID")
             STATE=$(echo "$RESP" | jq -r '.status.state')
           done
 
