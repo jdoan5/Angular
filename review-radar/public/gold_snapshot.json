@@ -1,17 +1,17 @@
 {
   "totals": {
-    "reviews_collected": 6948,
+    "reviews_collected": 7099,
     "overall_avg_rating": 3.93,
     "apps_tracked": 6
   },
   "overview": [
     {
       "app_name": "Productive - Habit Tracker",
-      "reviews_collected": 943,
+      "reviews_collected": 944,
       "avg_rating": 3.12,
       "versions_seen": 144,
       "oldest_review_at": "2017-08-08T12:04:43.000Z",
-      "newest_review_at": "2026-07-11T14:24:20.000Z"
+      "newest_review_at": "2026-09-18T01:38:35.000Z"
     },
     {
       "app_name": "Habit Tracker",
@@ -47,11 +47,11 @@
     },
     {
       "app_name": "Duolingo (high-volume control)",
-      "reviews_collected": 2875,
-      "avg_rating": 3.74,
-      "versions_seen": 261,
+      "reviews_collected": 3025,
+      "avg_rating": 3.75,
+      "versions_seen": 263,
       "oldest_review_at": "2017-09-10T02:37:43.000Z",
-      "newest_review_at": "2026-09-13T04:24:43.000Z"
+      "newest_review_at": "2026-09-23T07:46:00.000Z"
     }
   ],
   "rating_by_version": [
@@ -348,6 +348,20 @@
       "n_reviews": 31,
       "avg_rating": 3.97,
       "first_review_at": "2026-05-21T11:37:25.000Z"
+    },
+    {
+      "app_name": "Duolingo (high-volume control)",
+      "app_version": "7.141.0",
+      "n_reviews": 130,
+      "avg_rating": 4.02,
+      "first_review_at": "2026-09-22T15:26:06.000Z"
+    },
+    {
+      "app_name": "Duolingo (high-volume control)",
+      "app_version": "7.140.0",
+      "n_reviews": 20,
+      "avg_rating": 3.3,
+      "first_review_at": "2026-09-22T12:21:35.000Z"
     }
   ],
   "weekly_velocity": [
@@ -3390,6 +3404,20 @@
       "is_partial_week": false
     },
     {
+      "app_name": "Duolingo (high-volume control)",
+      "week": "2026-09-21T00:00:00.000Z",
+      "n_reviews": 150,
+      "avg_rating": 3.93,
+      "is_partial_week": true
+    },
+    {
+      "app_name": "Productive - Habit Tracker",
+      "week": "2026-09-14T00:00:00.000Z",
+      "n_reviews": 1,
+      "avg_rating": 5.0,
+      "is_partial_week": false
+    },
+    {
       "app_name": "HabitKit",
       "week": "2026-06-01T00:00:00.000Z",
       "n_reviews": 1,
@@ -3397,5 +3425,5 @@
       "is_partial_week": false
     }
   ],
-  "generated_at": "2026-09-23T20:42:28Z"
+  "generated_at": "2026-09-24T17:54:46Z"
 }
