@@ -14,7 +14,7 @@
           [class.active]="active() === s.id"
           [class.soon]="!s.live"
           [disabled]="!s.live"
-          (click)="active.set(s.id)"
+          (click)="open(s.id)"
         >
           <span class="stage-title">{{ s.title }}</span>
           <span class="stage-blurb">{{ s.live ? s.blurb : 'Launching soon' }}</span>
@@ -34,6 +34,14 @@
         />
       } @else if (stage.live && stage.kind === 'mission') {
         <app-mission-maker />
+      } @else if (stage.live && stage.kind === 'tour') {
+        <app-screenshot-tour
+          [heading]="stage.title"
+          [description]="stage.description"
+          [starters]="tourStarters"
+          [initialAppId]="tourApp()"
+          (appChange)="onTourApp($event)"
+        />
       }
     }
   </main>

@@ -5,11 +5,13 @@
 //   node server.mjs   → 0.0.0.0:$PORT (default 8080)
 //
 // Endpoints: /api/agent (GET health, POST chat stream), /api/mission (POST),
+// /api/tour (GET strip and ready tours, POST live tour stream),
 // /healthz (liveness/readiness probe — no auth, no model calls).
 
 import { createServer } from 'node:http';
 import agentHandler from './api/agent.mjs';
 import missionHandler from './api/mission.mjs';
+import tourHandler from './api/tour.mjs';
 
 const PORT = Number(process.env.PORT) || 8080;
 
@@ -51,6 +53,8 @@ const server = createServer(async (req, res) => {
       await agentHandler(req, res);
     } else if (req.url?.startsWith('/api/mission')) {
       await missionHandler(req, res);
+    } else if (req.url?.startsWith('/api/tour')) {
+      await tourHandler(req, res);
     } else {
       res.status(404).json({ error: 'not found' });
     }

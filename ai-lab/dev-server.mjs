@@ -1,10 +1,12 @@
 // Local stand-in for the Vercel function so `ng serve` + proxy works without
 // the vercel CLI. Reads GEMINI_API_KEY from .env.local (never committed).
 //   node dev-server.mjs        → http://localhost:8787/api/agent
+//                                  (also /api/mission and /api/tour, GET + POST)
 
 import { createServer } from 'node:http';
 import agentHandler from './api/agent.mjs';
 import missionHandler from './api/mission.mjs';
+import tourHandler from './api/tour.mjs';
 
 try {
   process.loadEnvFile('.env.local'); // Node ≥ 20.12; fine if the file is absent
@@ -43,6 +45,9 @@ createServer(async (req, res) => {
     await agentHandler(req, res);
   } else if (req.url?.startsWith('/api/mission')) {
     await missionHandler(req, res);
+  } else if (req.url?.startsWith('/api/tour')) {
+    // GET needs no body shim: the handler reads its query from req.url.
+    await tourHandler(req, res);
   } else {
     res.status(404).json({ error: 'not found' });
   }
