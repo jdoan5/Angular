@@ -46,6 +46,7 @@
         </button>
       </div>
 
+      @if (trace().length || phase() === 'loading' || errorMsg()) {
       <div class="status-box">
         @if (trace().length) {
           <div class="trace" aria-live="polite">
@@ -80,6 +81,7 @@
           </div>
         }
       </div>
+      }
 
       <div class="carousel" [attr.aria-busy]="phase() === 'loading'">
         @for (url of shots(); track url; let i = $index) {
@@ -122,8 +124,7 @@
 
       @if (tour()) {
         <p class="foot" role="status">
-          <span class="grounded">{{ groundingLine() }}</span>
-          <span class="src">{{ sourceLine() }}</span>
+          <span class="grounded">{{ groundingLine() }}</span> · {{ sourceLine() }}
         </p>
       }
 

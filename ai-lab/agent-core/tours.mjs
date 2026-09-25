@@ -587,9 +587,8 @@ function groundingSummary(v, n, willRetry) {
   for (const [reason, count] of Object.entries(v.dropped.reasons)) bits.push(reasonText(reason, count));
   if (!v.pass) {
     const empty = v.perShot.flatMap((k, i) => (k ? [] : [i + 1]));
-    bits.push(empty.length
-      ? `nothing on screenshot ${empty.join(', ')}`
-      : `needs ${neededCallouts(n)}`);
+    if (empty.length) bits.push(`nothing on screenshot ${empty.join(', ')}`);
+    if (v.callouts.length < neededCallouts(n)) bits.push(`needs ${neededCallouts(n)}`);
     bits.push(willRetry ? 'asking again' : 'rejected');
   }
   return bits.join(' · ');
