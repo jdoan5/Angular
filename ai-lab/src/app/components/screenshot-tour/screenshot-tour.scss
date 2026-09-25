@@ -99,13 +99,6 @@ h2 {
     background: var(--paper);
   }
 
-  span {
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
-
   &:hover,
   &.on {
     color: var(--ink);
@@ -184,8 +177,7 @@ h2 {
 }
 
 // One frame per swipe below 600px (the next peeks in), all side by side
-// above. Auto margins centre a short row without clipping the first frame
-// the way justify-content: center does once the row overflows.
+// above.
 .carousel {
   grid-area: shots;
   display: flex;
@@ -203,14 +195,6 @@ h2 {
   background: #05040f;
   border: 1px solid var(--stroke);
   border-radius: 26px;
-
-  &:first-child {
-    margin-left: auto;
-  }
-
-  &:last-child {
-    margin-right: auto;
-  }
 }
 
 .screen {
@@ -298,29 +282,6 @@ h2 {
   min-width: 0;
 }
 
-.legend {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-
-  button {
-    display: flex;
-    gap: 8px;
-    width: 100%;
-    padding: 6px 8px;
-    border-radius: 10px;
-    font-size: 0.82rem;
-    line-height: 1.35;
-    text-align: left;
-
-    &:hover,
-    &.on {
-      background: var(--paper);
-      border-color: var(--stroke);
-    }
-  }
-}
-
 // A bottom sheet on phones, with no backdrop so the lit box stays in view.
 .detail {
   position: fixed;
@@ -357,10 +318,6 @@ blockquote {
   gap: 10px;
 }
 
-.detail-head {
-  align-items: flex-start;
-}
-
 .detail-foot {
   flex-wrap: wrap;
   justify-content: space-between;
@@ -369,10 +326,8 @@ blockquote {
 }
 
 .tag {
-  border: 1px solid var(--stroke);
-  border-radius: 999px;
-  padding: 2px 9px;
   color: var(--teal);
+  font-style: italic;
 }
 
 // Trace: agent-chat's markup and look (rules copied, since component styles

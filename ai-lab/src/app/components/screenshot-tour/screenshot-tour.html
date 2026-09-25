@@ -145,17 +145,8 @@
               </span>
             </div>
           </div>
-        }
-        @if (pins().length) {
-          <ol class="legend" aria-label="Callouts">
-            @for (p of pins(); track p.n) {
-              <li>
-                <button [class.on]="activePin() === p.n" (click)="openPin(p.n)">
-                  <span class="num" aria-hidden="true">{{ p.n }}</span>{{ p.label }}
-                </button>
-              </li>
-            }
-          </ol>
+        } @else if (pins().length) {
+          <p class="status">Tap a numbered pin to see the sentence it's grounded in.</p>
         } @else if (phase() === 'tour') {
           <p class="status">No callouts survived the grounding check — try 'Watch it live'.</p>
         }

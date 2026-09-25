@@ -460,6 +460,10 @@ export class ScreenshotTour implements OnInit {
     this.source.set(s.source);
     if (s.receipt?.model) this.model.set(s.receipt.model);
     this.phase.set('tour');
+    // The side panel (>=900px) has room, so the tour opens on its first
+    // callout and Prev/Next walk it, without taking focus. Phones wait for a
+    // tap: the bottom sheet would cover the screenshots.
+    if (this.pins().length && globalThis.matchMedia?.('(min-width: 900px)').matches) this.activePin.set(1);
   }
 
   private fail(err: unknown, prev: Shown | null): void {
