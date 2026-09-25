@@ -1,0 +1,169 @@
+<section class="tour">
+  @if (!selected()) {
+    <div class="intro">
+      <h2>{{ heading() }}</h2>
+      <p>{{ description() }}</p>
+      @if (visibleStarters().length) {
+        <div class="starters">
+          @for (s of visibleStarters(); track s.appId) {
+            <button class="starter" (click)="select(s.appId)">{{ s.label }}</button>
+          }
+        </div>
+      }
+    </div>
+  }
+
+  @if (apps().length) {
+    <nav class="strip" aria-label="Pick an app to tour">
+      @for (a of apps(); track a.appId) {
+        <button
+          class="app"
+          [class.on]="a.appId === selectedId()"
+          [attr.aria-pressed]="a.appId === selectedId()"
+          [attr.aria-label]="'Tour ' + a.name"
+          (click)="select(a.appId)"
+        >
+          <img [src]="icon(a.artwork)" alt="" width="56" height="56" loading="lazy" decoding="async" />
+          <span>{{ a.name }}</span>
+        </button>
+      }
+    </nav>
+  } @else if (stripStatus() === 'error') {
+    <div class="error-banner" role="alert">
+      {{ stripError() }}
+      <button class="ghost" (click)="loadStrip()">Retry</button>
+    </div>
+  } @else {
+    <p class="status" role="status">Loading my App Store catalog…</p>
+  }
+
+  @if (selected(); as app) {
+    <div class="body">
+      <div class="bar">
+        <h2>{{ app.name }} <span class="ver">v{{ app.version }}</span></h2>
+        <button class="live" (click)="watchLive()" [disabled]="streaming()">
+          {{ streaming() ? 'Generating live…' : 'Watch it live ✦' }}
+        </button>
+      </div>
+
+      <div class="status-box">
+        @if (trace().length) {
+          <div class="trace" aria-live="polite">
+            @for (step of trace(); track $index) {
+              <div class="step" [class.running]="step.running">
+                <span class="tool">
+                  <span class="gear" aria-hidden="true">⚙</span>
+                  {{ step.tool }}
+                </span>
+                @if (argsPreview(step.args)) {
+                  <span class="args">({{ argsPreview(step.args) }})</span>
+                }
+                @if (step.running) {
+                  <span class="summary dim" role="status">running…</span>
+                } @else {
+                  <span class="summary">→ {{ step.summary }}</span>
+                }
+              </div>
+            }
+          </div>
+        } @else if (phase() === 'loading') {
+          <p class="status" role="status">
+            {{ streaming() ? 'Starting a live tour on Gemini…' : 'Opening the tour…' }}
+          </p>
+        }
+        @if (errorMsg()) {
+          <div class="error-banner" role="alert">
+            {{ errorMsg() }}
+            @if (phase() === 'error') {
+              <button class="ghost" (click)="retry()">Try again</button>
+            }
+          </div>
+        }
+      </div>
+
+      <div class="carousel" [attr.aria-busy]="phase() === 'loading'">
+        @for (url of shots(); track url; let i = $index) {
+          <figure class="frame">
+            <div class="screen">
+              <img
+                [src]="url"
+                [alt]="app.name + ' App Store screenshot ' + (i + 1) + ' of ' + shots().length"
+                width="600"
+                height="1300"
+                loading="lazy"
+                decoding="async"
+              />
+              <!-- .hl follows its pin so CSS alone can light the box on hover/focus. -->
+              @for (p of pinsByShot()[i]; track p.n) {
+                <button
+                  class="pin"
+                  [class.on]="activePin() === p.n"
+                  [attr.data-pin]="p.n"
+                  [attr.aria-label]="'Callout ' + p.n + ': ' + p.label"
+                  [attr.aria-expanded]="activePin() === p.n"
+                  [style.left.%]="p.x"
+                  [style.top.%]="p.y"
+                  [style.--i]="p.n"
+                  (click)="activePin() === p.n ? closePin() : openPin(p.n)"
+                >{{ p.n }}</button>
+                <span
+                  class="hl"
+                  aria-hidden="true"
+                  [style.top.%]="p.top"
+                  [style.left.%]="p.left"
+                  [style.height.%]="p.height"
+                  [style.width.%]="p.width"
+                ></span>
+              }
+            </div>
+          </figure>
+        }
+      </div>
+
+      @if (tour()) {
+        <p class="foot" role="status">
+          <span class="grounded">{{ groundingLine() }}</span>
+          <span class="src">{{ sourceLine() }}</span>
+        </p>
+      }
+
+      <div class="notes">
+        @if (active(); as p) {
+          <div class="detail" role="dialog" aria-modal="false" aria-labelledby="tour-pin-label">
+            <div class="detail-head">
+              <span class="num" aria-hidden="true">{{ p.n }}</span>
+              <h3 id="tour-pin-label">{{ p.label }}</h3>
+              <button class="close" (click)="closePin()" aria-label="Close callout">✕</button>
+            </div>
+            <blockquote>“{{ p.quote }}”</blockquote>
+            <div class="detail-foot">
+              <span class="tag">from the App Store description</span>
+              <span class="step-nav">
+                <button (click)="stepPin(-1)" aria-label="Previous callout">‹</button>
+                {{ p.n }} / {{ pins().length }}
+                <button (click)="stepPin(1)" aria-label="Next callout">›</button>
+              </span>
+            </div>
+          </div>
+        }
+        @if (pins().length) {
+          <ol class="legend" aria-label="Callouts">
+            @for (p of pins(); track p.n) {
+              <li>
+                <button [class.on]="activePin() === p.n" (click)="openPin(p.n)">
+                  <span class="num" aria-hidden="true">{{ p.n }}</span>{{ p.label }}
+                </button>
+              </li>
+            }
+          </ol>
+        } @else if (phase() === 'tour') {
+          <p class="status">No callouts survived the grounding check — try 'Watch it live'.</p>
+        }
+      </div>
+    </div>
+  }
+
+  @if (model()) {
+    <p class="modelline">Vision + structured output: {{ model() }} · every pin checked against the listing before it is drawn</p>
+  }
+</section>

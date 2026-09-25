@@ -26,7 +26,7 @@
 .total-bar-fill {
   height: 100%;
   border-radius: 999px;
-  background: linear-gradient(90deg, var(--accent), #c98b3d);
+  background: linear-gradient(90deg, var(--accent), var(--gold));
   transition: width 0.5s ease;
 }
 
@@ -82,6 +82,10 @@
   border-radius: 12px;
   padding: 0.95rem 1.05rem;
 }
+.entry.found {
+  /* --cat is the shelf colour (set inline); lifted for legibility in dark mode */
+  border-top-color: color-mix(in srgb, var(--cat), white var(--cat-lift));
+}
 .entry.locked {
   background: transparent;
   border-style: dashed;
@@ -117,11 +121,11 @@
   color: var(--good);
 }
 .diff.medium {
-  background: rgba(185, 138, 47, 0.14);
-  color: #8a6420;
+  background: var(--medium-soft);
+  color: var(--medium);
 }
 .diff.hard {
-  background: rgba(163, 59, 46, 0.12);
+  background: var(--bad-soft);
   color: var(--bad);
 }
 

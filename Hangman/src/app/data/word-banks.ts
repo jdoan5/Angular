@@ -1,9 +1,13 @@
 import { RawEntry, WordCategory, WordEntry } from '../models/word';
 import { ANIMALS } from './banks/animals';
 import { ARTS } from './banks/arts';
+import { BODY } from './banks/body';
 import { FOOD } from './banks/food';
 import { GEOGRAPHY } from './banks/geography';
 import { HISTORY } from './banks/history';
+import { INVENTIONS } from './banks/inventions';
+import { MUSIC } from './banks/music';
+import { MYTHOLOGY } from './banks/mythology';
 import { SCIENCE } from './banks/science';
 import { SPACE } from './banks/space';
 import { SPORTS } from './banks/sports';
@@ -37,6 +41,10 @@ export const WORD_BANKS: WordCategory[] = [
   category('arts', 'Arts & Literature', '🎭', '#be123c', 'Masterpieces and their makers', ARTS),
   category('food', 'Food & Drink', '🍜', '#c2410c', 'Dishes and flavours of the world', FOOD),
   category('sports', 'Sports & Games', '⚽', '#15803d', 'Contests of skill and speed', SPORTS),
+  category('mythology', 'Mythology', '🐉', '#a21caf', 'Gods, monsters, and legends', MYTHOLOGY),
+  category('music', 'Music', '🎵', '#4338ca', 'Instruments, genres, and legends', MUSIC),
+  category('inventions', 'Inventions', '💡', '#0369a1', 'Ideas that changed the world', INVENTIONS),
+  category('body', 'Human Body', '🧠', '#b91c1c', 'Organs, bones, and senses', BODY),
 ];
 
 export function findCategoryById(id: string): WordCategory | undefined {

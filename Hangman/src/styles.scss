@@ -3,22 +3,79 @@
    =========================================================================== */
 
 :root {
+  color-scheme: light;
+
   /* Parchment & ink */
   --paper: #f6f1e6;
   --paper-deep: #ece4d2;
   --surface: #fdfaf2;
   --ink: #2b2620;
+  --ink-hover: #43392c;
   --ink-faint: #c9bfa9;
   --muted: #6f6759;
 
   /* Accents */
   --accent: #a33b2e; /* bound-leather red */
+  --gold: #c98b3d;
   --good: #2f6b4f;
   --good-soft: #e3efe7;
+  --medium: #7d5a1c;
+  --medium-soft: rgba(185, 138, 47, 0.14);
   --bad: #a33b2e;
+  --bad-soft: rgba(163, 59, 46, 0.12);
+
+  /* Depth */
+  --glow: rgba(163, 59, 46, 0.045);
+  --shadow: rgba(43, 38, 32, 0.12);
+  --shadow-strong: rgba(43, 38, 32, 0.35);
+  --scrim: rgba(43, 38, 32, 0.5);
+
+  /* How far category colours are lifted toward white (keeps them legible on dark paper) */
+  --cat-lift: 0%;
+  --cat-wash: 10%;
 
   --font-display: 'Fraunces', 'Iowan Old Style', Georgia, serif;
   --font-body: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* Dark mode — the same encyclopedia read by lamplight: umber paper, parchment ink. */
+@mixin dark-tokens {
+  color-scheme: dark;
+
+  --paper: #1a1612;
+  --paper-deep: #2a241d;
+  --surface: #221d18;
+  --ink: #efe7d5;
+  --ink-hover: #d9cfba;
+  --ink-faint: #4f463a;
+  --muted: #aca28f;
+
+  --accent: #e8826c;
+  --gold: #dfb567;
+  --good: #86c9a6;
+  --good-soft: rgba(134, 201, 166, 0.14);
+  --medium: #dfb567;
+  --medium-soft: rgba(223, 181, 103, 0.14);
+  --bad: #e8826c;
+  --bad-soft: rgba(232, 130, 108, 0.14);
+
+  --glow: rgba(232, 130, 108, 0.06);
+  --shadow: rgba(0, 0, 0, 0.35);
+  --shadow-strong: rgba(0, 0, 0, 0.6);
+  --scrim: rgba(10, 8, 6, 0.66);
+
+  --cat-lift: 35%;
+  --cat-wash: 18%;
+}
+
+/* index.html stamps data-theme before first paint; the media query is the no-script fallback. */
+:root[data-theme='dark'] {
+  @include dark-tokens;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    @include dark-tokens;
+  }
 }
 
 * {
@@ -35,7 +92,7 @@ body {
 body {
   font-family: var(--font-body);
   background:
-    radial-gradient(ellipse at top, rgba(163, 59, 46, 0.045), transparent 55%),
+    radial-gradient(ellipse at top, var(--glow), transparent 55%),
     var(--paper);
   color: var(--ink);
   font-size: 15.5px;
@@ -92,7 +149,7 @@ h3 {
   color: var(--paper);
 }
 .btn-primary:hover:not(:disabled) {
-  background: #43392c;
+  background: var(--ink-hover);
 }
 
 .btn-ghost {

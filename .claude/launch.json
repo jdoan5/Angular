@@ -4,8 +4,25 @@
     {
       "name": "ai-lab",
       "runtimeExecutable": "npm",
-      "runtimeArgs": ["--prefix", "ai-lab", "start"],
+      "runtimeArgs": [
+        "--prefix",
+        "ai-lab",
+        "start"
+      ],
       "port": 4200
+    },
+    {
+      "name": "hangman",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "--prefix",
+        "Hangman",
+        "start",
+        "--",
+        "--port",
+        "4299"
+      ],
+      "port": 4299
     }
   ]
 }

@@ -17,15 +17,14 @@
 
     <div class="cat-grid">
       @for (p of store.progressByCategory(); track p.category.id) {
-        <button type="button" class="cat-card" (click)="store.start(p.category.id)">
-          <span class="cat-icon" [style.background]="p.category.color + '1a'">{{ p.category.icon }}</span>
+        <button type="button" class="cat-card" [style.--cat]="p.category.color" (click)="store.start(p.category.id)">
+          <span class="cat-icon">{{ p.category.icon }}</span>
           <span class="cat-name">{{ p.category.name }}</span>
           <span class="cat-tagline muted">{{ p.category.tagline }}</span>
           <span class="cat-progress">
             <span class="cat-bar"><span
               class="cat-bar-fill"
               [style.width.%]="p.total ? (p.collected / p.total) * 100 : 0"
-              [style.background]="p.category.color"
             ></span></span>
             <span class="cat-count muted">{{ p.collected }}/{{ p.total }}</span>
           </span>

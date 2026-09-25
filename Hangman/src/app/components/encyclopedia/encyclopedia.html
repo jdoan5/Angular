@@ -30,7 +30,7 @@
       <div class="entry-grid">
         @for (item of shelf.entries; track item.entry.id) {
           @if (item.found) {
-            <article class="entry found" [style.border-top-color]="shelf.color">
+            <article class="entry found" [style.--cat]="shelf.color">
               <div class="entry-head">
                 <h3>{{ item.entry.word }}</h3>
                 <span class="diff" [class.hard]="item.entry.difficulty === 'hard'"

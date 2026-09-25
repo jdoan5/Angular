@@ -123,6 +123,30 @@ async function ownAppId(appId) {
   return ids.has(id) ? id : null;
 }
 
+const deepFreeze = (v) => {
+  if (v && typeof v === 'object' && !Object.isFrozen(v)) {
+    for (const x of Object.values(v)) deepFreeze(x);
+    Object.freeze(v);
+  }
+  return v;
+};
+let frozenFor = null;   // the catalogCache object frozenApps was copied from
+let frozenApps = null;
+
+/** The cached lookup results themselves, for the Screenshot Tour
+ *  (tours.mjs), which needs the fields listMyApps drops: screenshotUrls,
+ *  description, artworkUrl512. Deep-frozen copies, so no caller can corrupt
+ *  the catalog every other stage reads; copied once per refresh, not per
+ *  call, because the tour strip reads it on every request. */
+export async function catalogApps() {
+  const cache = await catalogLookup();
+  if (frozenFor !== cache) {
+    frozenApps = deepFreeze(cache.results.map((r) => structuredClone(r)));
+    frozenFor = cache;
+  }
+  return frozenApps;
+}
+
 /** All published apps for the developer account. */
 export async function listMyApps() {
   const { results } = await catalogLookup();
