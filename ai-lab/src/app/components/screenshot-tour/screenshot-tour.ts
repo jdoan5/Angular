@@ -280,8 +280,12 @@ export class ScreenshotTour implements OnInit {
       this.stripStatus.set('ready');
       this.openInitial();
     } else {
-      void this.loadStrip().then((ok) => ok && this.openInitial());
+      this.retryStrip();
     }
+  }
+
+  retryStrip(): void {
+    void this.loadStrip().then((ok) => ok && this.openInitial());
   }
 
   private openInitial(): void {

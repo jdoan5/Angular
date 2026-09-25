@@ -31,7 +31,7 @@
   } @else if (stripStatus() === 'error') {
     <div class="error-banner" role="alert">
       {{ stripError() }}
-      <button class="ghost" (click)="loadStrip()">Retry</button>
+      <button class="ghost" (click)="retryStrip()">Retry</button>
     </div>
   } @else {
     <p class="status" role="status">Loading my App Store catalog…</p>
