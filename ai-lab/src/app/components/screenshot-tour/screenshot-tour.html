@@ -41,7 +41,8 @@
   }
 
   @if (selected(); as app) {
-    <div class="body">
+    <!-- .sheet: a callout is open, so phones pad below it for the bottom sheet. -->
+    <div class="body" [class.sheet]="active() !== null">
       <div class="bar">
         <h2>{{ app.name }} <span class="ver">v{{ app.version }}</span></h2>
         <button class="live" (click)="watchLive()" [disabled]="streaming()">
@@ -49,7 +50,7 @@
         </button>
       </div>
 
-      @if (trace().length || phase() === 'loading' || errorMsg()) {
+      @if (trace().length || phase() === 'loading' || phase() === 'offer' || errorMsg()) {
       <div class="status-box">
         @if (trace().length) {
           <div class="trace" aria-live="polite">
@@ -73,6 +74,11 @@
         } @else if (phase() === 'loading') {
           <p class="status" role="status">
             {{ streaming() ? 'Starting a live tour on Gemini…' : 'Opening the tour…' }}
+          </p>
+        } @else if (phase() === 'offer' && !errorMsg()) {
+          <p class="status offer" role="status">
+            No reviewed tour for v{{ app.version }} yet. Press <b>Watch it live</b> and Gemini
+            reads these screenshots against the listing now, in about 10 seconds.
           </p>
         }
         @if (errorMsg()) {

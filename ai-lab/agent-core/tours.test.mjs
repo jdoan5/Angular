@@ -751,6 +751,84 @@ test(`live ceiling: ${LIVE_TOURS_PER_HOUR} live tours an hour per instance, then
   assert.equal(cached.result.source, 'cache');
 });
 
+test('live ceiling: tours that fail or lose their visitor before the model call spend no slot', async (t) => {
+  t.mock.method(console, 'warn', () => {});
+  setup();
+  // The review probe: every screenshot fetch fails (mzstatic 503).
+  _setFetcherForTests(async () => { throw new Error('mzstatic 503'); });
+  for (let i = 0; i < LIVE_TOURS_PER_HOUR; i++) {
+    assert.match(String((await run({ appId: TOEHOLD, fresh: true }, fakeAI([]))).error?.message), /mzstatic 503/);
+  }
+  // Visitors who leave during the fetch (the UI aborts on every app switch).
+  _setFetcherForTests(async (url, init) => new Promise((resolve, reject) => {
+    if (init.signal.aborted) reject(init.signal.reason);
+    init.signal.addEventListener('abort', () => reject(init.signal.reason), { once: true });
+  }));
+  for (let i = 0; i < LIVE_TOURS_PER_HOUR; i++) {
+    const ac = new AbortController();
+    const pending = run({ appId: TOEHOLD, fresh: true }, fakeAI([]), ac.signal);
+    await new Promise((r) => setImmediate(r));
+    ac.abort();
+    assert.ok((await pending).error, `abandoned tour ${i + 1}`);
+  }
+  _setFetcherForTests(async () => jpegResponse());
+  const ai = fakeAI(() => reply({ callouts: goodCallouts(4) }));
+  const live = await run({ appId: TOEHOLD, fresh: true }, ai);
+  assert.equal(live.error, null, '40 tours with no model call left the hour untouched');
+  assert.equal(live.result.source, 'live');
+});
+
+test('live ceiling: the slot is taken at the first model call, so racing tours still stop at 20', async () => {
+  setup();
+  // Every tour passes the door check before any of them reaches the model.
+  let fetched = 0;
+  let open;
+  const gate = new Promise((r) => { open = r; });
+  _setFetcherForTests(async () => { fetched++; await gate; return jpegResponse(); });
+  const ai = fakeAI(() => reply({ callouts: goodCallouts(4) }));
+  const runs = Array.from({ length: LIVE_TOURS_PER_HOUR + 1 }, () => run({ appId: TOEHOLD, fresh: true }, ai));
+  // Bounded: a tour refused at the door never fetches, and must fail the
+  // test rather than hang it.
+  for (let spins = 0; fetched < (LIVE_TOURS_PER_HOUR + 1) * 4 && spins < 200; spins++) {
+    await new Promise((r) => setImmediate(r));
+  }
+  const passedDoor = fetched;
+  open();
+  const results = await Promise.all(runs);
+  assert.equal(passedDoor, (LIVE_TOURS_PER_HOUR + 1) * 4, 'all 21 passed the door and fetched');
+  const over = results.filter((r) => r.error);
+  assert.equal(over.length, 1);
+  assert.equal(over[0].error.code, 'LIVE_CEILING');
+  assert.ok(!over[0].events.some((e) => e.tool === 'gemini'), 'refused before its model call');
+  assert.equal(ai.requests.length, LIVE_TOURS_PER_HOUR);
+});
+
+test('a retry is part of the same live tour and takes no second slot', async () => {
+  setup();
+  const ai = fakeAI((i) => reply({ callouts: i % 2 === 0 ? [] : goodCallouts(4) }));
+  for (let i = 0; i < LIVE_TOURS_PER_HOUR; i++) {
+    const { error, result } = await run({ appId: TOEHOLD, fresh: true }, ai);
+    assert.equal(error, null, `tour ${i + 1}`);
+    assert.equal(result.receipt.attempts, 2);
+  }
+  assert.equal(ai.requests.length, LIVE_TOURS_PER_HOUR * 2);
+  assert.equal((await run({ appId: TOEHOLD, fresh: true }, ai)).error?.code, 'LIVE_CEILING');
+});
+
+test('a visitor who leaves during the catalog load starts nothing', async () => {
+  setup();
+  const ac = new AbortController();
+  _setCatalogForTests(async () => { ac.abort(); return CATALOG; });
+  const fetches = [];
+  _setFetcherForTests(async (url) => { fetches.push(url); return jpegResponse(); });
+  const ai = fakeAI([]);
+  const { error, events } = await run({ appId: TOEHOLD, fresh: true }, ai, ac.signal);
+  assert.ok(error, 'the tour stops');
+  assert.deepEqual(events, []);
+  assert.equal(fetches.length, 0);
+  assert.equal(ai.requests.length, 0);
+});
+
 // ------------------------------------------------- live checks (no Gemini key)
 
 test('live: every visible app yields 3-4 valid shots in store order, and Streak Rings is hidden', async () => {

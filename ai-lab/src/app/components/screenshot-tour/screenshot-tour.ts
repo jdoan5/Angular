@@ -84,7 +84,13 @@ interface Shown {
   source: Source | null;
 }
 
-type Phase = 'strip' | 'loading' | 'tour' | 'error';
+/** Where a failed 'Watch it live' goes back to: the tour it replaced, the
+ *  no-tour-yet offer, or (null) the error panel. */
+type Before = Shown | 'offer' | null;
+
+// 'offer': no reviewed or cached tour for this listing; the frames show and
+// 'Watch it live' waits for the visitor.
+type Phase = 'strip' | 'loading' | 'offer' | 'tour' | 'error';
 
 const SOURCE_LABEL: Record<Source, string> = {
   snapshot: 'reviewed snapshot',
@@ -358,8 +364,12 @@ export class ScreenshotTour implements OnInit {
         return;
       }
       if (res.status === 404 && data?.needsLive) {
-        // No reviewed tour for this listing yet: generate one right away.
-        await this.stream(app, false, ac, null);
+        // No reviewed tour for this listing yet. Live stays opt-in: a POST
+        // takes one of the visitor's 8 a minute and the instance's 20 an hour
+        // even if they tap away, and auto-starting one let a visitor browsing
+        // the strip spend 8 slots in a minute. So a tap, starter chip or share
+        // link only shows the frames and offers 'Watch it live'.
+        this.phase.set('offer');
         return;
       }
       if (res.status === 409 && !refetched) {
@@ -384,17 +394,23 @@ export class ScreenshotTour implements OnInit {
     }
   }
 
-  /** 'Watch it live': a fresh generation even when a snapshot exists. */
+  /** 'Watch it live', the only way this page POSTs: a fresh generation even
+   *  when a snapshot is showing. */
   watchLive(): void {
     const app = this.selected();
     if (!app || this.streaming()) return;
     const t = this.tour();
-    const prev: Shown | null = t ? { tour: t, receipt: this.receipt(), source: this.source() } : null;
-    void this.stream(app, true, this.restart(), prev);
+    const back: Before = t
+      ? { tour: t, receipt: this.receipt(), source: this.source() }
+      : this.phase() === 'offer' ? 'offer' : null;
+    // fresh only replaces a tour on screen. With none, the server may still
+    // answer from a tour another visitor's live run cached since the GET,
+    // with no model call.
+    void this.stream(app, t !== null, this.restart(), back);
   }
 
   /** POST /api/tour, read as NDJSON: the trace fills in as each tool runs. */
-  private async stream(app: TourApp, fresh: boolean, ac: AbortController, prev: Shown | null): Promise<void> {
+  private async stream(app: TourApp, fresh: boolean, ac: AbortController, prev: Before): Promise<void> {
     this.streaming.set(true);
     let drew = false;
     try {
@@ -479,12 +495,16 @@ export class ScreenshotTour implements OnInit {
     if (this.pins().length && globalThis.matchMedia?.('(min-width: 900px)').matches) this.activePin.set(1);
   }
 
-  private fail(err: unknown, prev: Shown | null): void {
+  private fail(err: unknown, prev: Before): void {
     console.warn('screenshot tour failed:', err);
     const msg = message(err);
-    if (prev) {
+    if (prev === 'offer') {
+      // Still no tour: keep the frames up, with 'Watch it live' to try again.
+      this.errorMsg.set(msg);
+      this.phase.set('offer');
+    } else if (prev) {
       this.show(prev);
-      this.errorMsg.set(`${msg} Showing the ${SOURCE_LABEL[prev.source ?? 'snapshot']} tour instead.`);
+      this.errorMsg.set(`${msg} Still showing the ${prev.source === 'snapshot' ? 'reviewed snapshot' : 'earlier tour'}.`);
     } else {
       this.errorMsg.set(msg);
       this.phase.set('error');
@@ -522,6 +542,13 @@ export class ScreenshotTour implements OnInit {
   }
 
   private reveal(n: number): void {
+    // Phones: the fixed sheet grows with its quote (a 330-char one was 310px
+    // of a 740px screen and hid the lowest pins). Its height plus a 12px gap,
+    // as --sheet, pads the stage and lifts the pin, so it has to be set
+    // before the scroll. Desktop never reads it.
+    const host = this.host.nativeElement;
+    const sheet = host.querySelector<HTMLElement>('.detail');
+    if (sheet) host.style.setProperty('--sheet', `${sheet.offsetHeight + 12}px`);
     this.pinEl(n)?.scrollIntoView({ block: 'nearest', inline: 'center', behavior: 'smooth' });
   }
 

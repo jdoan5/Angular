@@ -112,8 +112,10 @@ footer {
 
 /* Phones: five stacked stage cards took 426px of an 812px screen and left
    the Screenshot Tour a 294px window its pin sheet covered completely. One
-   sideways-scrolling row keeps every title and blurb at ~150px of header. */
-@media (max-width: 599px) {
+   sideways-scrolling row keeps every title and blurb at ~150px of header.
+   Short screens too: on a 780x360 landscape phone the cards wrapped to three
+   rows, a 250px header, and left the tour 54px. */
+@media (max-width: 599px), (max-height: 500px) {
   .lab {
     padding: 12px 16px 8px;
   }

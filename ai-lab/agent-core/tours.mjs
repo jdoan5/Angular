@@ -508,15 +508,23 @@ export async function lookupTour(appId, key) {
   return ready ? { state: 'hit', ...ready } : { state: 'miss' };
 }
 
-let liveStarts = [];   // start times of live tours in the past hour
+let liveStarts = [];   // times of live tours' first model calls, past hour
+
+/** Whether this hour still has a live tour to give. Only a check: nothing is
+ *  spent until takeLiveSlot(). */
+function liveSlotsLeft(now = Date.now()) {
+  liveStarts = liveStarts.filter((t) => now - t < HOUR_MS);
+  return liveStarts.length < LIVE_TOURS_PER_HOUR;
+}
 
 /** Claim one of this hour's live tours; false once the ceiling is reached. */
 function takeLiveSlot(now = Date.now()) {
-  liveStarts = liveStarts.filter((t) => now - t < HOUR_MS);
-  if (liveStarts.length >= LIVE_TOURS_PER_HOUR) return false;
+  if (!liveSlotsLeft(now)) return false;
   liveStarts.push(now);
   return true;
 }
+
+const ceilingReached = () => Object.assign(new Error('live tour ceiling reached'), { code: 'LIVE_CEILING' });
 
 /** Test hooks: replace the loaded snapshot, or clear every piece of state. */
 export function _setSnapshotForTests(data) { snapshot = data ?? null; }
@@ -657,6 +665,8 @@ export async function generateTour({ appId, fresh = false } = {}, signal, emit =
   if (!Number.isSafeInteger(appId)) throw badRequest();
   const app = await tourApp(appId);
   if (!app) throw Object.assign(new Error('not in the tour'), { code: 'NOT_IN_TOUR' });
+  // A cold catalog is an iTunes fetch; a visitor can leave during it.
+  stopIfGone();
 
   if (fresh !== true) {
     const ready = readyTour(app.appId, app.tourKey);
@@ -668,8 +678,9 @@ export async function generateTour({ appId, fresh = false } = {}, signal, emit =
   }
 
   const client = ai ?? makeGenAI();   // throws NO_KEY when credentials are missing
-  // After the credential check, so a keyless request never spends a slot.
-  if (!takeLiveSlot()) throw Object.assign(new Error('live tour ceiling reached'), { code: 'LIVE_CEILING' });
+  // Checked at the door so an over-ceiling visitor isn't kept waiting on four
+  // screenshot fetches; the slot itself is taken at the first model call.
+  if (!liveSlotsLeft()) throw ceilingReached();
   const n = app.shots.length;
 
   const images = await step(send, 'fetch_screenshots', { app: app.name, count: n },
@@ -710,6 +721,11 @@ export async function generateTour({ appId, fresh = false } = {}, signal, emit =
   const details = [];
   for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {
     stopIfGone();
+    // The slot is spent here, not at the door: in a review probe, 20 tours
+    // that failed or were abandoned during the screenshot fetch (the UI aborts
+    // on every app switch) used up the hour without one Gemini call. The
+    // retry is part of the same tour and takes no second slot.
+    if (attempt === 1 && !takeLiveSlot()) throw ceilingReached();
     receipt.attempts = attempt;
     let ms = 0;
     const out = await step(send, 'gemini', { model: MODEL, attempt, screenshots: n, mediaResolution: MEDIA_RESOLUTION },

@@ -98,6 +98,14 @@ export default async function handler(req, res) {
     res.status(405).json({ error: 'GET or POST only' });
     return;
   }
+  // Stop fetching and spending model quota the moment the visitor leaves.
+  // Wired before the first await: a visitor who left while a cold catalog
+  // loaded from iTunes fired 'close' before a later listener existed, and a
+  // review probe watched that tour fetch all four screenshots for nobody.
+  const ac = new AbortController();
+  res.on('close', () => { if (!res.writableEnded) ac.abort(); });
+  const gone = () => ac.signal.aborted || res.destroyed === true || req.socket?.destroyed === true;
+
   // Before the limiter too, so a hostile page can't burn a visitor's quota.
   if (rejectForeign(req, res)) return;
   try {
@@ -122,7 +130,13 @@ export default async function handler(req, res) {
       res.status(503).json({ error: 'Tour not configured: credentials are missing.' });
       return;
     }
-    if (!(await tourApp(appId))) {
+    const app = await tourApp(appId);
+    // Gone during the catalog load: nobody to answer, nothing to start.
+    if (gone()) {
+      ac.abort();
+      return;
+    }
+    if (!app) {
       res.status(400).json(NOT_IN_TOUR);
       return;
     }
@@ -133,10 +147,6 @@ export default async function handler(req, res) {
     res.setHeader('content-type', 'application/x-ndjson; charset=utf-8');
     res.setHeader('cache-control', 'no-cache, no-transform');
     const emit = (event) => res.write(JSON.stringify(event) + '\n');
-
-    // Stop fetching and spending model quota the moment the visitor leaves.
-    const ac = new AbortController();
-    res.on('close', () => { if (!res.writableEnded) ac.abort(); });
 
     try {
       await generateTour({ appId, fresh: fresh === true }, ac.signal, emit);
