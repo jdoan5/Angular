@@ -339,6 +339,33 @@ test('tour: a live tour that fails reports a visitor-safe error in the stream', 
   assert.ok(!res.chunks.join('').includes('must not fetch'), 'internals stay in the log');
 });
 
+// The review probe: 'close' fired 5 ms into a 30 ms catalog load, before the
+// old listener existed, and the tour went on to fetch four screenshots. A
+// real ServerResponse whose visitor left earlier emits nothing to a late
+// listener but reads destroyed, so both paths are covered.
+for (const [how, leave] of [
+  ['close fires', (res) => res.emit('close')],
+  ['the response is already destroyed', (res) => { res.destroyed = true; }],
+]) {
+  test(`tour: a visitor who leaves during the catalog load starts nothing (${how})`, async (t) => {
+    stubTour(t);
+    fakeKey(t);
+    const req = mockReq({ headers: JSON_TYPE, body: { appId: TOUR_APP, fresh: true } });
+    const res = mockRes();
+    let fetches = 0;
+    _setFetcherForTests(async () => { fetches++; throw new Error('nobody is there'); });
+    _setCatalogForTests(async () => {
+      await new Promise((r) => setTimeout(r, 5));
+      leave(res);
+      await new Promise((r) => setTimeout(r, 25));
+      return TOUR_CATALOG;
+    });
+    await tourHandler(req, res);
+    assert.equal(fetches, 0);
+    assert.deepEqual(res.chunks, [], 'no stream is started');
+  });
+}
+
 test('tour: POST is rate limited per IP (429 after 8 a minute)', async () => {
   const ip = nextIp();
   for (let i = 0; i < 8; i++) {
