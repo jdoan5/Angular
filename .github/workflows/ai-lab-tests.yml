@@ -1,0 +1,62 @@
+name: ai-lab-tests
+
+# The AI Lab's server suites, typecheck and production build, on every change
+# to ai-lab and once a week. The weekly run matters as much as the push runs:
+# half of what can break the lab lives outside this repo — the live App Store
+# catalog (the Guess My App leak audit reads all of John's apps), Apple's review
+# feed, and the Review Radar snapshot (radar.test.mjs fails if Databricks
+# renames an app). None of that shows up in a diff.
+#
+# No secrets: the suites never call Gemini. api.test.mjs clears the key
+# variables and drives a scripted model; the live tests only read public
+# iTunes and raw.githubusercontent.com URLs.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "ai-lab/**"
+      - ".github/workflows/ai-lab-tests.yml"
+  pull_request:
+    paths:
+      - "ai-lab/**"
+      - ".github/workflows/ai-lab-tests.yml"
+  schedule:
+    - cron: "0 15 * * 1" # Mondays 15:00 UTC, after the daily gold snapshot commit
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ai-lab-tests-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: ai-lab
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          # The oldest runtime the code ships on: the Cloud Run image is
+          # node:22-slim (local development runs 24).
+          node-version: 22
+          cache: npm
+          cache-dependency-path: ai-lab/package-lock.json
+
+      - run: npm ci
+
+      - name: Server suites (API guards, agent loop, missions, radar, Guess My App leak audit)
+        run: npm run test:server
+
+      - name: Typecheck
+        run: npx tsc --noEmit -p tsconfig.app.json
+
+      - name: Production build
+        run: npx ng build --configuration production
