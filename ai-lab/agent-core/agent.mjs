@@ -6,14 +6,16 @@
 import { FinishReason, ThinkingLevel } from '@google/genai';
 import { toolRegistry } from './tools.mjs';
 import { gameTools } from './game.mjs';
+import { radarTools, TRACKED } from './radar.mjs';
 import { makeGenAI } from './client.mjs';
 import { AGENTS, DEFAULT_AGENT } from './agents.mjs';
 
 // Guess My App's tools live in game.mjs, beside the sealed state they read.
 // They are merged here rather than inside tools.mjs so that module stays free
 // of any dependency on game.mjs — game.mjs imports it, and a cycle would put
-// this const in the temporal dead zone at module-eval time.
-const registry = { ...toolRegistry, ...gameTools };
+// this const in the temporal dead zone at module-eval time. The Review Radar
+// tools join here for the same reason: radar.mjs imports tools.mjs.
+const registry = { ...toolRegistry, ...gameTools, ...radarTools };
 
 const MODEL = process.env.GEMINI_MODEL || 'gemini-3.5-flash';
 
@@ -296,6 +298,18 @@ export async function runAgentStream(agentId, history, message, emit, signal, co
   budgetStop();
 }
 
+// "Finch: 13 versions", not "Finch: Self-Care Pet: 13 versions".
+const shortName = (app) => (typeof app === 'string' && Object.hasOwn(TRACKED, app) ? TRACKED[app].short : String(app ?? '?'));
+const plural = (n, word) => `${n} ${word}${n === 1 ? '' : 's'}`;
+const radarSource = (r) =>
+  ` · gold snapshot, as of ${r.as_of}${r.stale ? ' (stale)' : ''}${r.fetch_error ? ' (last good copy)' : ''}`;
+// An app whose reviews stop weeks before the export says so in the trace,
+// or "as of Sept 24" reads as current for Atoms data that ends July 29.
+const reach = (r) => {
+  const gap = (Date.parse(r.as_of) - Date.parse(r.newest_review_at)) / 86_400_000;
+  return gap >= 14 ? `, reviews to ${r.newest_review_at}` : '';
+};
+
 /** One-line human summary of a tool result for the UI trace. */
 function summarize(name, result) {
   if (result?.error) return `error: ${result.error}`;
@@ -308,6 +322,29 @@ function summarize(name, result) {
       return `${result.count} reviews fetched (${result.sort}, ${result.country})`;
     case 'get_developer_profile':
       return 'profile loaded';
+    // Snapshot answers name their source and date in the trace, so a visitor
+    // can tell lakehouse numbers from live ones, and an old copy says so.
+    case 'get_market_overview':
+      return `${result.apps?.length ?? 0} apps, ${result.total_reviews ?? 0} reviews${result.store_error ? ' (store ratings unavailable)' : ''}${radarSource(result)}`;
+    case 'get_version_ratings': {
+      const d = result.biggest_drop;
+      // A drop across years of releases is a different claim from one update.
+      const apart = d?.gap_days > 90 ? `, ${d.gap_days} days apart` : '';
+      const drop = d ? `, biggest drop ${d.from} → ${d.to} ${d.delta} (n=${d.n_from}→${d.n_to}${apart})` : '';
+      return `${shortName(result.app)}: ${plural(result.versions?.length ?? 0, 'version')}${drop}${reach(result)}${radarSource(result)}`;
+    }
+    case 'get_rating_trend': {
+      const { recent: r, prior: p } = result;
+      const body = result.enough_data
+        ? `last ${result.weeks} wk ${r.avg} (n=${r.n}) vs prior ${p.avg} (n=${p.n}), ${result.delta > 0 ? '+' : ''}${result.delta}`
+        : `not enough data for ${/^(8|11|18)$/.test(String(result.weeks)) ? 'an' : 'a'} ${result.weeks}-week trend`;
+      return `${shortName(result.app)}: ${body}${reach(result)}${radarSource(result)}`;
+    }
+    case 'get_competitor_reviews':
+      return `${shortName(result.app)}: ${plural(result.count, 'review')}, page ${result.page}`
+        + `${result.max_rating ? `, ≤${result.max_rating}★` : ''}${result.sort === 'mostHelpful' ? ', most helpful' : ''}`
+        + `${result.empty_note ? ' (feed came back empty)' : ''}${result.match_note ? ' (none matched on this page)' : ''}`
+        + ' · live App Store RSS';
     // The trace is visible to the player, so a wrong guess must never hint at
     // the answer — it echoes only what they themselves typed.
     case 'check_guess':

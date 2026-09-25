@@ -42,19 +42,20 @@ export class App {
     {
       id: 'reviews',
       title: 'App Review Analyst',
-      blurb: 'Live App Store ratings and releases, read by an agent with tools',
+      blurb: 'The habit-app market my Streak Rings competes in, from my own lakehouse',
       live: true,
       kind: 'chat',
       description:
-        "An agent with live App Store tools: it lists John's published apps and reads their ratings, versions, update dates and release notes, then checks the public review feed. The apps are new and written reviews are still rare — when there are none, it says so instead of inventing sentiment. Watch its tool calls stream in live.",
-      // Answerable from data that exists: the 15 apps have a handful of
-      // ratings and almost no written reviews, so three of the old four
-      // starters ended in "no reviews found".
+        "John's apps are too new to have reviews worth analyzing, so this agent studies the market his Apple Watch habit tracker Streak Rings competes in. It reads the daily gold snapshot of Review Radar, his Databricks lakehouse of App Store reviews for five habit apps, plus their live written reviews. The tools do the math and the agent cites its sources; watch every tool call stream in live.",
+      // Each starter maps to data that exists today: version drops come from
+      // the gold snapshot's rating_by_version, complaints from the live feed,
+      // the Finch gap from the overview's written-review vs store averages.
+      // The fourth keeps the honest answer about John's own apps one tap away.
       starters: [
-        "Which of John's apps have ratings so far?",
-        'What changed in the latest Cosmic Cadets update?',
-        "Which of John's apps were updated most recently?",
-        'Check the review feed for Learn English: Pronunciation',
+        "Which habit app's rating fell the most after an update?",
+        'What do habit-tracker users complain about that Streak Rings could win on?',
+        'Why does Finch rate higher on the App Store than in its written reviews?',
+        "How are John's own apps doing on the App Store?",
       ],
     },
     {

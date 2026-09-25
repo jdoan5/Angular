@@ -173,10 +173,17 @@ test('mission: GET is still 405', async () => {
 
 // ------------------------------------------------------ H2: loop cost ceilings
 
+// The budget tests call a tool the agent does not have: it counts against the
+// budget like any call but answers in a few bytes. With get_developer_profile,
+// 16 results passed the 150K contents cap once the profile grew to 15 app
+// notes, and the turn stopped there instead of on the budget under test.
+const CHEAP = 'not_a_tool';
+const ranCheap = (e) => e.summary === `error: Unknown tool: ${CHEAP}`;
+
 test('20 calls in one round: exactly 16 run, 4 get the budget error', async () => {
   const ids = Array.from({ length: 20 }, (_, i) => `c${i}`);
   const ai = fakeAI([
-    [chunk(ids.map((id) => fnCall('get_developer_profile', id)))],
+    [chunk(ids.map((id) => fnCall(CHEAP, id)))],
     [chunk([text('Here is John.')], 'STOP')],
   ]);
   const { error, of } = await runTurn({ ai });
@@ -184,7 +191,7 @@ test('20 calls in one round: exactly 16 run, 4 get the budget error', async () =
 
   const ends = of('tool-end');
   assert.equal(of('tool-start').length, 20, 'every requested call shows in the trace');
-  assert.equal(ends.filter((e) => e.summary === 'profile loaded').length, 16);
+  assert.equal(ends.filter(ranCheap).length, 16);
   const skipped = ends.filter((e) => /tool budget for this turn is used up/.test(e.summary));
   assert.equal(skipped.length, 4);
   assert.ok(skipped.every((e) => e.summary.startsWith('skipped')), 'trace says skipped, not failed');
@@ -201,15 +208,16 @@ test('20 calls in one round: exactly 16 run, 4 get the budget error', async () =
 
 test('the call budget spans rounds, not just one', async () => {
   const ai = fakeAI([
-    [chunk(Array.from({ length: 10 }, () => fnCall('get_developer_profile')))],
-    [chunk(Array.from({ length: 10 }, () => fnCall('get_developer_profile')))],
+    [chunk(Array.from({ length: 10 }, () => fnCall(CHEAP)))],
+    [chunk(Array.from({ length: 10 }, () => fnCall(CHEAP)))],
     [chunk([text('Done.')], 'STOP')],
   ]);
   const { error, of } = await runTurn({ ai });
   assert.equal(error, null);
   const ends = of('tool-end');
-  assert.equal(ends.filter((e) => e.summary === 'profile loaded').length, 16);
+  assert.equal(ends.filter(ranCheap).length, 16);
   assert.equal(ends.filter((e) => e.summary.startsWith('skipped')).length, 4);
+  assert.equal(ai.requests.length, 3, 'the turn reached its answer, not the contents cap');
 });
 
 test('round cap: 4 tool rounds, then the budget-exhausted answer', async () => {

@@ -18,10 +18,23 @@ Google Gemini (@google/genai — AI Studio key by default; GEMINI_VERTEX=1 switc
         │  tool calls
         ▼
 Apple iTunes Search & RSS APIs (public, no auth)
-  · list_my_apps        all my published apps + ratings
-  · get_app_details     store metadata for one app
-  · get_app_reviews     recent public customer reviews
+  · list_my_apps           all my published apps + ratings
+  · get_app_details        store metadata for one app
+  · get_app_reviews        recent public customer reviews
+  · get_competitor_reviews live reviews for the apps Review Radar tracks
+Review Radar gold snapshot (review-radar/public/gold_snapshot.json on GitHub)
+  · get_market_overview    per-app volume, written-review average, store rating
+  · get_version_ratings    rating by app version, with deltas computed server-side
+  · get_rating_trend       recent weeks vs the weeks before, with enough_data flags
 ```
+
+Review Radar is my Databricks lakehouse (bronze → silver → gold) of App Store
+reviews for five habit apps that my Apple Watch habit tracker Streak Rings
+competes with, plus Duolingo as a high-volume control. A daily GitHub Action
+commits its gold aggregates as JSON; the Analyst reads that file, so the
+lakehouse never has to be awake to answer. Aggregates only, by design: the
+published snapshot carries no review text and no author names, and the live
+feed tools drop author names too (`agent-core/radar.mjs`).
 
 ### Keeping a secret in a stateless app
 
@@ -54,7 +67,7 @@ npm run dev                    # agent API on :8787 + Angular on :4200 (proxied)
 ```
 
 No key yet? The UI still runs, and `curl -H 'content-type: application/json' -d '{"selftest":true}' localhost:8787/api/agent`
-exercises the live iTunes tools without Gemini.
+exercises the live iTunes tools and the Review Radar snapshot without Gemini.
 
 ## Deploy (Vercel)
 
@@ -67,7 +80,10 @@ project settings. `api/agent.mjs` becomes a serverless function automatically.
   a sealed token, and a prompt the model cannot betray because the answer was
   never in it
 - **App Review Analyst** ✅ · agentic tool-calling with a live, streamed trace
-  (NDJSON events: tool-start / tool-end / delta / done)
+  (NDJSON events: tool-start / tool-end / delta / done). My own apps are too
+  new to have reviews worth analyzing, so it studies the habit-app market from
+  the Review Radar lakehouse and live reviews; the tools do all the arithmetic
+  and the model cites counts and the snapshot date
 - **Portfolio Concierge** ✅ · grounded Q&A over live store data + a curated
   profile tool; per-agent tool scoping
 - **Math Mission Maker** ✅ · schema-constrained generation (`responseSchema` →

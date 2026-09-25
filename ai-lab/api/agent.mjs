@@ -6,6 +6,7 @@
 import { runAgentStream } from '../agent-core/agent.mjs';
 import { AGENTS } from '../agent-core/agents.mjs';
 import { listMyApps, getAppReviews } from '../agent-core/tools.mjs';
+import { loadSnapshot, sourceOf } from '../agent-core/radar.mjs';
 import { rateLimited, isRateLimit, RATE_LIMIT_MSG } from '../agent-core/ratelimit.mjs';
 import { hasCredentials, authMode } from '../agent-core/client.mjs';
 import { loadGame, seal, QUESTION_LIMIT } from '../agent-core/game.mjs';
@@ -132,11 +133,19 @@ export default async function handler(req, res) {
     const { message, history, selftest, agent, gameToken } = req.body ?? {};
 
     if (selftest) {
-      // Key-free verification path: exercises the live iTunes tools only.
+      // Key-free verification path: exercises the live iTunes tools and the
+      // Review Radar snapshot, never the model.
       const apps = await listMyApps();
       const first = apps.apps[0];
       const reviews = first ? await getAppReviews({ appId: first.appId }) : null;
-      res.status(200).json({ ok: true, apps: apps.count, sampleApp: first?.name ?? null, sampleReviews: reviews?.count ?? 0 });
+      const radar = await loadSnapshot().then(
+        ({ snapshot, fetchError }) => {
+          const { as_of, stale, fetch_error } = sourceOf(snapshot, fetchError);
+          return { as_of, stale, ...(fetch_error ? { fetch_error } : {}), apps: snapshot.overview.length };
+        },
+        (err) => ({ error: String(err?.message ?? err) }),
+      );
+      res.status(200).json({ ok: true, apps: apps.count, sampleApp: first?.name ?? null, sampleReviews: reviews?.count ?? 0, radar });
       return;
     }
 
