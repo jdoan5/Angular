@@ -10,8 +10,12 @@ import { EventEmitter } from 'node:events';
 
 import agentHandler, { sanitizeHistory, historyForTurn, visitorError } from '../api/agent.mjs';
 import missionHandler from '../api/mission.mjs';
+import tourHandler from '../api/tour.mjs';
 import { runAgentStream } from './agent.mjs';
 import { seal, unseal } from './game.mjs';
+import {
+  tourKey, selectShots, _setCatalogForTests, _setFetcherForTests, _setSnapshotForTests, _resetForTests,
+} from './tours.mjs';
 
 // Read lazily by client.mjs, so clearing them here is early enough.
 for (const k of ['GEMINI_API_KEY', 'GEMINI_AUTH', 'GEMINI_VERTEX', 'GOOGLE_CLOUD_PROJECT']) {
@@ -24,8 +28,8 @@ for (const k of ['GEMINI_API_KEY', 'GEMINI_AUTH', 'GEMINI_VERTEX', 'GOOGLE_CLOUD
 let ipSeq = 0;
 const nextIp = () => `203.0.113.${++ipSeq}`;
 
-function mockReq({ method = 'POST', headers = {}, body, ip = nextIp() } = {}) {
-  return { method, headers: { 'x-forwarded-for': ip, ...headers }, body, socket: {} };
+function mockReq({ method = 'POST', headers = {}, body, ip = nextIp(), url = '/api/test' } = {}) {
+  return { method, url, headers: { 'x-forwarded-for': ip, ...headers }, body, socket: {} };
 }
 
 function mockRes() {
@@ -49,6 +53,8 @@ const JSON_TYPE = { 'content-type': 'application/json' };
 const ENDPOINTS = [
   ['agent', agentHandler, { agent: 'reviews', message: 'How is Toehold rated?' }],
   ['mission', missionHandler, { skill: 'addition', tier: 1 }],
+  // Toehold: a visible app, so the body passes every check before the 503.
+  ['tour', tourHandler, { appId: 6801322941 }],
 ];
 
 /** A scripted GenAI client. `script` is a list of rounds (each a list of
@@ -169,6 +175,178 @@ test('agent: GET health still answers 200 with no content-type', async () => {
 test('mission: GET is still 405', async () => {
   const res = await call(missionHandler, { method: 'GET' });
   assert.equal(res.statusCode, 405);
+});
+
+// ------------------------------------------------------- Screenshot Tour
+
+// The handler reads the catalog through tours.mjs's seam, so none of these
+// touch iTunes. Streak Rings is in it to prove the hidden rule.
+const TOUR_APP = 6801322941;
+const HIDDEN_APP = 6784836738;
+const tourShot = (n) => `https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/ab/cd/ef/toe-0000/${n}.png/392x696bb.jpg`;
+const TOUR_CATALOG = [
+  {
+    wrapperType: 'software', trackId: TOUR_APP, trackName: 'Toehold: Sudoku Explained', version: '1.0',
+    description: 'A panel sits beside your board and keeps a live inventory of the techniques available right now.',
+    artworkUrl512: 'https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/ab/46/49/x/AppIcon.png/512x512bb.jpg',
+    screenshotUrls: ['01', '02', '03', '05', '04'].map(tourShot),
+  },
+  {
+    wrapperType: 'software', trackId: HIDDEN_APP, trackName: 'Streak Rings', version: '1.0.3',
+    description: 'Habit tracker made only for Apple Watch.', artworkUrl512: '',
+    screenshotUrls: ['a', 'b', 'c'].map(tourShot),
+  },
+];
+const TOUR_KEY = tourKey(TOUR_APP, '1.0', selectShots(TOUR_CATALOG[0]));
+const TOUR_SNAPSHOT = {
+  [TOUR_APP]: {
+    tour: {
+      appId: TOUR_APP, name: 'Toehold: Sudoku Explained', version: '1.0', tourKey: TOUR_KEY,
+      shots: selectShots(TOUR_CATALOG[0]).map((url) => ({ url })),
+      callouts: [{ shot: 0, box_2d: [716, 30, 930, 969], label: 'Available techniques', quote: 'keeps a live inventory of the techniques available right now' }],
+      dropped: { count: 0, reasons: {} },
+    },
+    receipt: { model: 'gemini-3.5-flash', ms: 7800, promptTokenCount: 5257, imageTokens: 4312, candidatesTokenCount: 700, thoughtsTokenCount: 200, attempts: 1, mediaResolution: 'MEDIA_RESOLUTION_HIGH' },
+  },
+};
+
+function stubTour(t, snapshot = {}) {
+  _resetForTests();
+  _setCatalogForTests(async () => TOUR_CATALOG);
+  _setSnapshotForTests(snapshot);
+  // If a bug ever routed one of these to a live tour, it would fail here,
+  // fetching screenshots, before any model call.
+  _setFetcherForTests(async () => { throw new Error('tests must not fetch screenshots'); });
+  t.after(() => _resetForTests());
+}
+
+/** Credentials that exist but are never used: every test that sets them
+ *  stops at a snapshot or a 400 before the model client is built. */
+function fakeKey(t) {
+  process.env.GEMINI_API_KEY = 'test-key-never-sent';
+  t.after(() => { delete process.env.GEMINI_API_KEY; });
+}
+
+const lines = (res) => res.chunks.join('').split('\n').filter(Boolean).map((l) => JSON.parse(l));
+
+test('tour: PUT is 405', async () => {
+  const res = await call(tourHandler, { method: 'PUT', headers: JSON_TYPE, body: { appId: TOUR_APP } });
+  assert.equal(res.statusCode, 405);
+});
+
+test('tour: GET strip answers without credentials, edge-cached', async (t) => {
+  stubTour(t);
+  const res = await call(tourHandler, { method: 'GET', url: '/api/tour' });
+  assert.equal(res.statusCode, 200);
+  assert.equal(res.headers['cache-control'], 'public, s-maxage=600, stale-while-revalidate=3600');
+  assert.deepEqual(res.body.apps.map((a) => a.appId), [TOUR_APP], 'the hidden app is not in the strip');
+  const [app] = res.body.apps;
+  assert.equal(app.tourKey, TOUR_KEY);
+  assert.equal(app.hasSnapshot, false);
+  assert.deepEqual(app.shots, ['01', '02', '03', '05'].map((n) => tourShot(n).replace('392x696bb.jpg', '600x1300bb.jpg')));
+});
+
+test('tour: GET a ready tour is 200 from the snapshot, without credentials', async (t) => {
+  stubTour(t, TOUR_SNAPSHOT);
+  const res = await call(tourHandler, { method: 'GET', url: `/api/tour?app=${TOUR_APP}&key=${encodeURIComponent(TOUR_KEY)}` });
+  assert.equal(res.statusCode, 200);
+  assert.equal(res.headers['cache-control'], 'public, s-maxage=86400');
+  assert.equal(res.body.source, 'snapshot');
+  assert.equal(res.body.tour.tourKey, TOUR_KEY);
+  assert.equal(res.body.receipt.attempts, 1);
+});
+
+test('tour: GET is 404 needsLive with no ready tour, 409 stale for an old key', async (t) => {
+  stubTour(t);
+  const miss = await call(tourHandler, { method: 'GET', url: `/api/tour?app=${TOUR_APP}&key=${encodeURIComponent(TOUR_KEY)}` });
+  assert.equal(miss.statusCode, 404);
+  assert.deepEqual(miss.body, { needsLive: true });
+  assert.equal(miss.headers['cache-control'], 'no-store');
+  for (const key of ['&key=6801322941:0.9:000000000000', '']) {
+    const stale = await call(tourHandler, { method: 'GET', url: `/api/tour?app=${TOUR_APP}${key}` });
+    assert.equal(stale.statusCode, 409);
+    assert.deepEqual(stale.body, { error: 'stale', tourKey: TOUR_KEY });
+  }
+});
+
+test('tour: GET refuses non-numeric, hidden and unknown apps with 400', async (t) => {
+  stubTour(t, TOUR_SNAPSHOT);
+  for (const app of ['abc', '6801322941abc', '', '1.5', '-1', '__proto__', '99999999999999999']) {
+    const res = await call(tourHandler, { method: 'GET', url: `/api/tour?app=${encodeURIComponent(app)}&key=x` });
+    assert.equal(res.statusCode, 400, `app=${app}`);
+  }
+  for (const app of [HIDDEN_APP, 424242]) {
+    const res = await call(tourHandler, { method: 'GET', url: `/api/tour?app=${app}&key=x` });
+    assert.equal(res.statusCode, 400);
+    assert.deepEqual(res.body, { error: 'not in the tour' });
+  }
+});
+
+test('tour: POST with a bad appId is 400 before the 503 gate', async () => {
+  for (const appId of ['__proto__', 1.5, '6801322941abc', '6801322941', null, {}, [TOUR_APP]]) {
+    const res = await call(tourHandler, { headers: JSON_TYPE, body: { appId } });
+    assert.equal(res.statusCode, 400, JSON.stringify(appId));
+  }
+  const none = await call(tourHandler, { headers: JSON_TYPE, body: {} });
+  assert.equal(none.statusCode, 400);
+});
+
+test('tour: POST for the hidden app is 400, not the 503 gate', async () => {
+  const res = await call(tourHandler, { headers: JSON_TYPE, body: { appId: HIDDEN_APP, fresh: true } });
+  assert.equal(res.statusCode, 400);
+  assert.deepEqual(res.body, { error: 'not in the tour' });
+});
+
+test('tour: POST without credentials is 503 with the tour message', async () => {
+  const res = await call(tourHandler, { headers: JSON_TYPE, body: { appId: TOUR_APP } });
+  assert.equal(res.statusCode, 503);
+  assert.deepEqual(res.body, { error: 'Tour not configured: credentials are missing.' });
+});
+
+test('tour: POST for an app outside the catalog is 400 once credentials exist, with no stream', async (t) => {
+  stubTour(t);
+  fakeKey(t);
+  const res = await call(tourHandler, { headers: JSON_TYPE, body: { appId: 424242 } });
+  assert.equal(res.statusCode, 400);
+  assert.deepEqual(res.body, { error: 'not in the tour' });
+  assert.deepEqual(res.chunks, []);
+});
+
+test('tour: POST streams a ready tour as NDJSON with no model call', async (t) => {
+  stubTour(t, TOUR_SNAPSHOT);
+  fakeKey(t);
+  const res = await call(tourHandler, { headers: { ...JSON_TYPE, 'sec-fetch-site': 'same-origin' }, body: { appId: TOUR_APP } });
+  assert.equal(res.statusCode, 200);
+  assert.equal(res.headers['content-type'], 'application/x-ndjson; charset=utf-8');
+  assert.equal(res.headers['cache-control'], 'no-cache, no-transform');
+  const events = lines(res);
+  assert.deepEqual(events.map((e) => e.type), ['tour', 'done']);
+  assert.equal(events[0].source, 'snapshot');
+  assert.equal(events[0].tour.tourKey, TOUR_KEY);
+  assert.equal(res.writableEnded, true);
+});
+
+test('tour: a live tour that fails reports a visitor-safe error in the stream', async (t) => {
+  t.mock.method(console, 'warn', () => {});
+  stubTour(t);
+  fakeKey(t);
+  // fresh:true skips the ready tour; the stubbed fetcher throws before any
+  // model call, and the stream carries only the generic line.
+  const res = await call(tourHandler, { headers: JSON_TYPE, body: { appId: TOUR_APP, fresh: true } });
+  assert.equal(res.statusCode, 200);
+  const events = lines(res);
+  assert.deepEqual(events.at(-1), { type: 'error', error: 'The live tour failed — try again in a moment.' });
+  assert.ok(!res.chunks.join('').includes('must not fetch'), 'internals stay in the log');
+});
+
+test('tour: POST is rate limited per IP (429 after 8 a minute)', async () => {
+  const ip = nextIp();
+  for (let i = 0; i < 8; i++) {
+    const res = await call(tourHandler, { ip, headers: JSON_TYPE, body: { appId: HIDDEN_APP } });
+    assert.equal(res.statusCode, 400);
+  }
+  const res = await call(tourHandler, { ip, headers: JSON_TYPE, body: { appId: HIDDEN_APP } });
+  assert.equal(res.statusCode, 429);
 });
 
 // ------------------------------------------------------ H2: loop cost ceilings

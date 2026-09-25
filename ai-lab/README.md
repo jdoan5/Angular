@@ -58,6 +58,42 @@ conversation. Three rules do it (`agent-core/game.mjs`):
 The UI shows the agent's **tool-call trace** for every answer — you can watch
 it decide to list apps, pick an id, and fetch reviews before it writes a word.
 
+### Screenshot Tour: pins that have to quote the listing
+
+```
+Angular 22 UI (app strip + screenshots with numbered pins)
+        │  GET  /api/tour                  the strip: catalog only, no model, edge-cached
+        │  GET  /api/tour?app=<id>&key=…   a ready tour: reviewed snapshot or instance cache, no model
+        │  POST /api/tour  (NDJSON)        "Watch it live": a fresh tour, streamed as a trace
+        ▼
+agent-core/tours.mjs
+  · fetch_screenshots   up to 4 iPhone screenshots in App Store order (600x1300 JPEG, mzstatic only)
+  · read_listing        the store description
+  · gemini              ONE generateContent call: images inline at HIGH resolution + description,
+                        responseSchema → callouts {shot, box_2d, label, quote}
+  · grounding_check     every box on the screen, every quote verbatim in the description
+```
+
+Gemini gets an app's real store screenshots and its store description, and
+returns callouts: a box on one screenshot, a short label, and a quote. The
+server keeps a callout only if its box is on the screen (not a sliver, not the
+status bar) and its quote is really in the description, matched after
+normalizing dashes, bullets, whitespace and case. The pin then shows the
+description's own words, not the model's copy of them, and the footer counts
+what was dropped and why. A tour that does not ground enough pins gets one
+corrective retry with the drop reasons, then fails rather than showing
+ungrounded pins.
+
+Tours are cached by a key of app id, version and a hash of the exact
+screenshot URLs, so a new release retires old tours on its own. Reviewed tours
+live in a committed snapshot (`agent-core/tours.snapshot.json`) that I
+generate locally with `node scripts/tour-snapshot.mjs` and read before
+committing; an app without one for its current screenshots offers only the
+live tour. Live tours sit behind the per-IP rate limit plus a ceiling of 20
+per hour per instance. Streak Rings is left out on purpose: its store
+screenshots show an iPhone UI while its description says it is made only for
+Apple Watch, so it stays hidden until the listing is fixed.
+
 ## Run locally
 
 ```bash
@@ -68,13 +104,15 @@ npm run dev                    # agent API on :8787 + Angular on :4200 (proxied)
 
 No key yet? The UI still runs, and `curl -H 'content-type: application/json' -d '{"selftest":true}' localhost:8787/api/agent`
 exercises the live iTunes tools and the Review Radar snapshot without Gemini.
+`curl localhost:8787/api/tour` lists the Screenshot Tour strip without Gemini too.
 
 ## Deploy (Vercel)
 
 Standard Angular deploy plus one env var: set `GEMINI_API_KEY` in Vercel
-project settings. `api/agent.mjs` becomes a serverless function automatically.
+project settings. Each file in `api/` (`agent.mjs`, `mission.mjs`, `tour.mjs`)
+becomes a serverless function automatically.
 
-## The four stages
+## The five stages
 
 - **Guess My App** ✅ · twenty questions over the live catalog; hidden state in
   a sealed token, and a prompt the model cannot betray because the answer was
@@ -89,6 +127,10 @@ project settings. `api/agent.mjs` becomes a serverless function automatically.
 - **Math Mission Maker** ✅ · schema-constrained generation (`responseSchema` →
   server-validated JSON) rendered as a playable mission, in the style of
   [Cosmic Cadets](https://apps.apple.com/us/app/cosmic-cadets/id6782706983)
+- **Screenshot Tour** · multimodal image understanding with grounded pins: one
+  call reads up to four real App Store screenshots with the store description,
+  and every pin is kept only if its box is on the screen and its quote is
+  verbatim in the listing
 
-Four stages, four distinct Gemini patterns: hidden-state hosting, tool loops,
-grounding, and structured output.
+Five stages, five distinct Gemini patterns: hidden-state hosting, tool loops,
+grounding, structured output, and multimodal image understanding.

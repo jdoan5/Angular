@@ -23,7 +23,10 @@
           [attr.aria-label]="'Tour ' + a.name"
           (click)="select(a.appId)"
         >
-          <img [src]="icon(a.artwork)" alt="" width="56" height="56" loading="lazy" decoding="async" />
+          <!-- The server blanks any artwork URL that isn't mzstatic https. -->
+          @if (a.artwork) {
+            <img [src]="icon(a.artwork)" alt="" width="56" height="56" loading="lazy" decoding="async" />
+          }
           <span>{{ a.name }}</span>
         </button>
       }

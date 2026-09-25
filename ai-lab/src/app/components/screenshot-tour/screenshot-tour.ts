@@ -110,6 +110,16 @@ async function readJson(res: Response): Promise<any> {
   }
 }
 
+/** Enough shape to render without throwing; the server validated the rest. */
+function isTour(t: any): t is Tour {
+  return (
+    Array.isArray(t?.callouts) &&
+    Array.isArray(t?.shots) &&
+    t.shots.length > 0 &&
+    t.shots.every((s: any) => typeof s?.url === 'string' && s.url.startsWith('https://'))
+  );
+}
+
 function isApp(a: any): a is TourApp {
   return (
     Number.isSafeInteger(a?.appId) &&
@@ -124,7 +134,7 @@ function isApp(a: any): a is TourApp {
  *  3 KB at 128x128 (measured on Toehold), and there are 14 of them. mzstatic
  *  serves any size from the last path segment; anything else is left alone. */
 export function iconUrl(artwork: string): string {
-  return artwork.replace(/\/\d+x\d+bb\.(jpg|png|webp)$/, '/128x128bb.$1');
+  return String(artwork ?? '').replace(/\/\d+x\d+bb\.(jpg|png|webp)$/, '/128x128bb.$1');
 }
 
 /** Callouts the server kept, numbered in callout order across all shots. The
@@ -138,7 +148,7 @@ export function toPins(tour: Tour | null): Pin[] {
     if (!Number.isInteger(c?.shot) || c.shot < 0 || c.shot >= tour.shots.length) continue;
     if (!Array.isArray(b) || b.length !== 4 || !b.every((v) => Number.isFinite(v) && v >= 0 && v <= 1000)) continue;
     const [ymin, xmin, ymax, xmax] = b;
-    if (ymin >= ymax || xmin >= xmax) continue;
+    if (ymin > ymax || xmin > xmax) continue;   // the server's own rule
     pins.push({
       n: pins.length + 1,
       shot: c.shot,
@@ -311,7 +321,7 @@ export class ScreenshotTour implements OnInit {
       if (this.stripAc.signal.aborted) return false;
       console.warn('tour strip failed:', err);
       if (!this.apps().length) {
-        this.stripError.set(err instanceof TypeError ? 'Could not reach the server — check your connection.' : message(err));
+        this.stripError.set(message(err));
         this.stripStatus.set('error');
       }
       return false;
@@ -326,6 +336,8 @@ export class ScreenshotTour implements OnInit {
     this.selectedId.set(appId);
     this.appChange.emit(appId);
     void this.lookup(app);
+    // A share link or starter chip can pick an icon off the end of the strip.
+    setTimeout(() => this.host.nativeElement.querySelector('.app.on')?.scrollIntoView({ block: 'nearest', inline: 'nearest' }));
   }
 
   retry(): void {
@@ -341,7 +353,7 @@ export class ScreenshotTour implements OnInit {
       const res = await fetch(url, { signal: ac.signal });
       const data = await readJson(res);
       if (ac.signal.aborted) return;
-      if (res.ok && data?.tour) {
+      if (res.ok && isTour(data?.tour)) {
         this.show({ tour: data.tour, receipt: data.receipt ?? null, source: data.source ?? 'snapshot' });
         return;
       }
@@ -417,6 +429,7 @@ export class ScreenshotTour implements OnInit {
             });
             break;
           case 'tour':
+            if (!isTour(event.tour)) throw new Error(UNAVAILABLE);
             this.show({ tour: event.tour, receipt: event.receipt ?? null, source: event.source ?? 'live' });
             drew = true;
             break;
@@ -468,7 +481,7 @@ export class ScreenshotTour implements OnInit {
 
   private fail(err: unknown, prev: Shown | null): void {
     console.warn('screenshot tour failed:', err);
-    const msg = err instanceof TypeError ? 'Could not reach the server — check your connection.' : message(err);
+    const msg = message(err);
     if (prev) {
       this.show(prev);
       this.errorMsg.set(`${msg} Showing the ${SOURCE_LABEL[prev.source ?? 'snapshot']} tour instead.`);
@@ -480,11 +493,12 @@ export class ScreenshotTour implements OnInit {
 
   openPin(n: number): void {
     this.activePin.set(n);
-    // After render: bring the pin into view (its scroll-margin keeps it above
-    // the mobile bottom sheet) and move focus into the panel for Escape/Tab.
+    // After render: move focus into the panel for Escape/Tab, then bring the
+    // pin into view (its scroll-margin keeps it above the mobile sheet).
+    // Focus first, so it can't cut the smooth scroll short.
     setTimeout(() => {
-      this.reveal(n);
       this.host.nativeElement.querySelector<HTMLElement>('.detail .close')?.focus({ preventScroll: true });
+      this.reveal(n);
     });
   }
 
@@ -526,6 +540,8 @@ export class ScreenshotTour implements OnInit {
   }
 }
 
+/** fetch rejects with a TypeError when the network is down. */
 function message(err: unknown): string {
+  if (err instanceof TypeError) return 'Could not reach the server — check your connection.';
   return err instanceof Error && err.message ? err.message : 'Something went wrong — try again.';
 }

@@ -1,4 +1,4 @@
-import { Component, computed, signal } from '@angular/core';
+import { AfterViewInit, Component, computed, signal } from '@angular/core';
 import { AgentChat } from './components/agent-chat/agent-chat';
 import { MissionMaker } from './components/mission-maker/mission-maker';
 import { ScreenshotTour, TourStarter } from './components/screenshot-tour/screenshot-tour';
@@ -43,7 +43,7 @@ function shareLink(): { stage: string | null; app: number | null } {
   templateUrl: './app.html',
   styleUrl: './app.scss',
 })
-export class App {
+export class App implements AfterViewInit {
   readonly stages: LabStage[] = [
     {
       id: 'guess',
@@ -130,6 +130,12 @@ export class App {
   /** The tour's open app: seeded from a share link, then kept so coming back
    *  to the tab reopens it (the component is rebuilt on every visit). */
   readonly tourApp = signal<number | null>(this.link.stage === 'tour' ? this.link.app : null);
+
+  // On a phone the stage cards scroll sideways, and a share link opens the
+  // last one, off the end of the row. (Not afterNextRender: it added 2.8 kB.)
+  ngAfterViewInit(): void {
+    document.querySelector('.stage.active')?.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+  }
 
   open(stageId: string): void {
     this.active.set(stageId);

@@ -13,7 +13,8 @@
     "test:api": "node --test agent-core/api.test.mjs",
     "test:missions": "node --test agent-core/missions.test.mjs",
     "test:radar": "node --test agent-core/radar.test.mjs",
-    "test:server": "node --test agent-core/api.test.mjs agent-core/missions.test.mjs agent-core/radar.test.mjs && node agent-core/game.test.mjs"
+    "test:tours": "node --test agent-core/tours.test.mjs",
+    "test:server": "node --test agent-core/api.test.mjs agent-core/missions.test.mjs agent-core/radar.test.mjs agent-core/tours.test.mjs && node agent-core/game.test.mjs"
   },
   "private": true,
   "packageManager": "npm@11.13.0",

@@ -109,3 +109,28 @@ footer {
     }
   }
 }
+
+/* Phones: five stacked stage cards took 426px of an 812px screen and left
+   the Screenshot Tour a 294px window its pin sheet covered completely. One
+   sideways-scrolling row keeps every title and blurb at ~150px of header. */
+@media (max-width: 599px) {
+  .lab {
+    padding: 12px 16px 8px;
+  }
+
+  header {
+    gap: 10px;
+    padding-bottom: 10px;
+  }
+
+  .stages {
+    flex-wrap: nowrap;
+    width: 100%;
+    overflow-x: auto;
+    padding-bottom: 4px;
+  }
+
+  .stage {
+    flex: 0 0 min(240px, 72vw);
+  }
+}

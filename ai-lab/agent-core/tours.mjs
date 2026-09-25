@@ -132,6 +132,7 @@ export async function fetchShot(url, signal) {
     const type = String(res.headers.get('content-type') ?? '').toLowerCase();
     if (!type.startsWith('image/jpeg')) throw new Error(`screenshot is ${type || 'untyped'}, not image/jpeg`);
     if (Number(res.headers.get('content-length')) > MAX_SHOT_BYTES) throw new Error('screenshot is over the size cap');
+    if (!res.body) throw new Error('screenshot body is empty');
     const reader = res.body.getReader();
     const chunks = [];
     let size = 0;
@@ -165,8 +166,9 @@ const badRequest = () => Object.assign(new Error('bad tour request'), { code: 'B
 
 /** The response schema for a tour of n screenshots. minItems/maxItems are
  *  strings and minimum/maximum numbers, as the SDK types them (the same split
- *  missions.mjs notes); this exact shape ran on the Vertex express key in the
- *  2026-09-25 spike. */
+ *  missions.mjs notes). The 2026-09-25 spike ran this pattern on the Vertex
+ *  express key: a nested ARRAY of bounded INTEGER, string item counts and
+ *  propertyOrdering. */
 export function tourSchema(n) {
   if (!validCount(n)) throw badRequest();
   return {
@@ -671,7 +673,14 @@ export async function generateTour({ appId, fresh = false } = {}, signal, emit =
   const n = app.shots.length;
 
   const images = await step(send, 'fetch_screenshots', { app: app.name, count: n },
-    () => Promise.all(app.shots.map((url) => fetchShot(url, signal))),
+    () => {
+      // One failed screenshot fails the tour, so it also cancels the others
+      // instead of letting them run out their 8-second timeouts.
+      const siblings = new AbortController();
+      const linked = signal ? AbortSignal.any([signal, siblings.signal]) : siblings.signal;
+      return Promise.all(app.shots.map((url) => fetchShot(url, linked)))
+        .catch((err) => { siblings.abort(); throw err; });
+    },
     (imgs) => `${imgs.length} screenshots · ${num(Math.round(imgs.reduce((s, b) => s + b.length, 0) / 1024))} KB`);
   stopIfGone();
   const description = await step(send, 'read_listing', { app: app.name },
