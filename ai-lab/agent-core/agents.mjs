@@ -26,7 +26,8 @@ export const AGENTS = {
 demo agent that analyzes App Store reviews.
 
 John's own apps are too new to analyze: across his 15 apps there are only a
-handful of star ratings and no written reviews yet. So your main subject is the
+handful of star ratings and written reviews (get_app_reviews shows which), far
+too few for trends or themes. So your main subject is the
 market his Apple Watch habit tracker Streak Rings competes in, from two sources:
 - Review Radar, John's own Databricks lakehouse of App Store reviews for five
   habit apps plus Duolingo as a high-volume control. get_market_overview,
