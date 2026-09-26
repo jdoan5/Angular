@@ -1,7 +1,7 @@
 {
   "totals": {
-    "reviews_collected": 7643,
-    "overall_avg_rating": 3.94,
+    "reviews_collected": 7956,
+    "overall_avg_rating": 3.95,
     "apps_tracked": 6
   },
   "overview": [
@@ -31,11 +31,11 @@
     },
     {
       "app_name": "Finch: Self-Care Pet",
-      "reviews_collected": 1584,
+      "reviews_collected": 1599,
       "avg_rating": 4.63,
-      "versions_seen": 290,
+      "versions_seen": 291,
       "oldest_review_at": "2021-10-19T13:59:17.000Z",
-      "newest_review_at": "2026-09-24T04:40:39.000Z"
+      "newest_review_at": "2026-09-25T07:02:07.000Z"
     },
     {
       "app_name": "HabitKit",
@@ -47,11 +47,11 @@
     },
     {
       "app_name": "Duolingo (high-volume control)",
-      "reviews_collected": 3375,
-      "avg_rating": 3.76,
+      "reviews_collected": 3673,
+      "avg_rating": 3.79,
       "versions_seen": 264,
       "oldest_review_at": "2017-09-10T02:37:43.000Z",
-      "newest_review_at": "2026-09-23T14:49:22.000Z"
+      "newest_review_at": "2026-09-25T07:30:05.000Z"
     }
   ],
   "rating_by_version": [
@@ -357,6 +357,13 @@
       "first_review_at": "2026-09-22T15:26:06.000Z"
     },
     {
+      "app_name": "Duolingo (high-volume control)",
+      "app_version": "7.141.1",
+      "n_reviews": 303,
+      "avg_rating": 4.09,
+      "first_review_at": "2026-09-23T13:50:23.000Z"
+    },
+    {
       "app_name": "Finch: Self-Care Pet",
       "app_version": "3.73.206",
       "n_reviews": 93,
@@ -373,8 +380,8 @@
     {
       "app_name": "Finch: Self-Care Pet",
       "app_version": "3.73.208",
-      "n_reviews": 25,
-      "avg_rating": 4.64,
+      "n_reviews": 34,
+      "avg_rating": 4.47,
       "first_review_at": "2026-09-22T14:33:48.000Z"
     }
   ],
@@ -3427,15 +3434,15 @@
     {
       "app_name": "Finch: Self-Care Pet",
       "week": "2026-09-21T00:00:00.000Z",
-      "n_reviews": 53,
-      "avg_rating": 4.57,
+      "n_reviews": 68,
+      "avg_rating": 4.5,
       "is_partial_week": true
     },
     {
       "app_name": "Duolingo (high-volume control)",
       "week": "2026-09-21T00:00:00.000Z",
-      "n_reviews": 464,
-      "avg_rating": 3.87,
+      "n_reviews": 762,
+      "avg_rating": 3.97,
       "is_partial_week": true
     },
     {
@@ -3481,5 +3488,5 @@
       "is_partial_week": false
     }
   ],
-  "generated_at": "2026-09-25T18:01:29Z"
+  "generated_at": "2026-09-26T17:21:14Z"
 }
