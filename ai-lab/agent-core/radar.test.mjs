@@ -549,11 +549,14 @@ test('live: competitor reviews come back for the habit apps in both sorts, witho
   for (const [name, t] of Object.entries(TRACKED)) {
     if (t.role !== 'habit') continue;
     for (const sort of ['mostRecent', 'mostHelpful']) {
-      let r = await getCompetitorReviews({ app: name, sort });
       // Apple's feed comes back empty ~1 time in 12 even on a fresh URL, and
       // the tool retries once. Over these 10 feeds that still failed CI about
       // 1 run in 16, so the test asks once more before calling it a regression.
-      if (!r.error && r.count === 0) r = await getCompetitorReviews({ app: name, sort });
+      // A 503 from the feed counts too (HabitKit mostHelpful, 2026-09-25): it
+      // surfaces as a throw, not an empty page.
+      const read = () => getCompetitorReviews({ app: name, sort }).catch((err) => ({ error: String(err?.message ?? err) }));
+      let r = await read();
+      if (r.error || r.count === 0) r = await read();
       assert.ok(!r.error, `${name} ${sort}: ${r.error}`);
       assert.ok(r.count > 0, `${name} ${sort}: no reviews`);
       assert.ok(r.count <= 12);

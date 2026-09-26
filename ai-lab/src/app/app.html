@@ -35,13 +35,20 @@
       } @else if (stage.live && stage.kind === 'mission') {
         <app-mission-maker />
       } @else if (stage.live && stage.kind === 'tour') {
-        <app-screenshot-tour
-          [heading]="stage.title"
-          [description]="stage.description"
-          [starters]="tourStarters"
-          [initialAppId]="tourApp()"
-          (appChange)="onTourApp($event)"
-        />
+        <!-- Deferred: visitors land on Guess My App, and the tour's component
+             and styles added 26 kB to the first load for a stage most never
+             open. It loads the moment the tour stage is chosen. -->
+        @defer (on immediate) {
+          <app-screenshot-tour
+            [heading]="stage.title"
+            [description]="stage.description"
+            [starters]="tourStarters"
+            [initialAppId]="tourApp()"
+            (appChange)="onTourApp($event)"
+          />
+        } @loading (minimum 200ms) {
+          <p class="stage-loading">Loading the tour…</p>
+        }
       }
     }
   </main>

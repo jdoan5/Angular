@@ -89,8 +89,13 @@ screenshot URLs, so a new release retires old tours on its own. Reviewed tours
 live in a committed snapshot (`agent-core/tours.snapshot.json`) that I
 generate locally with `node scripts/tour-snapshot.mjs` and read before
 committing; an app without one for its current screenshots offers only the
-live tour. Live tours sit behind the per-IP rate limit plus a ceiling of 20
-per hour per instance. Streak Rings is left out on purpose: its store
+live tour. `npm run tour:check` (no key, no model call) lists every visible
+app whose reviewed tour is missing or stale and exits 1 until none is, so it
+gates a deploy of this stage. The committed file starts empty, so until that
+first reviewed run lands every app is live-only. Live tours sit behind the
+per-IP rate limit plus a ceiling of 20 per hour per instance; a slot is spent
+only when a tour reaches its first model call, so a failed screenshot fetch or
+a visitor switching apps costs nothing against it. Streak Rings is left out on purpose: its store
 screenshots show an iPhone UI while its description says it is made only for
 Apple Watch, so it stays hidden until the listing is fixed.
 
@@ -110,7 +115,9 @@ exercises the live iTunes tools and the Review Radar snapshot without Gemini.
 
 Standard Angular deploy plus one env var: set `GEMINI_API_KEY` in Vercel
 project settings. Each file in `api/` (`agent.mjs`, `mission.mjs`, `tour.mjs`)
-becomes a serverless function automatically.
+becomes a serverless function automatically. Before the Screenshot Tour ships,
+run `node scripts/tour-snapshot.mjs` locally, review its callouts, commit
+`agent-core/tours.snapshot.json`, and check that `npm run tour:check` passes.
 
 ## The five stages
 

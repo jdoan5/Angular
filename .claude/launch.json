@@ -12,6 +12,17 @@
       "port": 4200
     },
     {
+      "name": "ai-lab-api",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "--prefix",
+        "ai-lab",
+        "run",
+        "api"
+      ],
+      "port": 8787
+    },
+    {
       "name": "hangman",
       "runtimeExecutable": "npm",
       "runtimeArgs": [

@@ -1,7 +1,8 @@
 import { AfterViewInit, Component, computed, signal } from '@angular/core';
 import { AgentChat } from './components/agent-chat/agent-chat';
 import { MissionMaker } from './components/mission-maker/mission-maker';
-import { ScreenshotTour, TourStarter } from './components/screenshot-tour/screenshot-tour';
+import { ScreenshotTour } from './components/screenshot-tour/screenshot-tour';
+import type { TourStarter } from './components/screenshot-tour/screenshot-tour';
 
 interface LabStage {
   id: string;

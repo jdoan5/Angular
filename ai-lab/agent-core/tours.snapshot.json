@@ -1,1 +1,1554 @@
-{}
+{
+  "6778971932": {
+    "tour": {
+      "appId": 6778971932,
+      "name": "US Citizenship Questions Prep",
+      "version": "1.1",
+      "tourKey": "6778971932:1.1:105f4264a25d",
+      "shots": [
+        {
+          "url": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/8e/bf/5a/8ebf5a63-b5be-ef3f-4978-105bec190f74/05-officials.png/600x1300bb.jpg"
+        },
+        {
+          "url": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/0b/ff/d9/0bffd927-9300-2a1f-2ed5-4588bc014b55/01-home.png/600x1300bb.jpg"
+        },
+        {
+          "url": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/57/84/de/5784de62-6145-c1c0-c1e9-d0925ea42a8d/03-fill.png/600x1300bb.jpg"
+        },
+        {
+          "url": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/28/ba/db/28badbfc-857c-544e-b353-5996bedcc440/04-study.png/600x1300bb.jpg"
+        }
+      ],
+      "callouts": [
+        {
+          "shot": 0,
+          "box_2d": [
+            342,
+            46,
+            654,
+            954
+          ],
+          "label": "My Officials form",
+          "quote": "Save the current names in My Officials and practice those questions like any other"
+        },
+        {
+          "shot": 0,
+          "box_2d": [
+            719,
+            95,
+            737,
+            743
+          ],
+          "label": "USCIS updates link",
+          "quote": "Built-in link to the official USCIS test-updates page so you can verify before your interview"
+        },
+        {
+          "shot": 1,
+          "box_2d": [
+            356,
+            38,
+            449,
+            962
+          ],
+          "label": "Practice test, like the real interview",
+          "quote": "Civics Test 2025 puts all 128 official USCIS questions and answers (the 2025 version) in your pocket — with a practice test that works like the real interview, a fill-in-the-blank mode that makes you produce the answer yourself, and clear notes on the answers that change with elections"
+        },
+        {
+          "shot": 1,
+          "box_2d": [
+            459,
+            38,
+            552,
+            962
+          ],
+          "label": "Fill in the Blank button",
+          "quote": "Type the answer the way you would say it to the officer"
+        },
+        {
+          "shot": 1,
+          "box_2d": [
+            775,
+            38,
+            991,
+            962
+          ],
+          "label": "Elections warning card",
+          "quote": "President, Vice President, Speaker of the House, Chief Justice, your senators, your representative, your governor, and your state capital — the app flags every one of them"
+        },
+        {
+          "shot": 2,
+          "box_2d": [
+            270,
+            38,
+            305,
+            962
+          ],
+          "label": "Answer input field",
+          "quote": "Type the answer the way you would say it to the officer"
+        },
+        {
+          "shot": 2,
+          "box_2d": [
+            893,
+            38,
+            948,
+            962
+          ],
+          "label": "Check answer button",
+          "quote": "Forgiving grading: \"27\" matches \"twenty-seven (27)\", \"Jefferson\" matches \"(Thomas) Jefferson"
+        },
+        {
+          "shot": 3,
+          "box_2d": [
+            121,
+            38,
+            171,
+            962
+          ],
+          "label": "Search bar",
+          "quote": "Search by question number, question text, or any answer"
+        },
+        {
+          "shot": 3,
+          "box_2d": [
+            193,
+            338,
+            226,
+            661
+          ],
+          "label": "65/20 filter tab",
+          "quote": "Filter the 20 starred 65/20 questions at any time"
+        },
+        {
+          "shot": 3,
+          "box_2d": [
+            287,
+            46,
+            991,
+            954
+          ],
+          "label": "Questions grouped by topic",
+          "quote": "Browse by official topic: American Government, American History, Symbols and Holidays"
+        }
+      ],
+      "dropped": {
+        "count": 0,
+        "reasons": {}
+      }
+    },
+    "receipt": {
+      "model": "gemini-3.5-flash",
+      "ms": 5471,
+      "promptTokenCount": 5582,
+      "imageTokens": 4312,
+      "candidatesTokenCount": 823,
+      "thoughtsTokenCount": 0,
+      "attempts": 1,
+      "mediaResolution": "MEDIA_RESOLUTION_HIGH"
+    }
+  },
+  "6775637573": {
+    "tour": {
+      "appId": 6775637573,
+      "name": "Learn English: Pronunciation",
+      "version": "2.4.0",
+      "tourKey": "6775637573:2.4.0:425b3b0013bd",
+      "shots": [
+        {
+          "url": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/4e/1e/38/4e1e38a9-049f-423b-60b0-5ab789e4d8d5/06-grammar-detail.png/600x1300bb.jpg"
+        },
+        {
+          "url": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/44/3c/e6/443ce6ca-646d-656f-a6ad-f9230b7a7a2f/05-grammar.png/600x1300bb.jpg"
+        },
+        {
+          "url": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/58/45/c7/5845c753-e101-930f-b44a-5a137fef15bb/07-cloze.png/600x1300bb.jpg"
+        }
+      ],
+      "callouts": [
+        {
+          "shot": 0,
+          "box_2d": [
+            369,
+            153,
+            488,
+            855
+          ],
+          "label": "Grammar Rule Card",
+          "quote": "A short rule, seven real examples, and fill-in-the-blank practice for each one"
+        },
+        {
+          "shot": 0,
+          "box_2d": [
+            522,
+            153,
+            577,
+            855
+          ],
+          "label": "Example Sentence",
+          "quote": "A real example sentence you can hear"
+        },
+        {
+          "shot": 1,
+          "box_2d": [
+            453,
+            153,
+            577,
+            498
+          ],
+          "label": "Articles, first of 30 grammar topics",
+          "quote": "Articles through to second conditionals and relative clauses — 210 examples and 104 drills"
+        },
+        {
+          "shot": 1,
+          "box_2d": [
+            582,
+            153,
+            706,
+            498
+          ],
+          "label": "Subject Pronouns Topic",
+          "quote": "A short rule, seven real examples, and fill-in-the-blank practice for each one"
+        },
+        {
+          "shot": 2,
+          "box_2d": [
+            326,
+            153,
+            399,
+            846
+          ],
+          "label": "Mixed-topic grammar drill",
+          "quote": "Grammar drills — tap or type, across every topic"
+        },
+        {
+          "shot": 2,
+          "box_2d": [
+            409,
+            153,
+            506,
+            846
+          ],
+          "label": "Multiple Choice Options",
+          "quote": "Answer by tapping a choice or by typing it, whichever you find harder"
+        }
+      ],
+      "dropped": {
+        "count": 0,
+        "reasons": {}
+      }
+    },
+    "receipt": {
+      "model": "gemini-3.5-flash",
+      "ms": 4052,
+      "promptTokenCount": 4573,
+      "imageTokens": 3234,
+      "candidatesTokenCount": 508,
+      "thoughtsTokenCount": 0,
+      "attempts": 1,
+      "mediaResolution": "MEDIA_RESOLUTION_HIGH"
+    }
+  },
+  "6776318136": {
+    "tour": {
+      "appId": 6776318136,
+      "name": "Soccer 2026: Live Scores",
+      "version": "1.1",
+      "tourKey": "6776318136:1.1:e828706d0d66",
+      "shots": [
+        {
+          "url": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/b3/a8/de/b3a8deee-6c26-092a-0ee0-11a53773d508/04-teams.png/600x1300bb.jpg"
+        },
+        {
+          "url": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/38/41/21/384121ae-2fc5-a37b-9f6b-431af0fdfa26/02-groups.PNG/600x1300bb.jpg"
+        },
+        {
+          "url": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/c5/cc/53/c5cc53d7-9951-3e2e-975e-0cdad64e8187/01-schedule.png/600x1300bb.jpg"
+        },
+        {
+          "url": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/77/54/ec/7754ec3a-28c1-079e-0e2f-5b7ce7651ac1/03_bracket.PNG/600x1300bb.jpg"
+        }
+      ],
+      "callouts": [
+        {
+          "shot": 0,
+          "box_2d": [
+            281,
+            45,
+            514,
+            954
+          ],
+          "label": "Every team built in, by group",
+          "quote": "The complete schedule, teams, groups, and bracket are built in"
+        },
+        {
+          "shot": 0,
+          "box_2d": [
+            889,
+            811,
+            911,
+            858
+          ],
+          "label": "Star team button",
+          "quote": "Star teams and matches to follow the ones you care about"
+        },
+        {
+          "shot": 1,
+          "box_2d": [
+            221,
+            45,
+            569,
+            954
+          ],
+          "label": "Group A table",
+          "quote": "All 12 group tables with up-to-the-minute standings"
+        },
+        {
+          "shot": 2,
+          "box_2d": [
+            303,
+            45,
+            480,
+            954
+          ],
+          "label": "Daily match schedule",
+          "quote": "Full schedule of all 104 matches, grouped by day, in your local time zone"
+        },
+        {
+          "shot": 2,
+          "box_2d": [
+            339,
+            825,
+            355,
+            861
+          ],
+          "label": "Followed match, kept on your iPhone",
+          "quote": "The teams and matches you follow stay on your iPhone"
+        },
+        {
+          "shot": 3,
+          "box_2d": [
+            139,
+            36,
+            914,
+            910
+          ],
+          "label": "Knockout bracket",
+          "quote": "Knockout bracket from the Round of 32 to the Final"
+        }
+      ],
+      "dropped": {
+        "count": 2,
+        "reasons": {
+          "removed in review": 2
+        }
+      }
+    },
+    "receipt": {
+      "model": "gemini-3.5-flash",
+      "ms": 9791,
+      "promptTokenCount": 5393,
+      "imageTokens": 4312,
+      "candidatesTokenCount": 581,
+      "thoughtsTokenCount": 925,
+      "attempts": 1,
+      "mediaResolution": "MEDIA_RESOLUTION_HIGH"
+    }
+  },
+  "6776927520": {
+    "tour": {
+      "appId": 6776927520,
+      "name": "Job Trail Applications",
+      "version": "1.6",
+      "tourKey": "6776927520:1.6:cb9f83d25bce",
+      "shots": [
+        {
+          "url": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/58/d9/be/58d9be19-889f-d8bf-cce1-cd3dc0c4194c/02-detail.png/600x1300bb.jpg"
+        },
+        {
+          "url": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/01/62/e8/0162e83b-fbb0-5d38-e871-169ea6affc25/03-add.png/600x1300bb.jpg"
+        },
+        {
+          "url": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/76/ea/bc/76eabc64-d72f-c3b3-1a82-14b7d42b70db/01-list.png/600x1300bb.jpg"
+        },
+        {
+          "url": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/12/cd/d8/12cdd8f4-e2d5-26db-b113-444377fa5ab9/04-filter.png/600x1300bb.jpg"
+        }
+      ],
+      "callouts": [
+        {
+          "shot": 0,
+          "box_2d": [
+            425,
+            45,
+            642,
+            954
+          ],
+          "label": "Application details",
+          "quote": "See how long ago you applied to each role"
+        },
+        {
+          "shot": 0,
+          "box_2d": [
+            701,
+            45,
+            801,
+            954
+          ],
+          "label": "Notes section",
+          "quote": "Notes for recruiters, salary ranges, and next steps"
+        },
+        {
+          "shot": 1,
+          "box_2d": [
+            184,
+            45,
+            349,
+            954
+          ],
+          "label": "Job details input",
+          "quote": "Log every application: company, role, location, date applied, and the posting URL"
+        },
+        {
+          "shot": 1,
+          "box_2d": [
+            705,
+            45,
+            803,
+            954
+          ],
+          "label": "Notes input",
+          "quote": "Notes for recruiters, salary ranges, and next steps"
+        },
+        {
+          "shot": 2,
+          "box_2d": [
+            189,
+            82,
+            219,
+            954
+          ],
+          "label": "Status filters",
+          "quote": "Color-coded status badges and one-tap filters to focus your pipeline"
+        },
+        {
+          "shot": 2,
+          "box_2d": [
+            920,
+            63,
+            971,
+            937
+          ],
+          "label": "Search bar",
+          "quote": "Search across companies, roles, and locations"
+        },
+        {
+          "shot": 3,
+          "box_2d": [
+            189,
+            456,
+            219,
+            775
+          ],
+          "label": "Interviewing filter",
+          "quote": "Filter to just your active interviews or open offers"
+        }
+      ],
+      "dropped": {
+        "count": 1,
+        "reasons": {
+          "removed in review": 1
+        }
+      }
+    },
+    "receipt": {
+      "model": "gemini-3.5-flash",
+      "ms": 12513,
+      "promptTokenCount": 5293,
+      "imageTokens": 4312,
+      "candidatesTokenCount": 612,
+      "thoughtsTokenCount": 1108,
+      "attempts": 1,
+      "mediaResolution": "MEDIA_RESOLUTION_HIGH"
+    }
+  },
+  "6782749406": {
+    "tour": {
+      "appId": 6782749406,
+      "name": "Tabwise: Bills & Invoices",
+      "version": "1.5",
+      "tourKey": "6782749406:1.5:0f499d949710",
+      "shots": [
+        {
+          "url": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/a0/c8/d0/a0c8d028-6e52-12b3-8ed1-937158b52490/01-invoices.png/600x1300bb.jpg"
+        },
+        {
+          "url": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/06/0f/4e/060f4ea2-1a9a-dce9-980a-6039589fdd02/02-dashboard.png/600x1300bb.jpg"
+        },
+        {
+          "url": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/7e/3a/dd/7e3addbe-1750-b7c8-43e6-3e83809c5aff/03-settings.png/600x1300bb.jpg"
+        }
+      ],
+      "callouts": [
+        {
+          "shot": 0,
+          "box_2d": [
+            178,
+            44,
+            224,
+            956
+          ],
+          "label": "Search bar",
+          "quote": "Search and filter by payee, status, note, or check number in an instant"
+        },
+        {
+          "shot": 0,
+          "box_2d": [
+            256,
+            33,
+            338,
+            497
+          ],
+          "label": "Owed to you summary",
+          "quote": "See your running totals: what you owe, what's owed to you, and your net position"
+        },
+        {
+          "shot": 1,
+          "box_2d": [
+            192,
+            33,
+            341,
+            975
+          ],
+          "label": "Net position card",
+          "quote": "A dashboard with your net position, money received vs. paid out, and what's still outstanding"
+        },
+        {
+          "shot": 1,
+          "box_2d": [
+            662,
+            33,
+            932,
+            975
+          ],
+          "label": "In vs Out chart",
+          "quote": "Clear charts of the last six months and your spending by category"
+        },
+        {
+          "shot": 2,
+          "box_2d": [
+            363,
+            33,
+            439,
+            975
+          ],
+          "label": "Lock with Face ID setting",
+          "quote": "Optional Face ID / Touch ID lock keeps your records private"
+        },
+        {
+          "shot": 2,
+          "box_2d": [
+            620,
+            71,
+            673,
+            937
+          ],
+          "label": "CSV export button",
+          "quote": "Export everything to a CSV file to share with your accountant or open in a spreadsheet"
+        }
+      ],
+      "dropped": {
+        "count": 0,
+        "reasons": {}
+      }
+    },
+    "receipt": {
+      "model": "gemini-3.5-flash",
+      "ms": 8454,
+      "promptTokenCount": 4522,
+      "imageTokens": 3234,
+      "candidatesTokenCount": 505,
+      "thoughtsTokenCount": 1102,
+      "attempts": 1,
+      "mediaResolution": "MEDIA_RESOLUTION_HIGH"
+    }
+  },
+  "6806631158": {
+    "tour": {
+      "appId": 6806631158,
+      "name": "Homefolio: Home Inventory",
+      "version": "1.0",
+      "tourKey": "6806631158:1.0:69fdc2d8673c",
+      "shots": [
+        {
+          "url": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/15/e6/ee/15e6eedb-e7be-0165-11f0-e2a576720c18/05-settings.png/600x1300bb.jpg"
+        },
+        {
+          "url": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/7d/57/7f/7d577f67-f053-62ec-0492-345c611aacb4/04-warranty.png/600x1300bb.jpg"
+        },
+        {
+          "url": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/b5/14/0a/b5140a3b-b85a-cc99-9476-846738599eaf/03-report.png/600x1300bb.jpg"
+        },
+        {
+          "url": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/b4/09/58/b4095813-341a-6300-f01d-4e155ba258c0/02-items.png/600x1300bb.jpg"
+        }
+      ],
+      "callouts": [
+        {
+          "shot": 1,
+          "box_2d": [
+            191,
+            32,
+            278,
+            974
+          ],
+          "label": "Warranty Status",
+          "quote": "Record warranty end dates and see what's active, expiring soon, or expired"
+        },
+        {
+          "shot": 1,
+          "box_2d": [
+            341,
+            32,
+            497,
+            974
+          ],
+          "label": "Warranty Reminders",
+          "quote": "Optional local reminders before a warranty runs out"
+        },
+        {
+          "shot": 2,
+          "box_2d": [
+            191,
+            32,
+            548,
+            974
+          ],
+          "label": "Personal Property Inventory",
+          "quote": "Export a Personal Property Inventory PDF: cover summary, room-by-room schedule, and a photo appendix"
+        },
+        {
+          "shot": 2,
+          "box_2d": [
+            552,
+            32,
+            690,
+            974
+          ],
+          "label": "Report Scope",
+          "quote": "Export the whole home, a single room, only high-value items, or a worksheet of what's still missing"
+        },
+        {
+          "shot": 3,
+          "box_2d": [
+            293,
+            335,
+            329,
+            966
+          ],
+          "label": "Missing Details Filters",
+          "quote": "See at a glance how many items still need a photo, a value, or a receipt"
+        },
+        {
+          "shot": 3,
+          "box_2d": [
+            403,
+            32,
+            490,
+            928
+          ],
+          "label": "Item Details",
+          "quote": "Every item can hold photos, a description, brand, model, serial number, quantity, and condition"
+        }
+      ],
+      "dropped": {
+        "count": 2,
+        "reasons": {
+          "removed in review": 2
+        }
+      }
+    },
+    "receipt": {
+      "model": "gemini-3.5-flash",
+      "ms": 12972,
+      "promptTokenCount": 5662,
+      "imageTokens": 4312,
+      "candidatesTokenCount": 653,
+      "thoughtsTokenCount": 1522,
+      "attempts": 1,
+      "mediaResolution": "MEDIA_RESOLUTION_HIGH"
+    }
+  },
+  "6792765641": {
+    "tour": {
+      "appId": 6792765641,
+      "name": "Price Trail: Drop Alerts",
+      "version": "1.3",
+      "tourKey": "6792765641:1.3:a6ee7db8d326",
+      "shots": [
+        {
+          "url": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/d7/c2/34/d7c23418-eb24-451e-670f-1dd242e34540/03-add.png/600x1300bb.jpg"
+        },
+        {
+          "url": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/b8/85/77/b8857745-7904-81b3-f132-003ba7c0ef3e/01-list.png/600x1300bb.jpg"
+        },
+        {
+          "url": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/df/be/cd/dfbecda6-1265-4379-a7ef-18ff547245cf/02-detail.png/600x1300bb.jpg"
+        },
+        {
+          "url": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/f0/5c/70/f05c7090-b5cc-fe75-e1ed-7a00b240fc87/04-settings.png/600x1300bb.jpg"
+        }
+      ],
+      "callouts": [
+        {
+          "shot": 0,
+          "box_2d": [
+            184,
+            44,
+            294,
+            955
+          ],
+          "label": "Product Link Input",
+          "quote": "Paste a link, and the app finds the product's name, photo, and current price automatically"
+        },
+        {
+          "shot": 0,
+          "box_2d": [
+            304,
+            90,
+            336,
+            842
+          ],
+          "label": "Supported Stores Note",
+          "quote": "Paste any product link — Amazon, Walmart, Best Buy, Target, and most other stores — and Price Trail checks the price for you, quietly, in the background"
+        },
+        {
+          "shot": 1,
+          "box_2d": [
+            176,
+            44,
+            566,
+            955
+          ],
+          "label": "Product List",
+          "quote": "Track the same product at multiple stores and see them side by side"
+        },
+        {
+          "shot": 2,
+          "box_2d": [
+            358,
+            44,
+            694,
+            955
+          ],
+          "label": "Price History Chart",
+          "quote": "A clear chart of every store's price over time — 1 month, 3 months, or everything"
+        },
+        {
+          "shot": 2,
+          "box_2d": [
+            757,
+            44,
+            903,
+            955
+          ],
+          "label": "Outlook Section",
+          "quote": "An on-device estimate of where the price is heading, computed from the product's own history"
+        },
+        {
+          "shot": 3,
+          "box_2d": [
+            184,
+            44,
+            294,
+            955
+          ],
+          "label": "Price-drop Alerts Settings",
+          "quote": "Get notified on any price drop, or set a target price and hear only when it's crossed"
+        },
+        {
+          "shot": 3,
+          "box_2d": [
+            598,
+            44,
+            816,
+            955
+          ],
+          "label": "Privacy Settings",
+          "quote": "No accounts, no ads, no analytics, no tracking"
+        }
+      ],
+      "dropped": {
+        "count": 1,
+        "reasons": {
+          "removed in review": 1
+        }
+      }
+    },
+    "receipt": {
+      "model": "gemini-3.5-flash",
+      "ms": 4211,
+      "promptTokenCount": 5441,
+      "imageTokens": 4312,
+      "candidatesTokenCount": 646,
+      "thoughtsTokenCount": 0,
+      "attempts": 1,
+      "mediaResolution": "MEDIA_RESOLUTION_HIGH"
+    }
+  },
+  "6780275076": {
+    "tour": {
+      "appId": 6780275076,
+      "name": "503020: Budget Coach",
+      "version": "1.0.1",
+      "tourKey": "6780275076:1.0.1:08f8e4559e59",
+      "shots": [
+        {
+          "url": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/87/29/c2/8729c249-7001-25fc-a19f-953b8dea5033/01-budget.png/600x1300bb.jpg"
+        },
+        {
+          "url": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/b6/9d/7b/b69d7b03-cae7-4a6d-42c4-f422c448cbdc/03-history.png/600x1300bb.jpg"
+        },
+        {
+          "url": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/ff/18/d1/ff18d150-5a32-ebc3-656e-9c2ec7c74f98/02-coach.png/600x1300bb.jpg"
+        },
+        {
+          "url": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/fc/41/72/fc4172fa-8072-2575-cd59-1caba1ef651e/04-settings.png/600x1300bb.jpg"
+        }
+      ],
+      "callouts": [
+        {
+          "shot": 0,
+          "box_2d": [
+            192,
+            38,
+            419,
+            970
+          ],
+          "label": "Under budget card",
+          "quote": "Instantly see if you're under budget, over budget, or cutting it close — with the exact amount left over or short"
+        },
+        {
+          "shot": 0,
+          "box_2d": [
+            434,
+            38,
+            652,
+            970
+          ],
+          "label": "50/30/20 Guideline card",
+          "quote": "See your spending split into Needs, Wants, and Savings"
+        },
+        {
+          "shot": 1,
+          "box_2d": [
+            192,
+            38,
+            449,
+            970
+          ],
+          "label": "Savings rate trend chart",
+          "quote": "Save a snapshot each month and watch your savings rate trend over time"
+        },
+        {
+          "shot": 1,
+          "box_2d": [
+            464,
+            38,
+            789,
+            970
+          ],
+          "label": "Saved months list",
+          "quote": "Reload any past month to compare or fine-tune"
+        },
+        {
+          "shot": 2,
+          "box_2d": [
+            286,
+            38,
+            810,
+            970
+          ],
+          "label": "Coaching tips",
+          "quote": "Tap \"Coach me\" for 3–5 specific, friendly tips based on your actual numbers"
+        },
+        {
+          "shot": 2,
+          "box_2d": [
+            304,
+            626,
+            330,
+            920
+          ],
+          "label": "On-device AI indicator",
+          "quote": "the coaching is generated right on your iPhone, so nothing is sent to a server"
+        },
+        {
+          "shot": 3,
+          "box_2d": [
+            549,
+            182,
+            574,
+            822
+          ],
+          "label": "Budget stays on device",
+          "quote": "No network connection — your budget never leaves your device"
+        },
+        {
+          "shot": 3,
+          "box_2d": [
+            598,
+            182,
+            626,
+            822
+          ],
+          "label": "No tracking indicator",
+          "quote": "No tracking, no analytics, no ads"
+        }
+      ],
+      "dropped": {
+        "count": 0,
+        "reasons": {}
+      }
+    },
+    "receipt": {
+      "model": "gemini-3.5-flash",
+      "ms": 11515,
+      "promptTokenCount": 5439,
+      "imageTokens": 4312,
+      "candidatesTokenCount": 604,
+      "thoughtsTokenCount": 1617,
+      "attempts": 1,
+      "mediaResolution": "MEDIA_RESOLUTION_HIGH"
+    }
+  },
+  "6772649719": {
+    "tour": {
+      "appId": 6772649719,
+      "name": "Family Medical Refill",
+      "version": "1.1",
+      "tourKey": "6772649719:1.1:9672b1204517",
+      "shots": [
+        {
+          "url": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/8b/e8/87/8be88708-9df0-841a-0284-39c30eac25d9/02-family.png/600x1300bb.jpg"
+        },
+        {
+          "url": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/8f/29/67/8f29674e-b6c3-f90d-a0a5-51595ce0ffe5/03-messages.png/600x1300bb.jpg"
+        },
+        {
+          "url": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/6c/0d/85/6c0d858a-b610-dafd-5e96-170fc58b97af/04-settings.png/600x1300bb.jpg"
+        },
+        {
+          "url": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/9c/cf/08/9ccf08a1-83bc-ebe6-ac0e-744d3f42f21c/01-today.png/600x1300bb.jpg"
+        }
+      ],
+      "callouts": [
+        {
+          "shot": 0,
+          "box_2d": [
+            182,
+            38,
+            275,
+            970
+          ],
+          "label": "Family Member Row",
+          "quote": "Add every family member with a name, color, and avatar"
+        },
+        {
+          "shot": 1,
+          "box_2d": [
+            777,
+            38,
+            830,
+            498
+          ],
+          "label": "Write with AI Button",
+          "quote": "Draft polite, short messages to doctors, pharmacies, and insurance"
+        },
+        {
+          "shot": 1,
+          "box_2d": [
+            777,
+            509,
+            830,
+            969
+          ],
+          "label": "Template Button",
+          "quote": "Falls back to clean templates if Apple Intelligence isn't enabled"
+        },
+        {
+          "shot": 2,
+          "box_2d": [
+            333,
+            45,
+            455,
+            954
+          ],
+          "label": "Apple Intelligence Status",
+          "quote": "AI runs on your device using Apple Intelligence"
+        },
+        {
+          "shot": 2,
+          "box_2d": [
+            514,
+            45,
+            623,
+            954
+          ],
+          "label": "Privacy Section",
+          "quote": "Every name, medication, and appointment stays on your iPhone"
+        },
+        {
+          "shot": 3,
+          "box_2d": [
+            284,
+            38,
+            394,
+            970
+          ],
+          "label": "Overdue Medication Card",
+          "quote": "Watch refill dates with clear urgency — overdue, refill now, this week, planned"
+        },
+        {
+          "shot": 3,
+          "box_2d": [
+            436,
+            38,
+            547,
+            970
+          ],
+          "label": "Today Appointment Card",
+          "quote": "Log appointments: doctor visits, lab work, insurance calls, pharmacy pickups, injection days"
+        },
+        {
+          "shot": 3,
+          "box_2d": [
+            916,
+            48,
+            973,
+            294
+          ],
+          "label": "Today Tab",
+          "quote": "See everything coming up across the whole family in one scroll"
+        }
+      ],
+      "dropped": {
+        "count": 1,
+        "reasons": {
+          "removed in review": 1
+        }
+      }
+    },
+    "receipt": {
+      "model": "gemini-3.5-flash",
+      "ms": 8089,
+      "promptTokenCount": 5480,
+      "imageTokens": 4312,
+      "candidatesTokenCount": 698,
+      "thoughtsTokenCount": 0,
+      "attempts": 1,
+      "mediaResolution": "MEDIA_RESOLUTION_HIGH"
+    }
+  },
+  "6772803398": {
+    "tour": {
+      "appId": 6772803398,
+      "name": "Three in a Row Duel",
+      "version": "2.1",
+      "tourKey": "6772803398:2.1:0d3006ee8c4f",
+      "shots": [
+        {
+          "url": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/74/df/75/74df75aa-97f6-419a-2326-1d335420a190/01-play.png/600x1300bb.jpg"
+        },
+        {
+          "url": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/6a/fb/c8/6afbc8b3-1b9d-3ced-289a-e6e58eaba3d8/02-leaderboard.png/600x1300bb.jpg"
+        },
+        {
+          "url": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/5c/81/61/5c816152-1c92-7ee8-5965-884fd0a8750f/03-players.png/600x1300bb.jpg"
+        }
+      ],
+      "callouts": [
+        {
+          "shot": 0,
+          "box_2d": [
+            163,
+            44,
+            228,
+            954
+          ],
+          "label": "Game Mode Selection",
+          "quote": "vs Computer — pick a difficulty and see how you stack up"
+        },
+        {
+          "shot": 0,
+          "box_2d": [
+            456,
+            44,
+            667,
+            954
+          ],
+          "label": "Computer Difficulties",
+          "quote": "Easy — plays at random, perfect for younger kids"
+        },
+        {
+          "shot": 1,
+          "box_2d": [
+            176,
+            44,
+            230,
+            954
+          ],
+          "label": "Include Computer Toggle",
+          "quote": "See who's actually the household champion"
+        },
+        {
+          "shot": 1,
+          "box_2d": [
+            290,
+            44,
+            442,
+            954
+          ],
+          "label": "Leaderboard Standings",
+          "quote": "Track wins, losses, draws, total games, and win rate per player"
+        },
+        {
+          "shot": 2,
+          "box_2d": [
+            218,
+            44,
+            358,
+            954
+          ],
+          "label": "People List",
+          "quote": "Add a real name for each person who plays"
+        }
+      ],
+      "dropped": {
+        "count": 1,
+        "reasons": {
+          "removed in review": 1
+        }
+      }
+    },
+    "receipt": {
+      "model": "gemini-3.5-flash",
+      "ms": 11964,
+      "promptTokenCount": 4303,
+      "imageTokens": 3234,
+      "candidatesTokenCount": 470,
+      "thoughtsTokenCount": 1695,
+      "attempts": 1,
+      "mediaResolution": "MEDIA_RESOLUTION_HIGH"
+    }
+  },
+  "6773937059": {
+    "tour": {
+      "appId": 6773937059,
+      "name": "LCD Classic Snake",
+      "version": "1.2",
+      "tourKey": "6773937059:1.2:27265d913876",
+      "shots": [
+        {
+          "url": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/00/71/9a/00719a8e-9b79-5385-9823-5a423431c9bd/01-play.png/600x1300bb.jpg"
+        },
+        {
+          "url": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/42/d8/b1/42d8b113-2ddf-4657-9bcf-3ac9b3f00c46/02-leaderboard.png/600x1300bb.jpg"
+        },
+        {
+          "url": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/93/8e/09/938e09e4-57ba-f689-6fa2-a42fdeb6f1f3/03-players.png/600x1300bb.jpg"
+        }
+      ],
+      "callouts": [
+        {
+          "shot": 0,
+          "box_2d": [
+            387,
+            88,
+            430,
+            911
+          ],
+          "label": "Difficulty Selection",
+          "quote": "Medium — classic arcade speed, 20 points per food"
+        },
+        {
+          "shot": 0,
+          "box_2d": [
+            469,
+            91,
+            487,
+            908
+          ],
+          "label": "Personal Best",
+          "quote": "See your personal best on the Play tab before every game"
+        },
+        {
+          "shot": 1,
+          "box_2d": [
+            205,
+            40,
+            415,
+            960
+          ],
+          "label": "High Scores List",
+          "quote": "Top 10 scores tracked per difficulty"
+        },
+        {
+          "shot": 2,
+          "box_2d": [
+            156,
+            40,
+            208,
+            968
+          ],
+          "label": "Add Player",
+          "quote": "Add a real name for each person who plays"
+        },
+        {
+          "shot": 2,
+          "box_2d": [
+            224,
+            40,
+            655,
+            960
+          ],
+          "label": "Player Stats",
+          "quote": "Per-player totals: games played and cumulative score"
+        }
+      ],
+      "dropped": {
+        "count": 1,
+        "reasons": {
+          "removed in review": 1
+        }
+      }
+    },
+    "receipt": {
+      "model": "gemini-3.5-flash",
+      "ms": 23012,
+      "promptTokenCount": 4355,
+      "imageTokens": 3234,
+      "candidatesTokenCount": 460,
+      "thoughtsTokenCount": 1366,
+      "attempts": 1,
+      "mediaResolution": "MEDIA_RESOLUTION_HIGH"
+    }
+  },
+  "6796511772": {
+    "tour": {
+      "appId": 6796511772,
+      "name": "VietFix English",
+      "version": "1.1",
+      "tourKey": "6796511772:1.1:a3bfdeedd414",
+      "shots": [
+        {
+          "url": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/1d/c7/65/1dc76515-d1de-bfd2-eee9-4fea86e8ec3e/01-vocab.png/600x1300bb.jpg"
+        },
+        {
+          "url": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/e5/89/5a/e5895a14-8c9c-e6de-85f2-3886a5409e80/05-practice.png/600x1300bb.jpg"
+        },
+        {
+          "url": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/06/54/32/06543227-7d45-df44-cb9a-dee64d657b0e/02-grammar.png/600x1300bb.jpg"
+        },
+        {
+          "url": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/42/9b/9b/429b9b61-4fe3-2c57-a004-90e75189ab26/04-mistakes.png/600x1300bb.jpg"
+        }
+      ],
+      "callouts": [
+        {
+          "shot": 0,
+          "box_2d": [
+            223,
+            44,
+            911,
+            955
+          ],
+          "label": "Vocabulary Topics List",
+          "quote": "Practical topics: greetings, family, food, work, shopping, health, travel, study, numbers and prices, time and dates, asking for help"
+        },
+        {
+          "shot": 1,
+          "box_2d": [
+            181,
+            46,
+            283,
+            953
+          ],
+          "label": "Mixed Practice Card",
+          "quote": "Fill-in-the-blank quizzes with an explanation for every question"
+        },
+        {
+          "shot": 2,
+          "box_2d": [
+            223,
+            46,
+            829,
+            953
+          ],
+          "label": "Grammar Topics List",
+          "quote": "12 topics, beginner to intermediate"
+        },
+        {
+          "shot": 2,
+          "box_2d": [
+            913,
+            231,
+            978,
+            421
+          ],
+          "label": "Grammar Tab",
+          "quote": "GRAMMAR EXPLAINED IN VIETNAMESE"
+        },
+        {
+          "shot": 3,
+          "box_2d": [
+            336,
+            46,
+            911,
+            953
+          ],
+          "label": "Common Mistakes List",
+          "quote": "60 mistakes Vietnamese speakers really make, grouped: verb tenses, missing articles, plurals, word-for-word translation, prepositions, confusing word pairs, final sounds"
+        },
+        {
+          "shot": 3,
+          "box_2d": [
+            913,
+            577,
+            978,
+            769
+          ],
+          "label": "Common Mistakes Tab",
+          "quote": "COMMON MISTAKES — THE HEART OF THE APP"
+        }
+      ],
+      "dropped": {
+        "count": 2,
+        "reasons": {
+          "quote too short": 2
+        }
+      }
+    },
+    "receipt": {
+      "model": "gemini-3.5-flash",
+      "ms": 5488,
+      "promptTokenCount": 5946,
+      "imageTokens": 4312,
+      "candidatesTokenCount": 592,
+      "thoughtsTokenCount": 0,
+      "attempts": 1,
+      "mediaResolution": "MEDIA_RESOLUTION_HIGH"
+    }
+  },
+  "6782706983": {
+    "tour": {
+      "appId": 6782706983,
+      "name": "Cosmic Cadets",
+      "version": "1.1",
+      "tourKey": "6782706983:1.1:d22a198ee275",
+      "shots": [
+        {
+          "url": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/b3/0a/8a/b30a8af7-8ae1-34c7-9dc0-ec27969fe9e0/02-mission.png/600x1300bb.jpg"
+        },
+        {
+          "url": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/b6/bc/d4/b6bcd4a8-2379-8c4c-c247-413c1015a232/04-cadets.png/600x1300bb.jpg"
+        },
+        {
+          "url": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/3d/21/48/3d2148d6-8fa3-40d3-2643-76b41ccf93c3/03-collection.png/600x1300bb.jpg"
+        },
+        {
+          "url": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/a9/54/fb/a954fba0-0ad6-faa3-c33f-4a9e417e466a/01-adventure.png/600x1300bb.jpg"
+        }
+      ],
+      "callouts": [
+        {
+          "shot": 0,
+          "box_2d": [
+            278,
+            44,
+            595,
+            956
+          ],
+          "label": "Math Problem Card",
+          "quote": "Younger cadets count colorful space objects; older cadets work with the numbers themselves"
+        },
+        {
+          "shot": 0,
+          "box_2d": [
+            757,
+            44,
+            847,
+            486
+          ],
+          "label": "Pick an Answer",
+          "quote": "Friendly retries — a wrong answer never scolds; your cadet just tries again"
+        },
+        {
+          "shot": 1,
+          "box_2d": [
+            146,
+            44,
+            234,
+            956
+          ],
+          "label": "Cadet Profile Row",
+          "quote": "Set up several kid profiles on one device, each with its own progress"
+        },
+        {
+          "shot": 2,
+          "box_2d": [
+            196,
+            670,
+            336,
+            958
+          ],
+          "label": "Unlocked Rocket",
+          "quote": "Earn stars to unlock rocket ships and cute alien companions"
+        },
+        {
+          "shot": 3,
+          "box_2d": [
+            160,
+            406,
+            250,
+            594
+          ],
+          "label": "Twin Suns Level Node",
+          "quote": "Journey across a star map of 15 hand-crafted levels"
+        },
+        {
+          "shot": 3,
+          "box_2d": [
+            488,
+            380,
+            603,
+            620
+          ],
+          "label": "Star Gate II Level Node",
+          "quote": "Solve them to fly your rocket across the screen and earn up to 3 stars"
+        }
+      ],
+      "dropped": {
+        "count": 2,
+        "reasons": {
+          "duplicate": 2
+        }
+      }
+    },
+    "receipt": {
+      "model": "gemini-3.5-flash",
+      "ms": 6447,
+      "promptTokenCount": 5482,
+      "imageTokens": 4312,
+      "candidatesTokenCount": 589,
+      "thoughtsTokenCount": 0,
+      "attempts": 1,
+      "mediaResolution": "MEDIA_RESOLUTION_HIGH"
+    }
+  },
+  "6801322941": {
+    "tour": {
+      "appId": 6801322941,
+      "name": "Toehold: Sudoku Explained",
+      "version": "1.0",
+      "tourKey": "6801322941:1.0:42261212fd70",
+      "shots": [
+        {
+          "url": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/21/1c/00/211c000d-8f1e-34da-91cf-fbfce61a2851/01-reading.png/600x1300bb.jpg"
+        },
+        {
+          "url": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/37/af/0c/37af0c56-c931-10d0-0b07-9799cf13152e/02-technique.png/600x1300bb.jpg"
+        },
+        {
+          "url": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/bc/7a/c4/bc7ac43d-311c-6d36-37ab-846b132ec894/03-notes.png/600x1300bb.jpg"
+        },
+        {
+          "url": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/fa/d2/a8/fad2a8f9-05c7-9e14-d7c7-5e6c773e4da3/05-gentle.png/600x1300bb.jpg"
+        }
+      ],
+      "callouts": [
+        {
+          "shot": 0,
+          "box_2d": [
+            672,
+            751,
+            704,
+            969
+          ],
+          "label": "Fill Notes Button",
+          "quote": "Fill all candidates in one tap, or place them yourself"
+        },
+        {
+          "shot": 0,
+          "box_2d": [
+            718,
+            32,
+            931,
+            970
+          ],
+          "label": "Technique Inventory Panel",
+          "quote": "A panel sits beside your board and keeps a live inventory of the techniques that are available right now"
+        },
+        {
+          "shot": 1,
+          "box_2d": [
+            739,
+            32,
+            910,
+            970
+          ],
+          "label": "Technique Explanation Panel",
+          "quote": "Tap a technique and it shows you the cells that make it true, and one plain sentence explaining why"
+        },
+        {
+          "shot": 2,
+          "box_2d": [
+            155,
+            29,
+            588,
+            970
+          ],
+          "label": "Sudoku Grid with Pencil Marks",
+          "quote": "Pencil marks in a fixed 3x3 lattice, so a digit is always in the same spot"
+        },
+        {
+          "shot": 2,
+          "box_2d": [
+            600,
+            32,
+            663,
+            968
+          ],
+          "label": "Digit Keyboard",
+          "quote": "Every key shows how many of that digit are left"
+        },
+        {
+          "shot": 3,
+          "box_2d": [
+            798,
+            509,
+            831,
+            935
+          ],
+          "label": "Hidden Single Technique",
+          "quote": "Gentle needs only singles"
+        }
+      ],
+      "dropped": {
+        "count": 2,
+        "reasons": {
+          "removed in review": 2
+        }
+      }
+    },
+    "receipt": {
+      "model": "gemini-3.5-flash",
+      "ms": 9987,
+      "promptTokenCount": 5519,
+      "imageTokens": 4312,
+      "candidatesTokenCount": 591,
+      "thoughtsTokenCount": 0,
+      "attempts": 1,
+      "mediaResolution": "MEDIA_RESOLUTION_HIGH"
+    }
+  }
+}
