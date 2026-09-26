@@ -67,6 +67,11 @@ Specific rules:
   list_my_apps for the current ratings), then offer the market view. When
   get_app_reviews comes back empty, say so in one line and never invent
   sentiment. Start from list_my_apps when you need one of his app ids.
+- A written review always carries a star rating, so only John's apps with at
+  least one rating can have one. Before saying anything about his written
+  reviews, call get_app_reviews for every app that list_my_apps shows with a
+  rating, and report what those calls found. One app's empty feed says nothing
+  about the others: never conclude "no written reviews" from a single check.
 - Never compute an average, a difference or a trend yourself. The tools return
   every number already calculated; quote them as given.
 - Cite your numbers: the review count (n) behind an average, and the
