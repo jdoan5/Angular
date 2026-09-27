@@ -1,6 +1,6 @@
 {
   "totals": {
-    "reviews_collected": 7956,
+    "reviews_collected": 8059,
     "overall_avg_rating": 3.95,
     "apps_tracked": 6
   },
@@ -15,11 +15,11 @@
     },
     {
       "app_name": "Habit Tracker",
-      "reviews_collected": 996,
+      "reviews_collected": 999,
       "avg_rating": 4.18,
       "versions_seen": 203,
       "oldest_review_at": "2019-01-29T10:35:04.000Z",
-      "newest_review_at": "2026-09-24T05:52:04.000Z"
+      "newest_review_at": "2026-09-25T18:30:09.000Z"
     },
     {
       "app_name": "Atoms - from Atomic Habits",
@@ -47,11 +47,11 @@
     },
     {
       "app_name": "Duolingo (high-volume control)",
-      "reviews_collected": 3673,
+      "reviews_collected": 3773,
       "avg_rating": 3.79,
       "versions_seen": 264,
       "oldest_review_at": "2017-09-10T02:37:43.000Z",
-      "newest_review_at": "2026-09-25T07:30:05.000Z"
+      "newest_review_at": "2026-09-26T03:51:47.000Z"
     }
   ],
   "rating_by_version": [
@@ -61,6 +61,20 @@
       "n_reviews": 20,
       "avg_rating": 3.5,
       "first_review_at": "2026-03-22T14:20:49.000Z"
+    },
+    {
+      "app_name": "Duolingo (high-volume control)",
+      "app_version": "7.141.0",
+      "n_reviews": 185,
+      "avg_rating": 4.04,
+      "first_review_at": "2026-09-22T15:26:06.000Z"
+    },
+    {
+      "app_name": "Duolingo (high-volume control)",
+      "app_version": "7.141.1",
+      "n_reviews": 402,
+      "avg_rating": 4.03,
+      "first_review_at": "2026-09-23T13:50:23.000Z"
     },
     {
       "app_name": "Finch: Self-Care Pet",
@@ -140,6 +154,13 @@
       "first_review_at": "2026-09-04T19:58:28.000Z"
     },
     {
+      "app_name": "Finch: Self-Care Pet",
+      "app_version": "3.73.206",
+      "n_reviews": 93,
+      "avg_rating": 4.62,
+      "first_review_at": "2026-09-17T02:11:39.000Z"
+    },
+    {
       "app_name": "Duolingo (high-volume control)",
       "app_version": "7.135.2",
       "n_reviews": 115,
@@ -189,6 +210,13 @@
       "first_review_at": "2023-01-16T17:22:50.000Z"
     },
     {
+      "app_name": "Duolingo (high-volume control)",
+      "app_version": "7.140.0",
+      "n_reviews": 306,
+      "avg_rating": 3.83,
+      "first_review_at": "2026-09-20T20:10:57.000Z"
+    },
+    {
       "app_name": "Finch: Self-Care Pet",
       "app_version": "3.73.205",
       "n_reviews": 111,
@@ -229,6 +257,13 @@
       "n_reviews": 28,
       "avg_rating": 2.82,
       "first_review_at": "2023-01-15T16:44:34.000Z"
+    },
+    {
+      "app_name": "Finch: Self-Care Pet",
+      "app_version": "3.73.208",
+      "n_reviews": 34,
+      "avg_rating": 4.47,
+      "first_review_at": "2026-09-22T14:33:48.000Z"
     },
     {
       "app_name": "Finch: Self-Care Pet",
@@ -310,8 +345,8 @@
     {
       "app_name": "Habit Tracker",
       "app_version": "2.14.23",
-      "n_reviews": 47,
-      "avg_rating": 4.02,
+      "n_reviews": 50,
+      "avg_rating": 4.06,
       "first_review_at": "2026-08-17T14:26:03.000Z"
     },
     {
@@ -348,41 +383,6 @@
       "n_reviews": 31,
       "avg_rating": 3.97,
       "first_review_at": "2026-05-21T11:37:25.000Z"
-    },
-    {
-      "app_name": "Duolingo (high-volume control)",
-      "app_version": "7.141.0",
-      "n_reviews": 185,
-      "avg_rating": 4.04,
-      "first_review_at": "2026-09-22T15:26:06.000Z"
-    },
-    {
-      "app_name": "Duolingo (high-volume control)",
-      "app_version": "7.141.1",
-      "n_reviews": 303,
-      "avg_rating": 4.09,
-      "first_review_at": "2026-09-23T13:50:23.000Z"
-    },
-    {
-      "app_name": "Finch: Self-Care Pet",
-      "app_version": "3.73.206",
-      "n_reviews": 93,
-      "avg_rating": 4.62,
-      "first_review_at": "2026-09-17T02:11:39.000Z"
-    },
-    {
-      "app_name": "Duolingo (high-volume control)",
-      "app_version": "7.140.0",
-      "n_reviews": 306,
-      "avg_rating": 3.83,
-      "first_review_at": "2026-09-20T20:10:57.000Z"
-    },
-    {
-      "app_name": "Finch: Self-Care Pet",
-      "app_version": "3.73.208",
-      "n_reviews": 34,
-      "avg_rating": 4.47,
-      "first_review_at": "2026-09-22T14:33:48.000Z"
     }
   ],
   "weekly_velocity": [
@@ -1283,6 +1283,20 @@
       "is_partial_week": false
     },
     {
+      "app_name": "Habit Tracker",
+      "week": "2026-09-14T00:00:00.000Z",
+      "n_reviews": 5,
+      "avg_rating": 4.6,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "Finch: Self-Care Pet",
+      "week": "2026-09-21T00:00:00.000Z",
+      "n_reviews": 68,
+      "avg_rating": 4.5,
+      "is_partial_week": true
+    },
+    {
       "app_name": "Finch: Self-Care Pet",
       "week": "2026-08-31T00:00:00.000Z",
       "n_reviews": 147,
@@ -1610,6 +1624,13 @@
       "n_reviews": 1,
       "avg_rating": 2.0,
       "is_partial_week": false
+    },
+    {
+      "app_name": "Duolingo (high-volume control)",
+      "week": "2026-09-21T00:00:00.000Z",
+      "n_reviews": 862,
+      "avg_rating": 3.96,
+      "is_partial_week": true
     },
     {
       "app_name": "Duolingo (high-volume control)",
@@ -2302,6 +2323,13 @@
       "week": "2022-11-28T00:00:00.000Z",
       "n_reviews": 1,
       "avg_rating": 3.0,
+      "is_partial_week": false
+    },
+    {
+      "app_name": "Duolingo (high-volume control)",
+      "week": "2026-09-14T00:00:00.000Z",
+      "n_reviews": 36,
+      "avg_rating": 4.19,
       "is_partial_week": false
     },
     {
@@ -3243,6 +3271,13 @@
       "is_partial_week": false
     },
     {
+      "app_name": "Atoms - from Atomic Habits",
+      "week": "2026-09-14T00:00:00.000Z",
+      "n_reviews": 1,
+      "avg_rating": 2.0,
+      "is_partial_week": false
+    },
+    {
       "app_name": "Productive - Habit Tracker",
       "week": "2023-09-04T00:00:00.000Z",
       "n_reviews": 7,
@@ -3425,41 +3460,6 @@
       "is_partial_week": false
     },
     {
-      "app_name": "Habit Tracker",
-      "week": "2026-09-14T00:00:00.000Z",
-      "n_reviews": 5,
-      "avg_rating": 4.6,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "Finch: Self-Care Pet",
-      "week": "2026-09-21T00:00:00.000Z",
-      "n_reviews": 68,
-      "avg_rating": 4.5,
-      "is_partial_week": true
-    },
-    {
-      "app_name": "Duolingo (high-volume control)",
-      "week": "2026-09-21T00:00:00.000Z",
-      "n_reviews": 762,
-      "avg_rating": 3.97,
-      "is_partial_week": true
-    },
-    {
-      "app_name": "Duolingo (high-volume control)",
-      "week": "2026-09-14T00:00:00.000Z",
-      "n_reviews": 36,
-      "avg_rating": 4.19,
-      "is_partial_week": false
-    },
-    {
-      "app_name": "Atoms - from Atomic Habits",
-      "week": "2026-09-14T00:00:00.000Z",
-      "n_reviews": 1,
-      "avg_rating": 2.0,
-      "is_partial_week": false
-    },
-    {
       "app_name": "Finch: Self-Care Pet",
       "week": "2026-09-14T00:00:00.000Z",
       "n_reviews": 116,
@@ -3469,8 +3469,8 @@
     {
       "app_name": "Habit Tracker",
       "week": "2026-09-21T00:00:00.000Z",
-      "n_reviews": 6,
-      "avg_rating": 4.33,
+      "n_reviews": 9,
+      "avg_rating": 4.44,
       "is_partial_week": true
     },
     {
@@ -3488,5 +3488,5 @@
       "is_partial_week": false
     }
   ],
-  "generated_at": "2026-09-26T17:21:14Z"
+  "generated_at": "2026-09-27T17:53:57Z"
 }
