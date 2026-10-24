@@ -408,13 +408,17 @@ export function validateTour(raw, { n, description } = {}) {
 // https mzstatic URL is dropped rather than handed to an <img>.
 const ARTWORK_URL = /^https:\/\/is\d-ssl\.mzstatic\.com\/image\/thumb\/[^?#\\@]+$/;
 
-/** Every app the tour can show, in catalog order: not hidden, with at least
- *  MIN_SHOTS valid screenshots and a description to quote from. */
+/** Every app the tour can show, in catalog order: an iOS app, not hidden,
+ *  with at least MIN_SHOTS valid screenshots and a description to quote from. */
 async function tourEntries() {
   const entries = [];
   for (const r of await loadCatalog()) {
     const appId = r?.trackId;
     if (!Number.isSafeInteger(appId) || isHidden(appId)) continue;
+    // iOS apps only: the tour frames every screenshot as a phone. Stderr
+    // (2026-10-01, kind 'mac-software') lists landscape Mac windows under
+    // screenshotUrls, which came back 600x375 inside a 600x1300 phone frame.
+    if (r.kind !== undefined && r.kind !== 'software') continue;
     const shots = selectShots(r);
     const description = String(r.description ?? '').slice(0, MAX_DESCRIPTION_CHARS);
     const name = String(r.trackName ?? '');

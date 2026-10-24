@@ -1,4 +1,227 @@
 {
+  "6775637573": {
+    "tour": {
+      "appId": 6775637573,
+      "name": "Learn English: Pronunciation",
+      "version": "2.5.0",
+      "tourKey": "6775637573:2.5.0:a90cc77f63fc",
+      "shots": [
+        {
+          "url": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/c9/8d/e5/c98de52f-d84c-bb3e-7826-9af87f0b0441/01-learn.png/600x1300bb.jpg"
+        },
+        {
+          "url": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/7d/39/d7/7d39d7fb-d5e9-804d-f951-32b002330736/03-favorites.png/600x1300bb.jpg"
+        },
+        {
+          "url": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/cf/02/54/cf025476-ddd4-4f17-e4c5-539210067271/04-settings.png/600x1300bb.jpg"
+        },
+        {
+          "url": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/54/4a/04/544a0406-d066-fe1e-4a11-5730d5e90a48/02-practice.png/600x1300bb.jpg"
+        }
+      ],
+      "callouts": [
+        {
+          "shot": 0,
+          "box_2d": [
+            427,
+            153,
+            567,
+            498
+          ],
+          "label": "Alphabet Lesson Card",
+          "quote": "Alphabet, Numbers, Colors, Animals, Food & Drink, Family"
+        },
+        {
+          "shot": 1,
+          "box_2d": [
+            342,
+            153,
+            373,
+            854
+          ],
+          "label": "Favorites Header",
+          "quote": "Save any word to Favorites and come back to it"
+        },
+        {
+          "shot": 1,
+          "box_2d": [
+            386,
+            153,
+            452,
+            854
+          ],
+          "label": "Apple Word Card",
+          "quote": "IPA phonetic notation on all 361 words"
+        },
+        {
+          "shot": 2,
+          "box_2d": [
+            342,
+            153,
+            533,
+            854
+          ],
+          "label": "Voice Selection Panel",
+          "quote": "switch between American, British, Australian and Indian English voices in Settings"
+        },
+        {
+          "shot": 2,
+          "box_2d": [
+            541,
+            153,
+            676,
+            854
+          ],
+          "label": "Speech Speed Panel",
+          "quote": "you can slow the speech right down when a word is hard"
+        },
+        {
+          "shot": 3,
+          "box_2d": [
+            427,
+            153,
+            501,
+            854
+          ],
+          "label": "Mixed Quiz Card",
+          "quote": "Listening quiz — hear a word, pick it from four"
+        }
+      ],
+      "dropped": {
+        "count": 2,
+        "reasons": {
+          "duplicate": 2
+        }
+      }
+    },
+    "receipt": {
+      "model": "gemini-3.5-flash",
+      "ms": 4374,
+      "promptTokenCount": 5658,
+      "imageTokens": 4312,
+      "candidatesTokenCount": 568,
+      "thoughtsTokenCount": 0,
+      "attempts": 1,
+      "mediaResolution": "MEDIA_RESOLUTION_HIGH"
+    }
+  },
+  "6792765641": {
+    "tour": {
+      "appId": 6792765641,
+      "name": "Price Trail: Drop Alerts",
+      "version": "1.3",
+      "tourKey": "6792765641:1.3:a6ee7db8d326",
+      "shots": [
+        {
+          "url": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/d7/c2/34/d7c23418-eb24-451e-670f-1dd242e34540/03-add.png/600x1300bb.jpg"
+        },
+        {
+          "url": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/b8/85/77/b8857745-7904-81b3-f132-003ba7c0ef3e/01-list.png/600x1300bb.jpg"
+        },
+        {
+          "url": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/df/be/cd/dfbecda6-1265-4379-a7ef-18ff547245cf/02-detail.png/600x1300bb.jpg"
+        },
+        {
+          "url": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/f0/5c/70/f05c7090-b5cc-fe75-e1ed-7a00b240fc87/04-settings.png/600x1300bb.jpg"
+        }
+      ],
+      "callouts": [
+        {
+          "shot": 0,
+          "box_2d": [
+            184,
+            44,
+            294,
+            955
+          ],
+          "label": "Product Link Input",
+          "quote": "Paste a link, and the app finds the product's name, photo, and current price automatically"
+        },
+        {
+          "shot": 0,
+          "box_2d": [
+            304,
+            90,
+            336,
+            842
+          ],
+          "label": "Supported Stores Note",
+          "quote": "Paste any product link — Amazon, Walmart, Best Buy, Target, and most other stores — and Price Trail checks the price for you, quietly, in the background"
+        },
+        {
+          "shot": 1,
+          "box_2d": [
+            176,
+            44,
+            566,
+            955
+          ],
+          "label": "Product List",
+          "quote": "Track the same product at multiple stores and see them side by side"
+        },
+        {
+          "shot": 2,
+          "box_2d": [
+            358,
+            44,
+            694,
+            955
+          ],
+          "label": "Price History Chart",
+          "quote": "A clear chart of every store's price over time — 1 month, 3 months, or everything"
+        },
+        {
+          "shot": 2,
+          "box_2d": [
+            757,
+            44,
+            903,
+            955
+          ],
+          "label": "Outlook Section",
+          "quote": "An on-device estimate of where the price is heading, computed from the product's own history"
+        },
+        {
+          "shot": 3,
+          "box_2d": [
+            184,
+            44,
+            294,
+            955
+          ],
+          "label": "Price-drop Alerts Settings",
+          "quote": "Get notified on any price drop, or set a target price and hear only when it's crossed"
+        },
+        {
+          "shot": 3,
+          "box_2d": [
+            598,
+            44,
+            816,
+            955
+          ],
+          "label": "Privacy Settings",
+          "quote": "No accounts, no ads, no analytics, no tracking"
+        }
+      ],
+      "dropped": {
+        "count": 1,
+        "reasons": {
+          "removed in review": 1
+        }
+      }
+    },
+    "receipt": {
+      "model": "gemini-3.5-flash",
+      "ms": 4211,
+      "promptTokenCount": 5441,
+      "imageTokens": 4312,
+      "candidatesTokenCount": 646,
+      "thoughtsTokenCount": 0,
+      "attempts": 1,
+      "mediaResolution": "MEDIA_RESOLUTION_HIGH"
+    }
+  },
   "6778971932": {
     "tour": {
       "appId": 6778971932,
@@ -147,107 +370,6 @@
       "mediaResolution": "MEDIA_RESOLUTION_HIGH"
     }
   },
-  "6775637573": {
-    "tour": {
-      "appId": 6775637573,
-      "name": "Learn English: Pronunciation",
-      "version": "2.4.0",
-      "tourKey": "6775637573:2.4.0:425b3b0013bd",
-      "shots": [
-        {
-          "url": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/4e/1e/38/4e1e38a9-049f-423b-60b0-5ab789e4d8d5/06-grammar-detail.png/600x1300bb.jpg"
-        },
-        {
-          "url": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/44/3c/e6/443ce6ca-646d-656f-a6ad-f9230b7a7a2f/05-grammar.png/600x1300bb.jpg"
-        },
-        {
-          "url": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/58/45/c7/5845c753-e101-930f-b44a-5a137fef15bb/07-cloze.png/600x1300bb.jpg"
-        }
-      ],
-      "callouts": [
-        {
-          "shot": 0,
-          "box_2d": [
-            369,
-            153,
-            488,
-            855
-          ],
-          "label": "Grammar Rule Card",
-          "quote": "A short rule, seven real examples, and fill-in-the-blank practice for each one"
-        },
-        {
-          "shot": 0,
-          "box_2d": [
-            522,
-            153,
-            577,
-            855
-          ],
-          "label": "Example Sentence",
-          "quote": "A real example sentence you can hear"
-        },
-        {
-          "shot": 1,
-          "box_2d": [
-            453,
-            153,
-            577,
-            498
-          ],
-          "label": "Articles, first of 30 grammar topics",
-          "quote": "Articles through to second conditionals and relative clauses — 210 examples and 104 drills"
-        },
-        {
-          "shot": 1,
-          "box_2d": [
-            582,
-            153,
-            706,
-            498
-          ],
-          "label": "Subject Pronouns Topic",
-          "quote": "A short rule, seven real examples, and fill-in-the-blank practice for each one"
-        },
-        {
-          "shot": 2,
-          "box_2d": [
-            326,
-            153,
-            399,
-            846
-          ],
-          "label": "Mixed-topic grammar drill",
-          "quote": "Grammar drills — tap or type, across every topic"
-        },
-        {
-          "shot": 2,
-          "box_2d": [
-            409,
-            153,
-            506,
-            846
-          ],
-          "label": "Multiple Choice Options",
-          "quote": "Answer by tapping a choice or by typing it, whichever you find harder"
-        }
-      ],
-      "dropped": {
-        "count": 0,
-        "reasons": {}
-      }
-    },
-    "receipt": {
-      "model": "gemini-3.5-flash",
-      "ms": 4052,
-      "promptTokenCount": 4573,
-      "imageTokens": 3234,
-      "candidatesTokenCount": 508,
-      "thoughtsTokenCount": 0,
-      "attempts": 1,
-      "mediaResolution": "MEDIA_RESOLUTION_HIGH"
-    }
-  },
   "6776318136": {
     "tour": {
       "appId": 6776318136,
@@ -354,443 +476,97 @@
       "mediaResolution": "MEDIA_RESOLUTION_HIGH"
     }
   },
-  "6776927520": {
+  "6811386431": {
     "tour": {
-      "appId": 6776927520,
-      "name": "Job Trail Applications",
-      "version": "1.6",
-      "tourKey": "6776927520:1.6:cb9f83d25bce",
-      "shots": [
-        {
-          "url": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/58/d9/be/58d9be19-889f-d8bf-cce1-cd3dc0c4194c/02-detail.png/600x1300bb.jpg"
-        },
-        {
-          "url": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/01/62/e8/0162e83b-fbb0-5d38-e871-169ea6affc25/03-add.png/600x1300bb.jpg"
-        },
-        {
-          "url": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/76/ea/bc/76eabc64-d72f-c3b3-1a82-14b7d42b70db/01-list.png/600x1300bb.jpg"
-        },
-        {
-          "url": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/12/cd/d8/12cdd8f4-e2d5-26db-b113-444377fa5ab9/04-filter.png/600x1300bb.jpg"
-        }
-      ],
-      "callouts": [
-        {
-          "shot": 0,
-          "box_2d": [
-            425,
-            45,
-            642,
-            954
-          ],
-          "label": "Application details",
-          "quote": "See how long ago you applied to each role"
-        },
-        {
-          "shot": 0,
-          "box_2d": [
-            701,
-            45,
-            801,
-            954
-          ],
-          "label": "Notes section",
-          "quote": "Notes for recruiters, salary ranges, and next steps"
-        },
-        {
-          "shot": 1,
-          "box_2d": [
-            184,
-            45,
-            349,
-            954
-          ],
-          "label": "Job details input",
-          "quote": "Log every application: company, role, location, date applied, and the posting URL"
-        },
-        {
-          "shot": 1,
-          "box_2d": [
-            705,
-            45,
-            803,
-            954
-          ],
-          "label": "Notes input",
-          "quote": "Notes for recruiters, salary ranges, and next steps"
-        },
-        {
-          "shot": 2,
-          "box_2d": [
-            189,
-            82,
-            219,
-            954
-          ],
-          "label": "Status filters",
-          "quote": "Color-coded status badges and one-tap filters to focus your pipeline"
-        },
-        {
-          "shot": 2,
-          "box_2d": [
-            920,
-            63,
-            971,
-            937
-          ],
-          "label": "Search bar",
-          "quote": "Search across companies, roles, and locations"
-        },
-        {
-          "shot": 3,
-          "box_2d": [
-            189,
-            456,
-            219,
-            775
-          ],
-          "label": "Interviewing filter",
-          "quote": "Filter to just your active interviews or open offers"
-        }
-      ],
-      "dropped": {
-        "count": 1,
-        "reasons": {
-          "removed in review": 1
-        }
-      }
-    },
-    "receipt": {
-      "model": "gemini-3.5-flash",
-      "ms": 12513,
-      "promptTokenCount": 5293,
-      "imageTokens": 4312,
-      "candidatesTokenCount": 612,
-      "thoughtsTokenCount": 1108,
-      "attempts": 1,
-      "mediaResolution": "MEDIA_RESOLUTION_HIGH"
-    }
-  },
-  "6782749406": {
-    "tour": {
-      "appId": 6782749406,
-      "name": "Tabwise: Bills & Invoices",
-      "version": "1.5",
-      "tourKey": "6782749406:1.5:0f499d949710",
-      "shots": [
-        {
-          "url": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/a0/c8/d0/a0c8d028-6e52-12b3-8ed1-937158b52490/01-invoices.png/600x1300bb.jpg"
-        },
-        {
-          "url": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/06/0f/4e/060f4ea2-1a9a-dce9-980a-6039589fdd02/02-dashboard.png/600x1300bb.jpg"
-        },
-        {
-          "url": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/7e/3a/dd/7e3addbe-1750-b7c8-43e6-3e83809c5aff/03-settings.png/600x1300bb.jpg"
-        }
-      ],
-      "callouts": [
-        {
-          "shot": 0,
-          "box_2d": [
-            178,
-            44,
-            224,
-            956
-          ],
-          "label": "Search bar",
-          "quote": "Search and filter by payee, status, note, or check number in an instant"
-        },
-        {
-          "shot": 0,
-          "box_2d": [
-            256,
-            33,
-            338,
-            497
-          ],
-          "label": "Owed to you summary",
-          "quote": "See your running totals: what you owe, what's owed to you, and your net position"
-        },
-        {
-          "shot": 1,
-          "box_2d": [
-            192,
-            33,
-            341,
-            975
-          ],
-          "label": "Net position card",
-          "quote": "A dashboard with your net position, money received vs. paid out, and what's still outstanding"
-        },
-        {
-          "shot": 1,
-          "box_2d": [
-            662,
-            33,
-            932,
-            975
-          ],
-          "label": "In vs Out chart",
-          "quote": "Clear charts of the last six months and your spending by category"
-        },
-        {
-          "shot": 2,
-          "box_2d": [
-            363,
-            33,
-            439,
-            975
-          ],
-          "label": "Lock with Face ID setting",
-          "quote": "Optional Face ID / Touch ID lock keeps your records private"
-        },
-        {
-          "shot": 2,
-          "box_2d": [
-            620,
-            71,
-            673,
-            937
-          ],
-          "label": "CSV export button",
-          "quote": "Export everything to a CSV file to share with your accountant or open in a spreadsheet"
-        }
-      ],
-      "dropped": {
-        "count": 0,
-        "reasons": {}
-      }
-    },
-    "receipt": {
-      "model": "gemini-3.5-flash",
-      "ms": 8454,
-      "promptTokenCount": 4522,
-      "imageTokens": 3234,
-      "candidatesTokenCount": 505,
-      "thoughtsTokenCount": 1102,
-      "attempts": 1,
-      "mediaResolution": "MEDIA_RESOLUTION_HIGH"
-    }
-  },
-  "6806631158": {
-    "tour": {
-      "appId": 6806631158,
-      "name": "Homefolio: Home Inventory",
+      "appId": 6811386431,
+      "name": "Clean Sheet PDF",
       "version": "1.0",
-      "tourKey": "6806631158:1.0:69fdc2d8673c",
+      "tourKey": "6811386431:1.0:07df842467a5",
       "shots": [
         {
-          "url": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/15/e6/ee/15e6eedb-e7be-0165-11f0-e2a576720c18/05-settings.png/600x1300bb.jpg"
+          "url": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/80/fa/83/80fa83af-cf8d-ced0-86a7-f66f6ac74b48/04-privacy.png/600x1300bb.jpg"
         },
         {
-          "url": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/7d/57/7f/7d577f67-f053-62ec-0492-345c611aacb4/04-warranty.png/600x1300bb.jpg"
+          "url": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/7c/7b/90/7c7b9097-80ee-d836-a67e-8b357fbc307a/02-reader.png/600x1300bb.jpg"
         },
         {
-          "url": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/b5/14/0a/b5140a3b-b85a-cc99-9476-846738599eaf/03-report.png/600x1300bb.jpg"
+          "url": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/64/8f/cf/648fcf96-2258-d8d3-5758-13f9d2db47f9/01-library.png/600x1300bb.jpg"
         },
         {
-          "url": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/b4/09/58/b4095813-341a-6300-f01d-4e155ba258c0/02-items.png/600x1300bb.jpg"
-        }
-      ],
-      "callouts": [
-        {
-          "shot": 1,
-          "box_2d": [
-            191,
-            32,
-            278,
-            974
-          ],
-          "label": "Warranty Status",
-          "quote": "Record warranty end dates and see what's active, expiring soon, or expired"
-        },
-        {
-          "shot": 1,
-          "box_2d": [
-            341,
-            32,
-            497,
-            974
-          ],
-          "label": "Warranty Reminders",
-          "quote": "Optional local reminders before a warranty runs out"
-        },
-        {
-          "shot": 2,
-          "box_2d": [
-            191,
-            32,
-            548,
-            974
-          ],
-          "label": "Personal Property Inventory",
-          "quote": "Export a Personal Property Inventory PDF: cover summary, room-by-room schedule, and a photo appendix"
-        },
-        {
-          "shot": 2,
-          "box_2d": [
-            552,
-            32,
-            690,
-            974
-          ],
-          "label": "Report Scope",
-          "quote": "Export the whole home, a single room, only high-value items, or a worksheet of what's still missing"
-        },
-        {
-          "shot": 3,
-          "box_2d": [
-            293,
-            335,
-            329,
-            966
-          ],
-          "label": "Missing Details Filters",
-          "quote": "See at a glance how many items still need a photo, a value, or a receipt"
-        },
-        {
-          "shot": 3,
-          "box_2d": [
-            403,
-            32,
-            490,
-            928
-          ],
-          "label": "Item Details",
-          "quote": "Every item can hold photos, a description, brand, model, serial number, quantity, and condition"
-        }
-      ],
-      "dropped": {
-        "count": 2,
-        "reasons": {
-          "removed in review": 2
-        }
-      }
-    },
-    "receipt": {
-      "model": "gemini-3.5-flash",
-      "ms": 12972,
-      "promptTokenCount": 5662,
-      "imageTokens": 4312,
-      "candidatesTokenCount": 653,
-      "thoughtsTokenCount": 1522,
-      "attempts": 1,
-      "mediaResolution": "MEDIA_RESOLUTION_HIGH"
-    }
-  },
-  "6792765641": {
-    "tour": {
-      "appId": 6792765641,
-      "name": "Price Trail: Drop Alerts",
-      "version": "1.3",
-      "tourKey": "6792765641:1.3:a6ee7db8d326",
-      "shots": [
-        {
-          "url": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/d7/c2/34/d7c23418-eb24-451e-670f-1dd242e34540/03-add.png/600x1300bb.jpg"
-        },
-        {
-          "url": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/b8/85/77/b8857745-7904-81b3-f132-003ba7c0ef3e/01-list.png/600x1300bb.jpg"
-        },
-        {
-          "url": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/df/be/cd/dfbecda6-1265-4379-a7ef-18ff547245cf/02-detail.png/600x1300bb.jpg"
-        },
-        {
-          "url": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/f0/5c/70/f05c7090-b5cc-fe75-e1ed-7a00b240fc87/04-settings.png/600x1300bb.jpg"
+          "url": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/8b/f4/c8/8bf4c8a2-35be-948b-828b-ad597816a83f/03-redact.png/600x1300bb.jpg"
         }
       ],
       "callouts": [
         {
           "shot": 0,
           "box_2d": [
-            184,
-            44,
-            294,
-            955
+            164,
+            45,
+            381,
+            954
           ],
-          "label": "Product Link Input",
-          "quote": "Paste a link, and the app finds the product's name, photo, and current price automatically"
+          "label": "Privacy settings",
+          "quote": "There is no networking code in this app"
         },
         {
           "shot": 0,
           "box_2d": [
-            304,
-            90,
-            336,
-            842
+            520,
+            45,
+            788,
+            954
           ],
-          "label": "Supported Stores Note",
-          "quote": "Paste any product link — Amazon, Walmart, Best Buy, Target, and most other stores — and Price Trail checks the price for you, quietly, in the background"
+          "label": "Redaction explanation",
+          "quote": "A redacted page becomes an image, so its text is no longer searchable or selectable"
         },
         {
           "shot": 1,
           "box_2d": [
-            176,
-            44,
-            566,
-            955
+            124,
+            0,
+            715,
+            1000
           ],
-          "label": "Product List",
-          "quote": "Track the same product at multiple stores and see them side by side"
-        },
-        {
-          "shot": 2,
-          "box_2d": [
-            358,
-            44,
-            694,
-            955
-          ],
-          "label": "Price History Chart",
-          "quote": "A clear chart of every store's price over time — 1 month, 3 months, or everything"
-        },
-        {
-          "shot": 2,
-          "box_2d": [
-            757,
-            44,
-            903,
-            955
-          ],
-          "label": "Outlook Section",
-          "quote": "An on-device estimate of where the price is heading, computed from the product's own history"
+          "label": "PDF document view",
+          "quote": "Read PDFs, with smooth scrolling, pinch zoom and text selection"
         },
         {
           "shot": 3,
           "box_2d": [
-            184,
-            44,
-            294,
-            955
+            87,
+            691,
+            131,
+            954
           ],
-          "label": "Price-drop Alerts Settings",
-          "quote": "Get notified on any price drop, or set a target price and hear only when it's crossed"
+          "label": "Save Copy button",
+          "quote": "Before it saves, the app re-reads its own output and refuses to hand you a document it cannot prove came out clean"
         },
         {
           "shot": 3,
           "box_2d": [
-            598,
-            44,
-            816,
-            955
+            347,
+            78,
+            382,
+            570
           ],
-          "label": "Privacy Settings",
-          "quote": "No accounts, no ads, no analytics, no tracking"
+          "label": "Redacted text lines",
+          "quote": "Redact — mark anything and it is removed, not covered"
         }
       ],
       "dropped": {
-        "count": 1,
+        "count": 3,
         "reasons": {
-          "removed in review": 1
+          "removed in review": 3
         }
       }
     },
     "receipt": {
       "model": "gemini-3.5-flash",
-      "ms": 4211,
-      "promptTokenCount": 5441,
+      "ms": 11900,
+      "promptTokenCount": 5417,
       "imageTokens": 4312,
-      "candidatesTokenCount": 646,
-      "thoughtsTokenCount": 0,
+      "candidatesTokenCount": 639,
+      "thoughtsTokenCount": 1794,
       "attempts": 1,
       "mediaResolution": "MEDIA_RESOLUTION_HIGH"
     }
@@ -921,6 +697,123 @@
       "mediaResolution": "MEDIA_RESOLUTION_HIGH"
     }
   },
+  "6776927520": {
+    "tour": {
+      "appId": 6776927520,
+      "name": "Job Trail Applications",
+      "version": "1.6",
+      "tourKey": "6776927520:1.6:cb9f83d25bce",
+      "shots": [
+        {
+          "url": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/58/d9/be/58d9be19-889f-d8bf-cce1-cd3dc0c4194c/02-detail.png/600x1300bb.jpg"
+        },
+        {
+          "url": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/01/62/e8/0162e83b-fbb0-5d38-e871-169ea6affc25/03-add.png/600x1300bb.jpg"
+        },
+        {
+          "url": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/76/ea/bc/76eabc64-d72f-c3b3-1a82-14b7d42b70db/01-list.png/600x1300bb.jpg"
+        },
+        {
+          "url": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/12/cd/d8/12cdd8f4-e2d5-26db-b113-444377fa5ab9/04-filter.png/600x1300bb.jpg"
+        }
+      ],
+      "callouts": [
+        {
+          "shot": 0,
+          "box_2d": [
+            425,
+            45,
+            642,
+            954
+          ],
+          "label": "Application details",
+          "quote": "See how long ago you applied to each role"
+        },
+        {
+          "shot": 0,
+          "box_2d": [
+            701,
+            45,
+            801,
+            954
+          ],
+          "label": "Notes section",
+          "quote": "Notes for recruiters, salary ranges, and next steps"
+        },
+        {
+          "shot": 1,
+          "box_2d": [
+            184,
+            45,
+            349,
+            954
+          ],
+          "label": "Job details input",
+          "quote": "Log every application: company, role, location, date applied, and the posting URL"
+        },
+        {
+          "shot": 1,
+          "box_2d": [
+            705,
+            45,
+            803,
+            954
+          ],
+          "label": "Notes input",
+          "quote": "Notes for recruiters, salary ranges, and next steps"
+        },
+        {
+          "shot": 2,
+          "box_2d": [
+            189,
+            82,
+            219,
+            954
+          ],
+          "label": "Status filters",
+          "quote": "Color-coded status badges and one-tap filters to focus your pipeline"
+        },
+        {
+          "shot": 2,
+          "box_2d": [
+            920,
+            63,
+            971,
+            937
+          ],
+          "label": "Search bar",
+          "quote": "Search across companies, roles, and locations"
+        },
+        {
+          "shot": 3,
+          "box_2d": [
+            189,
+            456,
+            219,
+            775
+          ],
+          "label": "Interviewing filter",
+          "quote": "Filter to just your active interviews or open offers"
+        }
+      ],
+      "dropped": {
+        "count": 1,
+        "reasons": {
+          "removed in review": 1
+        }
+      }
+    },
+    "receipt": {
+      "model": "gemini-3.5-flash",
+      "ms": 12513,
+      "promptTokenCount": 5293,
+      "imageTokens": 4312,
+      "candidatesTokenCount": 612,
+      "thoughtsTokenCount": 1108,
+      "attempts": 1,
+      "mediaResolution": "MEDIA_RESOLUTION_HIGH"
+    }
+  },
   "6772649719": {
     "tour": {
       "appId": 6772649719,
@@ -1045,6 +938,213 @@
       "imageTokens": 4312,
       "candidatesTokenCount": 698,
       "thoughtsTokenCount": 0,
+      "attempts": 1,
+      "mediaResolution": "MEDIA_RESOLUTION_HIGH"
+    }
+  },
+  "6806631158": {
+    "tour": {
+      "appId": 6806631158,
+      "name": "Homefolio: Home Inventory",
+      "version": "1.0",
+      "tourKey": "6806631158:1.0:69fdc2d8673c",
+      "shots": [
+        {
+          "url": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/15/e6/ee/15e6eedb-e7be-0165-11f0-e2a576720c18/05-settings.png/600x1300bb.jpg"
+        },
+        {
+          "url": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/7d/57/7f/7d577f67-f053-62ec-0492-345c611aacb4/04-warranty.png/600x1300bb.jpg"
+        },
+        {
+          "url": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/b5/14/0a/b5140a3b-b85a-cc99-9476-846738599eaf/03-report.png/600x1300bb.jpg"
+        },
+        {
+          "url": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/b4/09/58/b4095813-341a-6300-f01d-4e155ba258c0/02-items.png/600x1300bb.jpg"
+        }
+      ],
+      "callouts": [
+        {
+          "shot": 1,
+          "box_2d": [
+            191,
+            32,
+            278,
+            974
+          ],
+          "label": "Warranty Status",
+          "quote": "Record warranty end dates and see what's active, expiring soon, or expired"
+        },
+        {
+          "shot": 1,
+          "box_2d": [
+            341,
+            32,
+            497,
+            974
+          ],
+          "label": "Warranty Reminders",
+          "quote": "Optional local reminders before a warranty runs out"
+        },
+        {
+          "shot": 2,
+          "box_2d": [
+            191,
+            32,
+            548,
+            974
+          ],
+          "label": "Personal Property Inventory",
+          "quote": "Export a Personal Property Inventory PDF: cover summary, room-by-room schedule, and a photo appendix"
+        },
+        {
+          "shot": 2,
+          "box_2d": [
+            552,
+            32,
+            690,
+            974
+          ],
+          "label": "Report Scope",
+          "quote": "Export the whole home, a single room, only high-value items, or a worksheet of what's still missing"
+        },
+        {
+          "shot": 3,
+          "box_2d": [
+            293,
+            335,
+            329,
+            966
+          ],
+          "label": "Missing Details Filters",
+          "quote": "See at a glance how many items still need a photo, a value, or a receipt"
+        },
+        {
+          "shot": 3,
+          "box_2d": [
+            403,
+            32,
+            490,
+            928
+          ],
+          "label": "Item Details",
+          "quote": "Every item can hold photos, a description, brand, model, serial number, quantity, and condition"
+        }
+      ],
+      "dropped": {
+        "count": 2,
+        "reasons": {
+          "removed in review": 2
+        }
+      }
+    },
+    "receipt": {
+      "model": "gemini-3.5-flash",
+      "ms": 12972,
+      "promptTokenCount": 5662,
+      "imageTokens": 4312,
+      "candidatesTokenCount": 653,
+      "thoughtsTokenCount": 1522,
+      "attempts": 1,
+      "mediaResolution": "MEDIA_RESOLUTION_HIGH"
+    }
+  },
+  "6782749406": {
+    "tour": {
+      "appId": 6782749406,
+      "name": "Tabwise: Bills & Invoices",
+      "version": "1.5",
+      "tourKey": "6782749406:1.5:0f499d949710",
+      "shots": [
+        {
+          "url": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/a0/c8/d0/a0c8d028-6e52-12b3-8ed1-937158b52490/01-invoices.png/600x1300bb.jpg"
+        },
+        {
+          "url": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/06/0f/4e/060f4ea2-1a9a-dce9-980a-6039589fdd02/02-dashboard.png/600x1300bb.jpg"
+        },
+        {
+          "url": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/7e/3a/dd/7e3addbe-1750-b7c8-43e6-3e83809c5aff/03-settings.png/600x1300bb.jpg"
+        }
+      ],
+      "callouts": [
+        {
+          "shot": 0,
+          "box_2d": [
+            178,
+            44,
+            224,
+            956
+          ],
+          "label": "Search bar",
+          "quote": "Search and filter by payee, status, note, or check number in an instant"
+        },
+        {
+          "shot": 0,
+          "box_2d": [
+            256,
+            33,
+            338,
+            497
+          ],
+          "label": "Owed to you summary",
+          "quote": "See your running totals: what you owe, what's owed to you, and your net position"
+        },
+        {
+          "shot": 1,
+          "box_2d": [
+            192,
+            33,
+            341,
+            975
+          ],
+          "label": "Net position card",
+          "quote": "A dashboard with your net position, money received vs. paid out, and what's still outstanding"
+        },
+        {
+          "shot": 1,
+          "box_2d": [
+            662,
+            33,
+            932,
+            975
+          ],
+          "label": "In vs Out chart",
+          "quote": "Clear charts of the last six months and your spending by category"
+        },
+        {
+          "shot": 2,
+          "box_2d": [
+            363,
+            33,
+            439,
+            975
+          ],
+          "label": "Lock with Face ID setting",
+          "quote": "Optional Face ID / Touch ID lock keeps your records private"
+        },
+        {
+          "shot": 2,
+          "box_2d": [
+            620,
+            71,
+            673,
+            937
+          ],
+          "label": "CSV export button",
+          "quote": "Export everything to a CSV file to share with your accountant or open in a spreadsheet"
+        }
+      ],
+      "dropped": {
+        "count": 0,
+        "reasons": {}
+      }
+    },
+    "receipt": {
+      "model": "gemini-3.5-flash",
+      "ms": 8454,
+      "promptTokenCount": 4522,
+      "imageTokens": 3234,
+      "candidatesTokenCount": 505,
+      "thoughtsTokenCount": 1102,
       "attempts": 1,
       "mediaResolution": "MEDIA_RESOLUTION_HIGH"
     }
@@ -1233,12 +1333,118 @@
       "mediaResolution": "MEDIA_RESOLUTION_HIGH"
     }
   },
+  "6801322941": {
+    "tour": {
+      "appId": 6801322941,
+      "name": "Toehold: Sudoku Explained",
+      "version": "1.0",
+      "tourKey": "6801322941:1.0:42261212fd70",
+      "shots": [
+        {
+          "url": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/21/1c/00/211c000d-8f1e-34da-91cf-fbfce61a2851/01-reading.png/600x1300bb.jpg"
+        },
+        {
+          "url": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/37/af/0c/37af0c56-c931-10d0-0b07-9799cf13152e/02-technique.png/600x1300bb.jpg"
+        },
+        {
+          "url": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/bc/7a/c4/bc7ac43d-311c-6d36-37ab-846b132ec894/03-notes.png/600x1300bb.jpg"
+        },
+        {
+          "url": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/fa/d2/a8/fad2a8f9-05c7-9e14-d7c7-5e6c773e4da3/05-gentle.png/600x1300bb.jpg"
+        }
+      ],
+      "callouts": [
+        {
+          "shot": 0,
+          "box_2d": [
+            672,
+            751,
+            704,
+            969
+          ],
+          "label": "Fill Notes Button",
+          "quote": "Fill all candidates in one tap, or place them yourself"
+        },
+        {
+          "shot": 0,
+          "box_2d": [
+            718,
+            32,
+            931,
+            970
+          ],
+          "label": "Technique Inventory Panel",
+          "quote": "A panel sits beside your board and keeps a live inventory of the techniques that are available right now"
+        },
+        {
+          "shot": 1,
+          "box_2d": [
+            739,
+            32,
+            910,
+            970
+          ],
+          "label": "Technique Explanation Panel",
+          "quote": "Tap a technique and it shows you the cells that make it true, and one plain sentence explaining why"
+        },
+        {
+          "shot": 2,
+          "box_2d": [
+            155,
+            29,
+            588,
+            970
+          ],
+          "label": "Sudoku Grid with Pencil Marks",
+          "quote": "Pencil marks in a fixed 3x3 lattice, so a digit is always in the same spot"
+        },
+        {
+          "shot": 2,
+          "box_2d": [
+            600,
+            32,
+            663,
+            968
+          ],
+          "label": "Digit Keyboard",
+          "quote": "Every key shows how many of that digit are left"
+        },
+        {
+          "shot": 3,
+          "box_2d": [
+            798,
+            509,
+            831,
+            935
+          ],
+          "label": "Hidden Single Technique",
+          "quote": "Gentle needs only singles"
+        }
+      ],
+      "dropped": {
+        "count": 2,
+        "reasons": {
+          "removed in review": 2
+        }
+      }
+    },
+    "receipt": {
+      "model": "gemini-3.5-flash",
+      "ms": 9987,
+      "promptTokenCount": 5519,
+      "imageTokens": 4312,
+      "candidatesTokenCount": 591,
+      "thoughtsTokenCount": 0,
+      "attempts": 1,
+      "mediaResolution": "MEDIA_RESOLUTION_HIGH"
+    }
+  },
   "6796511772": {
     "tour": {
       "appId": 6796511772,
       "name": "VietFix English",
-      "version": "1.1",
-      "tourKey": "6796511772:1.1:a3bfdeedd414",
+      "version": "1.2",
+      "tourKey": "6796511772:1.2:a3bfdeedd414",
       "shots": [
         {
           "url": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/1d/c7/65/1dc76515-d1de-bfd2-eee9-4fea86e8ec3e/01-vocab.png/600x1300bb.jpg"
@@ -1257,10 +1463,10 @@
         {
           "shot": 0,
           "box_2d": [
-            223,
-            44,
-            911,
-            955
+            222,
+            45,
+            915,
+            954
           ],
           "label": "Vocabulary Topics List",
           "quote": "Practical topics: greetings, family, food, work, shopping, health, travel, study, numbers and prices, time and dates, asking for help"
@@ -1269,9 +1475,9 @@
           "shot": 1,
           "box_2d": [
             181,
-            46,
+            45,
             283,
-            953
+            954
           ],
           "label": "Mixed Practice Card",
           "quote": "Fill-in-the-blank quizzes with an explanation for every question"
@@ -1279,10 +1485,10 @@
         {
           "shot": 2,
           "box_2d": [
-            223,
-            46,
+            222,
+            45,
             829,
-            953
+            954
           ],
           "label": "Grammar Topics List",
           "quote": "12 topics, beginner to intermediate"
@@ -1290,10 +1496,10 @@
         {
           "shot": 2,
           "box_2d": [
-            913,
-            231,
+            915,
+            230,
             978,
-            421
+            423
           ],
           "label": "Grammar Tab",
           "quote": "GRAMMAR EXPLAINED IN VIETNAMESE"
@@ -1301,24 +1507,24 @@
         {
           "shot": 3,
           "box_2d": [
-            336,
-            46,
-            911,
-            953
+            181,
+            45,
+            274,
+            954
           ],
-          "label": "Common Mistakes List",
-          "quote": "60 mistakes Vietnamese speakers really make, grouped: verb tenses, missing articles, plurals, word-for-word translation, prepositions, confusing word pairs, final sounds"
+          "label": "Common Mistakes Intro Card",
+          "quote": "VietFix English is built to catch exactly those mistakes and explain, in Vietnamese, why they happen"
         },
         {
           "shot": 3,
           "box_2d": [
-            913,
-            577,
-            978,
-            769
+            336,
+            45,
+            915,
+            954
           ],
-          "label": "Common Mistakes Tab",
-          "quote": "COMMON MISTAKES — THE HEART OF THE APP"
+          "label": "Mistake Categories List",
+          "quote": "60 mistakes Vietnamese speakers really make, grouped: verb tenses, missing articles, plurals, word-for-word translation, prepositions, confusing word pairs, final sounds"
         }
       ],
       "dropped": {
@@ -1330,10 +1536,10 @@
     },
     "receipt": {
       "model": "gemini-3.5-flash",
-      "ms": 5488,
+      "ms": 4103,
       "promptTokenCount": 5946,
       "imageTokens": 4312,
-      "candidatesTokenCount": 592,
+      "candidatesTokenCount": 595,
       "thoughtsTokenCount": 0,
       "attempts": 1,
       "mediaResolution": "MEDIA_RESOLUTION_HIGH"
@@ -1440,112 +1646,6 @@
       "promptTokenCount": 5482,
       "imageTokens": 4312,
       "candidatesTokenCount": 589,
-      "thoughtsTokenCount": 0,
-      "attempts": 1,
-      "mediaResolution": "MEDIA_RESOLUTION_HIGH"
-    }
-  },
-  "6801322941": {
-    "tour": {
-      "appId": 6801322941,
-      "name": "Toehold: Sudoku Explained",
-      "version": "1.0",
-      "tourKey": "6801322941:1.0:42261212fd70",
-      "shots": [
-        {
-          "url": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/21/1c/00/211c000d-8f1e-34da-91cf-fbfce61a2851/01-reading.png/600x1300bb.jpg"
-        },
-        {
-          "url": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/37/af/0c/37af0c56-c931-10d0-0b07-9799cf13152e/02-technique.png/600x1300bb.jpg"
-        },
-        {
-          "url": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/bc/7a/c4/bc7ac43d-311c-6d36-37ab-846b132ec894/03-notes.png/600x1300bb.jpg"
-        },
-        {
-          "url": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/fa/d2/a8/fad2a8f9-05c7-9e14-d7c7-5e6c773e4da3/05-gentle.png/600x1300bb.jpg"
-        }
-      ],
-      "callouts": [
-        {
-          "shot": 0,
-          "box_2d": [
-            672,
-            751,
-            704,
-            969
-          ],
-          "label": "Fill Notes Button",
-          "quote": "Fill all candidates in one tap, or place them yourself"
-        },
-        {
-          "shot": 0,
-          "box_2d": [
-            718,
-            32,
-            931,
-            970
-          ],
-          "label": "Technique Inventory Panel",
-          "quote": "A panel sits beside your board and keeps a live inventory of the techniques that are available right now"
-        },
-        {
-          "shot": 1,
-          "box_2d": [
-            739,
-            32,
-            910,
-            970
-          ],
-          "label": "Technique Explanation Panel",
-          "quote": "Tap a technique and it shows you the cells that make it true, and one plain sentence explaining why"
-        },
-        {
-          "shot": 2,
-          "box_2d": [
-            155,
-            29,
-            588,
-            970
-          ],
-          "label": "Sudoku Grid with Pencil Marks",
-          "quote": "Pencil marks in a fixed 3x3 lattice, so a digit is always in the same spot"
-        },
-        {
-          "shot": 2,
-          "box_2d": [
-            600,
-            32,
-            663,
-            968
-          ],
-          "label": "Digit Keyboard",
-          "quote": "Every key shows how many of that digit are left"
-        },
-        {
-          "shot": 3,
-          "box_2d": [
-            798,
-            509,
-            831,
-            935
-          ],
-          "label": "Hidden Single Technique",
-          "quote": "Gentle needs only singles"
-        }
-      ],
-      "dropped": {
-        "count": 2,
-        "reasons": {
-          "removed in review": 2
-        }
-      }
-    },
-    "receipt": {
-      "model": "gemini-3.5-flash",
-      "ms": 9987,
-      "promptTokenCount": 5519,
-      "imageTokens": 4312,
-      "candidatesTokenCount": 591,
       "thoughtsTokenCount": 0,
       "attempts": 1,
       "mediaResolution": "MEDIA_RESOLUTION_HIGH"

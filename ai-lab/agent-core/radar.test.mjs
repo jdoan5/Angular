@@ -8,7 +8,7 @@ import {
   TRACKED, radarTools, resolveApp, clampWeeks, validateSnapshot, sourceOf,
   marketOverview, versionRatings, ratingTrend, loadSnapshot, shapeReviews,
   getMarketOverview, getVersionRatings, getRatingTrend, getCompetitorReviews,
-  _setFetcherForTests, _setLookupForTests, _resetCacheForTests,
+  _setFetcherForTests, _setLookupForTests, _setClockForTests, _resetCacheForTests,
 } from './radar.mjs';
 import { toolRegistry, getReviewFeed } from './tools.mjs';
 import { gameTools } from './game.mjs';
@@ -388,6 +388,8 @@ function fakeAI(rounds) {
 }
 
 test('trace: short names, plurals, gaps and reach read cleanly', async () => {
+  // An hour after the fixture's export, so it reads as fresh on any date.
+  _setClockForTests(() => Date.parse(fixture().generated_at) + 3_600_000);
   _setFetcherForTests(async () => fixture());
   _setLookupForTests(async () => ({ results: [] }));
   _resetCacheForTests();
@@ -421,6 +423,7 @@ test('trace: short names, plurals, gaps and reach read cleanly', async () => {
       `error: app must be one of: ${Object.keys(TRACKED).join('; ')}`,
     ]);
   } finally {
+    _setClockForTests(null);
     stub.restore();
     _setFetcherForTests(null);
     _setLookupForTests(null);

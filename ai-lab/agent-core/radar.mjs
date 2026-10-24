@@ -116,6 +116,11 @@ export async function loadSnapshot() {
 /** Test hooks: swap the fetchers and/or clear or expire the caches. */
 export function _setFetcherForTests(fn) { fetchJSON = fn ?? getJSON; }
 export function _setLookupForTests(fn) { lookupJSON = fn ?? getJSON; }
+// The clock behind a result's age and stale flag. A test that froze the
+// expected text of a fresh snapshot failed every CI run once its fixture
+// date was two days old (2026-09-28 onward).
+let clock = () => Date.now();
+export function _setClockForTests(fn) { clock = fn ?? (() => Date.now()); }
 export function _resetCacheForTests({ keepCopy = false } = {}) {
   if (keepCopy && cached) cached = { ...cached, expires: 0 };
   else cached = null;
@@ -130,7 +135,7 @@ const round2 = (x) => Math.round(x * 100) / 100;
 /** Provenance attached to every snapshot result. No snapshot-wide "newest
  *  review" here: it was Duolingo's date on every per-app result, which read
  *  as Atoms data reaching Sept 23 when Atoms stops at July 29. */
-export function sourceOf(snapshot, fetchError = false, now = Date.now()) {
+export function sourceOf(snapshot, fetchError = false, now = clock()) {
   const ageDays = Math.max(0, Math.floor((now - Date.parse(snapshot.generated_at)) / DAY_MS));
   return {
     source: 'Review Radar gold snapshot (Databricks)',

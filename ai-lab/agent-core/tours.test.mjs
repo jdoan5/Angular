@@ -77,6 +77,7 @@ const CATALOG = [
   appOf(STREAK, 'Streak Rings', ['a', 'b', 'c', 'd'].map((n) => shotUrl('streak', n)), { version: '1.0.3' }),
   appOf(SNAKE, 'LCD Classic Snake', ['01-play', '02-leaderboard', '03-players'].map((n) => shotUrl('snake', n)), { version: '1.2' }),
   appOf(111, 'Two Shots Only', ['a', 'b'].map((n) => shotUrl('two', n))),
+  { ...appOf(222, 'A Mac App', ['a', 'b', 'c'].map((n) => shotUrl('mac', n))), kind: 'mac-software' },
 ];
 
 const jpeg = (size = 2048) => {
@@ -704,6 +705,7 @@ test('lookupTour: hit, stale, miss and not-in-tour', async () => {
   assert.deepEqual(await lookupTour(STREAK, 'x'), { state: 'not-in-tour' });
   assert.deepEqual(await lookupTour(424242, 'x'), { state: 'not-in-tour' });
   assert.deepEqual(await lookupTour(111, 'x'), { state: 'not-in-tour' }, 'two screenshots is too few');
+  assert.deepEqual(await lookupTour(222, 'x'), { state: 'not-in-tour' }, 'Mac apps are not toured');
 });
 
 test('the hidden app is refused before any fetch or model call', async () => {
@@ -838,8 +840,10 @@ test('live: every visible app yields 3-4 valid shots in store order, and Streak 
   assert.ok(Object.isFrozen(raw) && Object.isFrozen(raw[0]) && Object.isFrozen(raw[0].screenshotUrls));
 
   const apps = await listTourApps();
-  assert.equal(apps.length, raw.filter((r) => !isHidden(r.trackId)).length,
-    'every app but the hidden one is in the tour (none has too few screenshots)');
+  const ios = raw.filter((r) => !isHidden(r.trackId) && (r.kind === undefined || r.kind === 'software'));
+  assert.equal(apps.length, ios.length,
+    'every iOS app but the hidden one is in the tour (none has too few screenshots)');
+  assert.ok(!apps.some((a) => raw.find((r) => r.trackId === a.appId)?.kind === 'mac-software'), 'no Mac app (Stderr) in the tour');
   assert.ok(!apps.some((a) => a.appId === STREAK));
   for (const app of apps) {
     const r = raw.find((x) => x.trackId === app.appId);
