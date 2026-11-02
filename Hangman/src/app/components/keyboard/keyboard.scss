@@ -45,10 +45,20 @@
 }
 
 .key.hit {
+  position: relative;
   background: var(--good-soft);
   border-color: var(--good);
   color: var(--good);
   box-shadow: none;
+}
+/* A tick so a hit never differs from a miss by colour alone (misses are struck through). */
+.key.hit::after {
+  content: '✓';
+  position: absolute;
+  top: 1px;
+  right: 3px;
+  font-size: 0.62rem;
+  line-height: 1;
 }
 
 .key.miss {
@@ -57,4 +67,13 @@
   color: var(--ink-faint);
   box-shadow: none;
   text-decoration: line-through;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .key,
+  .key:hover:not(:disabled),
+  .key:active:not(:disabled) {
+    transition: none;
+    transform: none;
+  }
 }

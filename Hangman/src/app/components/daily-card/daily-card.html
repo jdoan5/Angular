@@ -1,0 +1,67 @@
+<!-- Before the first daily there is no today(), so no card at all. -->
+@if (daily.today(); as t) {
+  <section class="daily" [style.--cat]="t.category.color" aria-labelledby="daily-title">
+    <div class="daily-head">
+      <span class="daily-icon" aria-hidden="true">{{ t.category.icon }}</span>
+      <div class="daily-heading">
+        <h2 id="daily-title">
+          Today's Entry <span class="daily-date">· No. {{ daily.dayNumber() }} · {{ dateLabel() }}</span>
+        </h2>
+      </div>
+      <span class="diff" [class.medium]="t.entry.difficulty === 'medium'" [class.hard]="t.entry.difficulty === 'hard'">
+        {{ t.entry.difficulty }}
+      </span>
+    </div>
+
+    <p class="daily-pattern" role="img" [attr.aria-label]="patternLabel()">{{ pattern() }}</p>
+    <p class="daily-sub muted">From {{ t.category.name }}{{ bigOne() ? ' · the big one' : '' }}</p>
+
+    <div class="daily-body">
+      @switch (daily.state()) {
+        @case ('in-progress') {
+          <button type="button" class="btn btn-primary" (click)="daily.open()">
+            Resume · {{ daily.missesUsed() }} of {{ maxMisses }} misses used
+          </button>
+          <span class="pips" aria-hidden="true">
+            @for (spent of pips(); track $index) {
+              <span class="pip" [class.spent]="spent"></span>
+            }
+          </span>
+        }
+        @case ('done') {
+          @if (daily.record()?.result === 'won') {
+            <p class="daily-verdict">
+              <span aria-hidden="true">✦ </span>Solved with {{ daily.missesUsed() }}
+              {{ daily.missesUsed() === 1 ? 'miss' : 'misses' }}
+            </p>
+          } @else {
+            <p class="daily-verdict lost">Missed today, back tomorrow</p>
+          }
+          <app-share-result [text]="daily.shareText()" />
+          <button
+            type="button"
+            class="btn btn-ghost"
+            aria-controls="daily-reading"
+            [attr.aria-expanded]="reading()"
+            (click)="reading.set(!reading())"
+          >
+            {{ reading() ? 'Close the entry' : 'Read the entry' }}
+          </button>
+          @if (reading()) {
+            <div id="daily-reading" class="daily-reading">
+              <h3>{{ t.entry.word }}</h3>
+              <p>{{ t.entry.fact }}</p>
+            </div>
+          }
+          <p class="countdown muted">Next entry in {{ countdown() }}</p>
+        }
+        @default {
+          <button type="button" class="btn btn-primary" (click)="daily.open()">Open today's entry</button>
+          @if (daily.alreadyCollected()) {
+            <p class="daily-note muted">Already in your encyclopedia, so call it a warm-up</p>
+          }
+        }
+      }
+    </div>
+  </section>
+}

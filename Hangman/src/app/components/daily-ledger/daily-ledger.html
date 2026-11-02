@@ -1,0 +1,64 @@
+<section aria-labelledby="ledger-title">
+  <div class="ledger-head">
+    <h2 id="ledger-title">Daily ledger</h2>
+    <p class="streaks muted">
+      Daily streak <strong>{{ daily.streaks().current }}</strong> · Best <strong>{{ daily.streaks().best }}</strong>
+    </p>
+  </div>
+
+  <div class="month-nav">
+    <button type="button" class="month-btn" aria-label="Previous month" [disabled]="!canPrev()" (click)="step(-1)">
+      <span aria-hidden="true">◀</span>
+    </button>
+    <span class="month-name" aria-hidden="true">{{ caption() }}</span>
+    <button type="button" class="month-btn" aria-label="Next month" [disabled]="!canNext()" (click)="step(1)">
+      <span aria-hidden="true">▶</span>
+    </button>
+  </div>
+
+  <table>
+    <caption>{{ caption() }}</caption>
+    <thead>
+      <tr>
+        @for (day of weekdays; track day.short) {
+          <th scope="col" [attr.abbr]="day.long">{{ day.short }}</th>
+        }
+      </tr>
+    </thead>
+    <tbody>
+      @for (week of weeks(); track $index) {
+        <tr>
+          @for (cell of week; track cell.id) {
+            @if (cell.day === null) {
+              <td class="pad"></td>
+            } @else {
+              <td
+                [class.future]="cell.dim"
+                [class.today]="cell.today"
+                [attr.aria-current]="cell.today ? 'date' : null"
+                [attr.aria-label]="cell.label"
+              >
+                <span class="date" aria-hidden="true">{{ cell.day }}</span>
+                @if (cell.stamp !== 'none') {
+                  <span
+                    class="stamp"
+                    [class.won]="cell.stamp === 'won'"
+                    [class.lost]="cell.stamp === 'lost'"
+                    [class.open]="cell.stamp === 'open'"
+                    aria-hidden="true"
+                  >{{ stamp[cell.stamp].glyph }}</span>
+                }
+              </td>
+            }
+          }
+        </tr>
+      }
+    </tbody>
+  </table>
+
+  <ul class="legend" aria-hidden="true">
+    <li><span class="stamp won">{{ stamp.won.glyph }}</span>{{ stamp.won.word }}</li>
+    <li><span class="stamp lost">{{ stamp.lost.glyph }}</span>{{ stamp.lost.word }}</li>
+    <li><span class="stamp open">{{ stamp.open.glyph }}</span>{{ stamp.open.word }}</li>
+  </ul>
+</section>

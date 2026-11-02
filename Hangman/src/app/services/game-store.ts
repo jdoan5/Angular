@@ -1,14 +1,45 @@
-import { computed, effect, inject, Injectable, signal } from '@angular/core';
+import { computed, effect, inject, Injectable, InjectionToken, signal } from '@angular/core';
+import { DAILY_SCHEDULE } from '../data/daily-schedule';
 import { findCategoryById, WORD_BANKS } from '../data/word-banks';
 import { WordCategory, WordEntry } from '../models/word';
+import { dayNumber, localDayKey, scheduledIdFor } from './daily-math';
 import { StorageService } from './storage';
 
 export const MAX_MISSES = 6;
+
+/**
+ * The time, as a seam: tests swap in a fixed clock. Lives here (not in
+ * daily.ts) because GameStore needs it too, and DailyService already depends
+ * on GameStore, so the reverse import would be a cycle.
+ */
+export const CLOCK = new InjectionToken<() => Date>('CLOCK', {
+  providedIn: 'root',
+  factory: () => () => new Date(),
+});
 
 const STATS_KEY = 'he.stats';
 const COLLECTION_KEY = 'he.collection';
 
 export type GamePhase = 'home' | 'playing' | 'won' | 'lost';
+
+/** `daily` rounds pause instead of counting a walk-away as a loss. */
+export type GameMode = 'free' | 'daily';
+
+/** The round as DailyService saves it after every guess and hint. */
+export interface RoundSnapshot {
+  entryId: string;
+  /** Letters in the order they were guessed. */
+  guesses: string;
+  /** Guesses made before the hint was bought; -1 = no hint. */
+  hintAt: number;
+  result: 'won' | 'lost' | null;
+}
+
+/** Where to pick a daily round back up: the saved guesses, replayed in order. */
+export interface DailyResume {
+  guesses: string;
+  hintAt: number;
+}
 
 export interface GameStats {
   wins: number;
@@ -35,12 +66,17 @@ export interface WordTile {
 @Injectable({ providedIn: 'root' })
 export class GameStore {
   private readonly storage = inject(StorageService);
+  private readonly clock = inject(CLOCK);
 
+  readonly mode = signal<GameMode>('free');
   readonly phase = signal<GamePhase>('home');
   readonly category = signal<WordCategory | null>(null);
   readonly entry = signal<WordEntry | null>(null);
+  /** Guessed letters; a Set keeps insertion order, so this is also the play order. */
   readonly guessed = signal<ReadonlySet<string>>(new Set());
-  readonly hintUsed = signal(false);
+  /** How many guesses had been made when the hint was bought; -1 = not bought. */
+  readonly hintAt = signal(-1);
+  readonly hintUsed = computed(() => this.hintAt() >= 0);
 
   private lastEntryId: string | null = null;
 
@@ -78,6 +114,19 @@ export class GameStore {
 
   readonly collectedCount = computed(() => Object.keys(this.collection()).length);
 
+  /** The round in saveable form (null between rounds); DailyService persists it. */
+  readonly snapshot = computed<RoundSnapshot | null>(() => {
+    const entry = this.entry();
+    if (!entry) return null;
+    const phase = this.phase();
+    return {
+      entryId: entry.id,
+      guesses: [...this.guessed()].join(''),
+      hintAt: this.hintAt(),
+      result: phase === 'won' ? 'won' : phase === 'lost' ? 'lost' : null,
+    };
+  });
+
   readonly progressByCategory = computed(() => {
     const collection = this.collection();
     return WORD_BANKS.map((c) => ({
@@ -95,18 +144,47 @@ export class GameStore {
   start(categoryId: string): void {
     const category = findCategoryById(categoryId);
     if (!category || category.entries.length === 0) return;
+    this.mode.set('free');
     this.category.set(category);
     this.entry.set(this.pickEntry(category));
     this.guessed.set(new Set());
-    this.hintUsed.set(false);
+    this.hintAt.set(-1);
     this.phase.set('playing');
   }
 
-  /** Prefer words not yet in the encyclopedia, and avoid an immediate repeat. */
+  /**
+   * Begin (or pick back up) today's daily round. Saved guesses are replayed
+   * in their original order with the hint bought at the same point, so the
+   * board, misses, and share glyphs come back exactly as they were left.
+   */
+  startDaily(entry: WordEntry, category: WordCategory, resume: DailyResume): void {
+    this.mode.set('daily');
+    this.category.set(category);
+    this.entry.set(entry);
+    this.guessed.set(new Set());
+    this.hintAt.set(-1);
+    this.phase.set('playing');
+
+    const letters = [...resume.guesses];
+    letters.forEach((letter, i) => {
+      if (i === resume.hintAt) this.useHint();
+      this.guess(letter);
+    });
+    if (resume.hintAt >= letters.length) this.useHint();
+  }
+
+  /**
+   * Prefer words not yet in the encyclopedia, and avoid an immediate repeat.
+   * Today's daily entry is never served here, so free play can't spoil it.
+   * (Worked out from the schedule directly rather than by asking
+   * DailyService, which itself depends on this store.)
+   */
   private pickEntry(category: WordCategory): WordEntry {
     const collection = this.collection();
-    const fresh = category.entries.filter((e) => !(e.id in collection));
-    let pool = fresh.length > 0 ? fresh : category.entries;
+    const dailyId = scheduledIdFor(dayNumber(localDayKey(this.clock())), DAILY_SCHEDULE);
+    const playable = category.entries.filter((e) => e.id !== dailyId);
+    const fresh = playable.filter((e) => !(e.id in collection));
+    let pool = fresh.length > 0 ? fresh : playable;
     if (pool.length > 1) {
       pool = pool.filter((e) => e.id !== this.lastEntryId);
     }
@@ -137,7 +215,7 @@ export class GameStore {
 
   useHint(): void {
     if (!this.hintAvailable()) return;
-    this.hintUsed.set(true);
+    this.hintAt.set(this.guessed().size);
   }
 
   /** Concede the round — reveals the word and counts as a loss. */
@@ -165,7 +243,12 @@ export class GameStore {
     }
   }
 
+  /** Free play deals another word; a daily has no "next", so it heads home. */
   nextWord(): void {
+    if (this.mode() === 'daily') {
+      this.backToCategories();
+      return;
+    }
     const category = this.category();
     if (category) this.start(category.id);
   }
@@ -173,9 +256,16 @@ export class GameStore {
   backToCategories(): void {
     // Walking away from a round you've started counts as a concession —
     // otherwise streaks could be farmed by bailing out of every losing word.
-    if (this.phase() === 'playing' && (this.guessed().size > 0 || this.hintUsed())) {
+    // A daily round only pauses: its progress is saved and it can't be
+    // re-rolled, so there's nothing to farm.
+    if (
+      this.mode() === 'free' &&
+      this.phase() === 'playing' &&
+      (this.guessed().size > 0 || this.hintUsed())
+    ) {
       this.stats.update((s) => ({ ...s, losses: s.losses + 1, streak: 0 }));
     }
+    this.mode.set('free');
     this.phase.set('home');
     this.category.set(null);
     this.entry.set(null);

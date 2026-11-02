@@ -1,0 +1,167 @@
+:host {
+  display: block;
+  margin: 0 auto 2.4rem;
+  max-width: 420px;
+}
+
+.ledger-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  border-bottom: 2px solid var(--ink-faint);
+  padding-bottom: 0.5rem;
+  margin-bottom: 0.8rem;
+}
+.ledger-head h2 {
+  font-size: 1.3rem;
+  margin: 0;
+}
+.streaks {
+  margin: 0;
+  font-size: 0.9rem;
+  font-variant-numeric: tabular-nums;
+}
+.streaks strong {
+  color: var(--ink);
+}
+
+.month-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 0.4rem;
+}
+.month-btn {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border-radius: 999px;
+  border: 1.5px solid var(--ink-faint);
+  background: var(--surface);
+  color: var(--ink);
+  font: inherit;
+  font-size: 0.95rem;
+  cursor: pointer;
+}
+.month-btn:hover:not(:disabled) {
+  border-color: var(--ink);
+}
+.month-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+.month-name {
+  font-family: var(--font-display);
+  font-weight: 650;
+  font-size: 1.05rem;
+}
+
+table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 4px;
+  table-layout: fixed;
+}
+caption {
+  /* the visible month name above the arrows says the same thing */
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+th {
+  padding: 0 0 0.2rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+td {
+  position: relative;
+  height: 44px;
+  padding: 0;
+  border-radius: 10px;
+  text-align: center;
+  vertical-align: middle;
+  background: var(--surface);
+  border: 1px solid var(--ink-faint);
+}
+td.pad {
+  background: transparent;
+  border-color: transparent;
+}
+td.future {
+  background: transparent;
+  border-style: dashed;
+}
+td.today {
+  border-color: var(--accent);
+  box-shadow: inset 0 0 0 1.5px var(--accent);
+}
+
+.date {
+  position: absolute;
+  top: 2px;
+  left: 5px;
+  font-size: 0.66rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--muted);
+}
+.stamp {
+  display: inline-block;
+  margin-top: 6px;
+  font-size: 1.1rem;
+  line-height: 1;
+  font-weight: 700;
+}
+.stamp.won {
+  color: var(--good);
+  animation: stamp 0.25s ease;
+}
+.stamp.lost {
+  color: var(--bad);
+  animation: stamp 0.25s ease;
+}
+.stamp.open {
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.3rem 1rem;
+  margin: 0.6rem 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+.legend .stamp {
+  margin: 0 0.3rem 0 0;
+  font-size: 0.9rem;
+}
+
+@keyframes stamp {
+  from {
+    transform: scale(1.5) rotate(-12deg);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stamp.won,
+  .stamp.lost {
+    animation: none;
+  }
+}

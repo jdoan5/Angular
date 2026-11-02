@@ -109,25 +109,7 @@
   letter-spacing: 0.22em;
 }
 
-.diff {
-  flex-shrink: 0;
-  font-size: 0.68rem;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  padding: 0.14rem 0.5rem;
-  border-radius: 999px;
-  background: var(--good-soft);
-  color: var(--good);
-}
-.diff.medium {
-  background: var(--medium-soft);
-  color: var(--medium);
-}
-.diff.hard {
-  background: var(--bad-soft);
-  color: var(--bad);
-}
+/* .diff pills live in styles.scss (shared with the daily card and ledger). */
 
 .entry-fact {
   margin: 0;

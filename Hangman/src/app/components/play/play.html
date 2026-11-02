@@ -7,13 +7,15 @@
         Solve the word, earn the entry. {{ store.collectedCount() }} of {{ totalEntries }}
         entries discovered so far.
       </p>
-      <div class="stat-strip" aria-label="Your record">
+      <div class="stat-strip" role="group" aria-label="Your record">
         <span class="stat"><strong>{{ store.stats().wins }}</strong> wins</span>
         <span class="stat"><strong>{{ store.stats().losses }}</strong> losses</span>
-        <span class="stat">🔥 <strong>{{ store.stats().streak }}</strong> streak</span>
-        <span class="stat">🏆 best <strong>{{ store.stats().bestStreak }}</strong></span>
+        <span class="stat"><span aria-hidden="true">🔥 </span><strong>{{ store.stats().streak }}</strong> streak</span>
+        <span class="stat"><span aria-hidden="true">🏆 </span>best <strong>{{ store.stats().bestStreak }}</strong></span>
       </div>
     </header>
+
+    <app-daily-card />
 
     <div class="cat-grid">
       @for (p of store.progressByCategory(); track p.category.id) {
@@ -39,11 +41,14 @@
   <section class="page game" [attr.inert]="store.phase() !== 'playing' ? '' : null">
     <div class="game-top">
       <button type="button" class="btn btn-ghost btn-sm" (click)="store.backToCategories()">
-        ← Volumes
+        <span aria-hidden="true">←</span> Volumes
       </button>
       <span class="chip">
-        {{ store.category()?.icon }} {{ store.category()?.name }}
+        <span aria-hidden="true">{{ store.category()?.icon }}</span> {{ store.category()?.name }}
       </span>
+      @if (isDaily()) {
+        <span class="chip"><span aria-hidden="true">📅</span> Daily No. {{ dailyNo() }}</span>
+      }
       <div class="pips" role="img" [attr.aria-label]="store.misses() + ' of 6 misses used'">
         @for (spent of pips(); track $index) {
           <span class="pip" [class.spent]="spent"></span>
@@ -57,7 +62,9 @@
       </div>
 
       <div class="play-side">
-        <div class="tiles" aria-label="The word to guess" aria-live="polite">
+        <!-- One spoken pattern instead of a row of empty spans; guess results
+             are announced by the narrator in app.html, not by this row. -->
+        <div class="tiles" role="img" [attr.aria-label]="tilesLabel()">
           @for (tile of store.tiles(); track $index) {
             @if (tile.isLetter) {
               <span class="tile" [class.missed]="isMissedLetter(tile)">
@@ -77,10 +84,14 @@
               type="button"
               class="btn btn-ghost btn-sm"
               [disabled]="!store.hintAvailable()"
+              [attr.aria-describedby]="hintLocked() ? 'hint-why' : null"
               (click)="store.useHint()"
             >
-              💡 Reveal hint — costs 1 miss
+              <span aria-hidden="true">💡</span> Reveal hint — costs 1 miss
             </button>
+            @if (hintLocked()) {
+              <p id="hint-why" class="hint-why muted">No hints on your last miss: it would end the round.</p>
+            }
           }
         </div>
 
@@ -101,32 +112,62 @@
   <!-- ============ Round-over fact card ============ -->
   @if (store.phase() === 'won' || store.phase() === 'lost') {
     <div class="overlay">
-      <div class="fact-card" role="dialog" aria-modal="true">
-        <p class="verdict" [class.lost]="store.phase() === 'lost'">
-          {{ store.phase() === 'won' ? '✦ Solved!' : 'Hard luck —' }}
+      <div
+        #factCard
+        class="fact-card"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="round-verdict round-word"
+        aria-describedby="round-fact"
+      >
+        <p id="round-verdict" class="verdict" [class.lost]="store.phase() === 'lost'">
+          @if (store.phase() === 'won') {
+            <span aria-hidden="true">✦ </span>Solved!
+          } @else {
+            Hard luck<span aria-hidden="true"> —</span>
+          }
         </p>
-        <h2 class="the-word">{{ store.entry()?.word }}</h2>
+        <h2 id="round-word" class="the-word">{{ store.entry()?.word }}</h2>
 
         <div class="fact">
           <p class="fact-kicker">From the encyclopedia</p>
-          <p class="fact-text">{{ store.entry()?.fact }}</p>
+          <p id="round-fact" class="fact-text">{{ store.entry()?.fact }}</p>
         </div>
 
         @if (store.phase() === 'won') {
-          <p class="collected-note">📖 Added to your encyclopedia</p>
+          <p class="collected-note"><span aria-hidden="true">📖 </span>Added to your encyclopedia</p>
         } @else {
           <p class="collected-note muted">Win it next time to add the entry to your collection.</p>
         }
 
         <div class="fact-actions">
+          <!-- nextWord() heads home after a daily (there is no next one), hence the label. -->
           <button #nextBtn type="button" class="btn btn-primary" (click)="store.nextWord()">
-            Next word <kbd>↵</kbd>
+            {{ isDaily() ? 'All volumes' : 'Next word' }} <kbd aria-hidden="true">↵</kbd>
           </button>
-          <button type="button" class="btn btn-ghost" (click)="store.backToCategories()">
-            All volumes
-          </button>
+          @if (isDaily()) {
+            <app-share-result [text]="shareText()" />
+          } @else {
+            <button type="button" class="btn btn-ghost" (click)="store.backToCategories()">
+              All volumes
+            </button>
+          }
           <a class="btn btn-ghost" routerLink="/encyclopedia">My encyclopedia</a>
         </div>
+
+        @if (isDaily()) {
+          <ol class="week" aria-label="Your dailies this week">
+            @for (day of week(); track day.key) {
+              <li [class.today]="day.today" [attr.aria-current]="day.today ? 'date' : null">
+                <span class="week-name" aria-hidden="true">{{ day.initial }}</span>
+                <span class="week-mark" [class.won]="day.state === 'won'" [class.lost]="day.state === 'lost'" aria-hidden="true">
+                  {{ day.glyph }}
+                </span>
+                <span class="sr-only">{{ day.label }}</span>
+              </li>
+            }
+          </ol>
+        }
       </div>
     </div>
   }

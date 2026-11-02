@@ -53,3 +53,21 @@ export function findCategoryById(id: string): WordCategory | undefined {
 
 /** Total number of collectible entries across all categories. */
 export const TOTAL_ENTRIES = WORD_BANKS.reduce((sum, c) => sum + c.entries.length, 0);
+
+/** An entry together with the volume it belongs to. */
+export interface IndexedEntry {
+  entry: WordEntry;
+  category: WordCategory;
+}
+
+/**
+ * Every entry by id. The daily schedule and saved daily records store bare
+ * ids, so they need a constant-time way back to the word and its volume.
+ */
+export const ENTRY_INDEX: ReadonlyMap<string, IndexedEntry> = new Map(
+  WORD_BANKS.flatMap((category) => category.entries.map((entry) => [entry.id, { entry, category }] as const)),
+);
+
+export function findEntryById(id: string): IndexedEntry | undefined {
+  return ENTRY_INDEX.get(id);
+}

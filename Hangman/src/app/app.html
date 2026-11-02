@@ -10,9 +10,10 @@
       <a routerLink="/encyclopedia" routerLinkActive="active">Encyclopedia</a>
     </nav>
 
-    <div class="tally" aria-label="Current streak and collection size">
-      <span title="Current streak">🔥 {{ store.stats().streak }}</span>
-      <span title="Entries collected">📖 {{ store.collectedCount() }}</span>
+    <!-- role=group so the label is actually read; emoji are decoration, the sr-only words carry the meaning -->
+    <div class="tally" role="group" aria-label="Current streak and collection size">
+      <span title="Current streak"><span aria-hidden="true">🔥 </span><span class="sr-only">Streak </span>{{ store.stats().streak }}</span>
+      <span title="Entries collected"><span aria-hidden="true">📖 </span><span class="sr-only">Collected </span>{{ store.collectedCount() }}</span>
     </div>
 
     <button
@@ -39,6 +40,9 @@
 <main>
   <router-outlet />
 </main>
+
+<!-- The single guess narrator: one short line per guess, never an unrevealed letter. -->
+<p class="sr-only" role="status" aria-live="polite" aria-atomic="true">{{ narration() }}</p>
 
 <footer class="foot">
   <p class="muted">Solve a word · unlock its story — a little encyclopedia, one game at a time.</p>

@@ -180,8 +180,14 @@
   text-align: center;
   min-height: 42px;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 0.3rem;
+}
+.hint-why {
+  margin: 0;
+  font-size: 0.82rem;
 }
 .hint-text {
   margin: 0;
@@ -215,20 +221,25 @@
 }
 
 /* ---------- Round-over overlay ---------- */
+/* The overlay is the scroll container: a daily card (share + week strip) can
+   outgrow a phone screen, and a centred flex item would clip at both ends. */
 .overlay {
   position: fixed;
   inset: 0;
   z-index: 40;
   display: flex;
-  align-items: center;
-  justify-content: center;
   padding: 1rem;
+  overflow-y: auto;
+  overscroll-behavior: contain;
   background: var(--scrim);
   backdrop-filter: blur(3px);
   animation: fade 0.18s ease;
 }
 
 .fact-card {
+  /* auto margins centre it when it fits and fall to 0 when it doesn't, so
+     a tall card starts at the top and scrolls instead of being cut off */
+  margin: auto;
   width: 100%;
   max-width: 480px;
   background: var(--surface);
@@ -290,6 +301,40 @@
   flex-wrap: wrap;
   gap: 0.6rem;
 }
+/* Mon–Sun daily dots under a daily fact card */
+.week {
+  display: flex;
+  justify-content: center;
+  gap: 0.35rem;
+  margin: 1.1rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+.week li {
+  display: grid;
+  justify-items: center;
+  gap: 0.1rem;
+  width: 34px;
+  padding: 0.25rem 0;
+  border-radius: 10px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--muted);
+}
+.week li.today {
+  box-shadow: inset 0 0 0 1.5px var(--accent);
+}
+.week-mark {
+  font-size: 1rem;
+  line-height: 1.2;
+}
+.week-mark.won {
+  color: var(--good);
+}
+.week-mark.lost {
+  color: var(--bad);
+}
+
 kbd {
   font-family: inherit;
   font-size: 0.78em;
@@ -320,5 +365,10 @@ kbd {
   .gallows-side {
     max-width: 190px;
     margin: 0 auto;
+  }
+}
+@media (max-width: 480px) {
+  .fact-card {
+    padding: 1.4rem 1.15rem;
   }
 }

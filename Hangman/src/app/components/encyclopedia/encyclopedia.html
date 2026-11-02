@@ -11,6 +11,10 @@
     </div>
   </header>
 
+  @if (hasDaily()) {
+    <app-daily-ledger />
+  }
+
   @if (store.collectedCount() === 0) {
     <div class="empty">
       <p class="empty-mark">✦</p>

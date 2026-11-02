@@ -9,7 +9,7 @@
           [class.miss]="key.state === 'miss'"
           [disabled]="key.state !== 'idle' || locked()"
           (click)="pick.emit(key.letter)"
-          [attr.aria-label]="'Guess letter ' + key.letter"
+          [attr.aria-label]="key.label"
         >
           {{ key.letter }}
         </button>

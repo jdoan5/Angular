@@ -1,0 +1,146 @@
+:host {
+  display: block;
+  margin: 0 0 1.8rem;
+}
+
+.daily {
+  /* --cat is the volume colour (set inline), lifted for dark paper like the volume cards */
+  --cat-tone: color-mix(in srgb, var(--cat, var(--accent)), white var(--cat-lift));
+  position: relative;
+  padding: 1.15rem 1.25rem 1.2rem;
+  background: var(--surface);
+  border: 1.5px solid var(--ink-faint);
+  border-left: 5px solid var(--cat-tone);
+  border-radius: 16px;
+  box-shadow: 0 6px 18px var(--shadow);
+}
+
+.daily-head {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.daily-icon {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--cat-tone) var(--cat-wash), transparent);
+  font-size: 1.45rem;
+}
+.daily-heading {
+  flex: 1;
+  min-width: 0;
+}
+.daily-heading h2 {
+  margin: 0;
+  font-size: 1.2rem;
+}
+.daily-date {
+  font-family: var(--font-body);
+  font-size: 0.86rem;
+  font-weight: 600;
+  letter-spacing: 0;
+  color: var(--muted);
+}
+
+.daily-pattern {
+  margin: 0.9rem 0 0.2rem;
+  font-family: var(--font-display);
+  font-size: 2.1rem;
+  line-height: 1.15;
+  letter-spacing: 0.22em;
+  color: var(--muted);
+  overflow-wrap: anywhere;
+}
+.daily-sub {
+  margin: 0 0 0.9rem;
+  font-size: 0.86rem;
+}
+
+.daily-body {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem 0.9rem;
+}
+.daily-body .btn {
+  min-height: 44px;
+}
+.daily-note {
+  flex-basis: 100%;
+  margin: 0;
+  font-size: 0.88rem;
+  font-style: italic;
+}
+.daily-verdict {
+  flex-basis: 100%;
+  margin: 0;
+  font-weight: 700;
+  color: var(--good);
+}
+.daily-verdict.lost {
+  color: var(--bad);
+}
+.daily-reading {
+  flex-basis: 100%;
+  padding: 0.85rem 1rem;
+  border-radius: 12px;
+  background: var(--paper-deep);
+}
+.daily-reading h3 {
+  margin: 0 0 0.3rem;
+  font-size: 1.05rem;
+  letter-spacing: 0.04em;
+}
+.daily-reading p {
+  margin: 0;
+  font-size: 0.92rem;
+  line-height: 1.55;
+}
+.countdown {
+  flex-basis: 100%;
+  margin: 0;
+  font-size: 0.85rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.pips {
+  display: inline-flex;
+  gap: 0.35rem;
+}
+.pip {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid var(--ink-faint);
+}
+.pip.spent {
+  background: var(--bad);
+  border-color: var(--bad);
+}
+
+@media (hover: hover) {
+  .daily {
+    transition: box-shadow 0.15s ease;
+  }
+  .daily:hover {
+    box-shadow: 0 10px 26px var(--shadow);
+  }
+}
+
+@media (max-width: 560px) {
+  .daily {
+    padding: 1rem 1rem 1.05rem;
+  }
+  /* 1.9rem keeps the longest answer (17 characters) on one line at 375px */
+  .daily-pattern {
+    font-size: 1.9rem;
+    letter-spacing: 0.16em;
+  }
+  .daily-body .btn {
+    flex: 1 1 auto;
+  }
+}

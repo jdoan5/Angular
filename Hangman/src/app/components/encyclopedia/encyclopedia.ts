@@ -2,7 +2,9 @@ import { Component, computed, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { TOTAL_ENTRIES } from '../../data/word-banks';
 import { WordEntry } from '../../models/word';
+import { DailyService } from '../../services/daily';
 import { GameStore } from '../../services/game-store';
+import { DailyLedger } from '../daily-ledger/daily-ledger';
 
 interface Shelf {
   id: string;
@@ -17,13 +19,17 @@ interface Shelf {
 /** The player's personal encyclopedia — every solved word becomes an entry. */
 @Component({
   selector: 'app-encyclopedia',
-  imports: [RouterLink],
+  imports: [RouterLink, DailyLedger],
   templateUrl: './encyclopedia.html',
   styleUrl: './encyclopedia.scss',
 })
 export class Encyclopedia {
   protected readonly store = inject(GameStore);
+  private readonly daily = inject(DailyService);
   protected readonly totalEntries = TOTAL_ENTRIES;
+
+  /** The ledger appears once the player has touched at least one daily. */
+  protected readonly hasDaily = computed(() => Object.keys(this.daily.records()).length > 0);
 
   protected readonly shelves = computed<Shelf[]>(() => {
     const collection = this.store.collection();
