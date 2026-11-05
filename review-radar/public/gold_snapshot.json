@@ -1,6 +1,6 @@
 {
   "totals": {
-    "reviews_collected": 9636,
+    "reviews_collected": 9736,
     "overall_avg_rating": 3.98,
     "apps_tracked": 6
   },
@@ -47,11 +47,11 @@
     },
     {
       "app_name": "Duolingo (high-volume control)",
-      "reviews_collected": 4726,
-      "avg_rating": 3.83,
+      "reviews_collected": 4826,
+      "avg_rating": 3.84,
       "versions_seen": 266,
       "oldest_review_at": "2017-09-10T02:37:43.000Z",
-      "newest_review_at": "2026-11-02T23:48:56.000Z"
+      "newest_review_at": "2026-11-03T18:38:55.000Z"
     }
   ],
   "rating_by_version": [
@@ -464,8 +464,8 @@
     {
       "app_name": "Duolingo (high-volume control)",
       "app_version": "7.147.0",
-      "n_reviews": 50,
-      "avg_rating": 4.28,
+      "n_reviews": 149,
+      "avg_rating": 4.23,
       "first_review_at": "2026-11-02T21:15:57.000Z"
     }
   ],
@@ -480,7 +480,7 @@
     {
       "app_name": "Duolingo (high-volume control)",
       "week": "2026-11-02T00:00:00.000Z",
-      "n_reviews": 75,
+      "n_reviews": 175,
       "avg_rating": 4.19,
       "is_partial_week": true
     },
@@ -3726,5 +3726,5 @@
       "is_partial_week": false
     }
   ],
-  "generated_at": "2026-11-04T20:29:47Z"
+  "generated_at": "2026-11-05T20:45:18Z"
 }
